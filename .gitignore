@@ -1,0 +1,15 @@
+node_modules
+
+#Hardhat files
+cache
+artifacts
+
+#IDE
+.vscode
+
+#Coverage
+coverage
+coverage.json
+
+#System
+**/.DS_Store
