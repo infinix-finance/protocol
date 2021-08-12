@@ -42,6 +42,10 @@ export default {
     runOnCompile: true,
     disambiguatePaths: false,
   },
+  gasReporter: {
+    currency: "USD",
+    gasPrice: 21,
+  },
   namedAccounts: {
     deployer: 0,
   },
