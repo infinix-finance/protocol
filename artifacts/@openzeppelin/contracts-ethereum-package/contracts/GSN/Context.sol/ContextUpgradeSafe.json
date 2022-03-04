@@ -1,0 +1,10 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "ContextUpgradeSafe",
+  "sourceName": "@openzeppelin/contracts-ethereum-package/contracts/GSN/Context.sol",
+  "abi": [],
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220e55e1e253055b39f7716b157e05f4560a23d73f7579c53b0a6955f6fc23c54a364736f6c63430006090033",
+  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220e55e1e253055b39f7716b157e05f4560a23d73f7579c53b0a6955f6fc23c54a364736f6c63430006090033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

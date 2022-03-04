@@ -1,0 +1,185 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "ISelfServeRrpBeaconServerWhitelister",
+  "sourceName": "contracts/oracle/ISelfServeRrpBeaconServerWhitelister.sol",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "beaconId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint64",
+          "name": "expirationTimestamp",
+          "type": "uint64"
+        }
+      ],
+      "name": "SetBeaconIdToExpirationTimestamp",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "beaconId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "indefiniteWhitelistStatus",
+          "type": "bool"
+        }
+      ],
+      "name": "SetBeaconIdToIndefiniteWhitelistStatus",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "beaconId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "reader",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint64",
+          "name": "expirationTimestamp",
+          "type": "uint64"
+        },
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "indefiniteWhitelistStatus",
+          "type": "bool"
+        }
+      ],
+      "name": "WhitelistedReader",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "_beaconId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "beaconIdToExpirationTimestamp",
+      "outputs": [
+        {
+          "internalType": "uint64",
+          "name": "",
+          "type": "uint64"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "_beaconId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "beaconIdToIndefiniteWhitelistStatus",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "rrpBeaconServer",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "_beaconId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint64",
+          "name": "_expirationTimestamp",
+          "type": "uint64"
+        }
+      ],
+      "name": "setBeaconIdToExpirationTimestamp",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "_beaconId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bool",
+          "name": "_indefiniteWhitelistStatus",
+          "type": "bool"
+        }
+      ],
+      "name": "setBeaconIdToIndefiniteWhitelistStatus",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "_beaconId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "address",
+          "name": "_reader",
+          "type": "address"
+        }
+      ],
+      "name": "whitelistReader",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

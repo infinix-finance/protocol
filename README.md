@@ -1,2 +1,2 @@
-# hardhat-framework
-Hardhat framework for new projects
+# infinitix
+Infinitix projet

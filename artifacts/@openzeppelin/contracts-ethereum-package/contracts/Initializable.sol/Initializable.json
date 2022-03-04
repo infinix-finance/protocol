@@ -1,0 +1,10 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "Initializable",
+  "sourceName": "@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol",
+  "abi": [],
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea26469706673582212205b4fc6aa1d83d4aa8347797046b7769f1f458dd11834ac1a5cfcc1ae94f4350164736f6c63430006090033",
+  "deployedBytecode": "0x6080604052600080fdfea26469706673582212205b4fc6aa1d83d4aa8347797046b7769f1f458dd11834ac1a5cfcc1ae94f4350164736f6c63430006090033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}
