@@ -1,2 +1,2 @@
-# infinitix
-Infinitix projet
+# infinix
+Infinix projet
