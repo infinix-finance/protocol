@@ -5,19 +5,13 @@ import "hardhat-deploy";
 import "solidity-coverage";
 import "hardhat-contract-sizer";
 import "hardhat-gas-reporter";
+import "@nomiclabs/hardhat-etherscan";
 
 import { HardhatUserConfig } from "hardhat/types";
 import { task } from "hardhat/config";
 
-// This is a sample Hardhat task. To learn how to create your own go to
-// https://hardhat.org/guides/create-task.html
-task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
-  const accounts = await hre.ethers.getSigners();
+require("dotenv").config();
 
-  for (const account of accounts) {
-    console.log(account.address);
-  }
-});
 
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
@@ -48,6 +42,16 @@ export default {
       },
     ]
   },
+  networks: {
+    hardhat: {},
+    rinkeby: {
+      url: process.env.RINKEBY_URL,
+      chainId: 4,
+      accounts: {
+        mnemonic: process.env.MNEMONIC,
+      },
+    },
+  },
   settings: {
     optimizer: {
       enabled: true,
@@ -62,6 +66,9 @@ export default {
     alphaSort: true,
     runOnCompile: true,
     disambiguatePaths: false,
+  },
+  etherscan: {
+    apiKey: process.env.ETHERSCAN_API_KEY,
   },
   gasReporter: {
     currency: "USD",
