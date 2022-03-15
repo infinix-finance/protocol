@@ -46,6 +46,7 @@
     "@opengsn/gsn": "^2.1.0",
     "@openzeppelin/contracts-ethereum-package": "^3.0.0",
     "@typechain/hardhat": "^2.3.0",
+    "prb-math": "1.0.3",
     "solhint": "^3.3.6",
     "solidity-bytes-utils": "0.1.2",
     "ts-generator": "^0.1.1"
