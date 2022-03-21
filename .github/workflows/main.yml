@@ -17,6 +17,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - name: Tests
-      - run: yarn --no-lockfile
-      - run: yarn run prettier:solidity
-      - run: yarn test
+        run: |
+            yarn install --no-lockfile
+            yarn run prettier:solidity
+            yarn test
