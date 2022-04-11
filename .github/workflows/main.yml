@@ -4,11 +4,19 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the dev branch
   push:
-    branches: [dev, main]
-    paths: ["**.js", "**.sol"]
+    branches:
+      - dev
+      - main
+    paths:
+      - "**.js"
+      - "**.sol"
   pull_request:
-    branches: [dev, main]
-    paths: ["**.js", "**.sol"]
+    branches:
+      - dev
+      - main
+    paths:
+      - "**.js"
+      - "**.sol"
 
 jobs:
   build:
