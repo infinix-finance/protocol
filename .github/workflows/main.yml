@@ -17,6 +17,9 @@ on:
     paths:
       - "**.js"
       - "**.sol"
+  workflow_dispatch:
+    branches:
+      - main
 
 jobs:
   build:
