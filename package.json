@@ -20,7 +20,7 @@
     }
   },
   "devDependencies": {
-    "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.10",
+    "@nomiclabs/hardhat-ethers": "^2.0.5",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
     "@typechain/ethers-v5": "^7.0.1",
     "@types/chai": "^4.2.21",
@@ -44,8 +44,11 @@
   },
   "dependencies": {
     "@nomiclabs/hardhat-etherscan": "^3.0.3",
+    "@eth-optimism/smock": "^1.1.10",
+    "@nomiclabs/ethereumjs-vm": "^4.2.2",
     "@opengsn/gsn": "^2.1.0",
     "@openzeppelin/contracts-ethereum-package": "^3.0.0",
+    "@openzeppelin/test-helpers": "^0.5.15",
     "@typechain/hardhat": "^2.3.0",
     "dotenv": "^16.0.0",
     "prb-math": "1.0.3",
