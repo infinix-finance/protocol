@@ -3,6 +3,7 @@
   "description": "Hardhat framework for new projects",
   "scripts": {
     "coverage": "npx hardhat coverage",
+    "compile": "npx hardhat compile",
     "test": "npx hardhat test",
     "prettier:solidity": "npx prettier --write contracts/**/*.sol"
   },

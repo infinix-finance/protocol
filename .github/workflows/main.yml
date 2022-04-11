@@ -29,6 +29,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Tests
         run: |
-          yarn install --no-lockfile
+          yarn
           yarn run prettier:solidity
+          yarn compile
           yarn test

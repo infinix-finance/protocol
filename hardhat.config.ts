@@ -6,8 +6,7 @@ import "solidity-coverage";
 import "hardhat-contract-sizer";
 import "hardhat-gas-reporter";
 
-import { HardhatUserConfig } from "hardhat/types";
-import { task } from "hardhat/config";
+import { HardhatUserConfig, task } from "hardhat/config";
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -46,7 +45,7 @@ export default {
           },
         },
       },
-    ]
+    ],
   },
   settings: {
     optimizer: {
