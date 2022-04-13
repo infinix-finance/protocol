@@ -7,8 +7,8 @@ import {
 } from "@openzeppelin/contracts-ethereum-package/contracts/presets/ERC20PresetMinterPauser.sol";
 
 // TODO rename to UpgradableMintableERC20
-contract MockERC20 is ERC20PresetMinterPauserUpgradeSafe {
-    function initializeERC20Mock(
+contract ERC20Fake is ERC20PresetMinterPauserUpgradeSafe {
+    function initializeERC20Fake(
         uint256 initialSupply,
         string memory name,
         string memory symbol,

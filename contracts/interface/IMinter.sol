@@ -10,5 +10,5 @@ interface IMinter {
 
     function mintForLoss(Decimal.decimal memory _amount) external;
 
-    function getPerpToken() external view returns (IERC20);
+    function getIfnxToken() external view returns (IERC20);
 }

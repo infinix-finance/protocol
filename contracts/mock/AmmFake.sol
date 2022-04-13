@@ -4,7 +4,7 @@ pragma experimental ABIEncoderV2;
 
 import "../Amm.sol";
 
-contract MockAmm is Amm {
+contract AmmFake is Amm {
     constructor(
         uint256 _dcQuoteAssetReserve,
         uint256 _dcBaseAssetReserve,

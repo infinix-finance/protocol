@@ -9,10 +9,10 @@ import { IERC20 } from "@openzeppelin/contracts-ethereum-package/contracts/token
 import { Decimal } from "./utils/Decimal.sol";
 import { SignedDecimal } from "./utils/SignedDecimal.sol";
 import { MixedDecimal } from "./utils/MixedDecimal.sol";
-import { PerpFiOwnableUpgrade } from "./utils/PerpFiOwnableUpgrade.sol";
+import { IfnxFiOwnableUpgrade } from "./utils/IfnxFiOwnableUpgrade.sol";
 import { IAmm } from "./interface/IAmm.sol";
 
-contract Amm is IAmm, PerpFiOwnableUpgrade, BlockContext {
+contract Amm is IAmm, IfnxFiOwnableUpgrade, BlockContext {
     using SafeMath for uint256;
     using Decimal for Decimal.decimal;
     using SignedDecimal for SignedDecimal.signedDecimal;

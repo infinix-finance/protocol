@@ -16,7 +16,7 @@ import { ContextUpgradeSafe } from "@openzeppelin/contracts-ethereum-package/con
  * `onlyOwner`, which can be applied to your functions to restrict their use to
  * the owner.
  */
-contract PerpFiOwnableUpgrade is ContextUpgradeSafe {
+contract IfnxFiOwnableUpgrade is ContextUpgradeSafe {
     address private _owner;
     address private _candidate;
 
@@ -52,7 +52,7 @@ contract PerpFiOwnableUpgrade is ContextUpgradeSafe {
      * @dev Throws if called by any account other than the owner.
      */
     modifier onlyOwner() {
-        require(_owner == _msgSender(), "PerpFiOwnableUpgrade: caller is not the owner");
+        require(_owner == _msgSender(), "IfnxFiOwnableUpgrade: caller is not the owner");
         _;
     }
 
@@ -73,9 +73,9 @@ contract PerpFiOwnableUpgrade is ContextUpgradeSafe {
      * Can only be called by the current owner.
      */
     function setOwner(address newOwner) public onlyOwner {
-        require(newOwner != address(0), "PerpFiOwnableUpgrade: zero address");
-        require(newOwner != _owner, "PerpFiOwnableUpgrade: same as original");
-        require(newOwner != _candidate, "PerpFiOwnableUpgrade: same as candidate");
+        require(newOwner != address(0), "IfnxFiOwnableUpgrade: zero address");
+        require(newOwner != _owner, "IfnxFiOwnableUpgrade: same as original");
+        require(newOwner != _candidate, "IfnxFiOwnableUpgrade: same as candidate");
         _candidate = newOwner;
     }
 
@@ -84,8 +84,8 @@ contract PerpFiOwnableUpgrade is ContextUpgradeSafe {
      * Can only be called by the new owner.
      */
     function updateOwner() public {
-        require(_candidate != address(0), "PerpFiOwnableUpgrade: candidate is zero address");
-        require(_candidate == _msgSender(), "PerpFiOwnableUpgrade: not the new owner");
+        require(_candidate != address(0), "IfnxFiOwnableUpgrade: candidate is zero address");
+        require(_candidate == _msgSender(), "IfnxFiOwnableUpgrade: not the new owner");
 
         emit OwnershipTransferred(_owner, _candidate);
         _owner = _candidate;

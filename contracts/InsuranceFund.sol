@@ -2,7 +2,7 @@
 pragma solidity 0.6.9;
 pragma experimental ABIEncoderV2;
 
-import { PerpFiOwnableUpgrade } from "./utils/PerpFiOwnableUpgrade.sol";
+import { IfnxFiOwnableUpgrade } from "./utils/IfnxFiOwnableUpgrade.sol";
 import {
     ReentrancyGuardUpgradeSafe
 } from "@openzeppelin/contracts-ethereum-package/contracts/utils/ReentrancyGuard.sol";
@@ -16,7 +16,7 @@ import { IMinter } from "./interface/IMinter.sol";
 import { IAmm } from "./interface/IAmm.sol";
 import { IInflationMonitor } from "./interface/IInflationMonitor.sol";
 
-contract InsuranceFund is IInsuranceFund, PerpFiOwnableUpgrade, BlockContext, ReentrancyGuardUpgradeSafe, DecimalERC20 {
+contract InsuranceFund is IInsuranceFund, IfnxFiOwnableUpgrade, BlockContext, ReentrancyGuardUpgradeSafe, DecimalERC20 {
     using Decimal for Decimal.decimal;
 
     //
@@ -41,7 +41,7 @@ contract InsuranceFund is IInsuranceFund, PerpFiOwnableUpgrade, BlockContext, Re
 
     // contract dependencies
     IExchangeWrapper public exchange;
-    IERC20 public perpToken;
+    IERC20 public IfnxToken;
     IMinter public minter;
     IInflationMonitor public inflationMonitor;
     address private beneficiary;
@@ -135,7 +135,7 @@ contract InsuranceFund is IInsuranceFund, PerpFiOwnableUpgrade, BlockContext, Re
         if (balanceOf(_token).toUint() > 0) {
             address outputToken = getTokenWithMaxValue();
             if (outputToken == address(0)) {
-                outputToken = address(perpToken);
+                outputToken = address(IfnxToken);
             }
             swapInput(_token, IERC20(outputToken), balanceOf(_token), Decimal.zero());
         }
@@ -177,7 +177,7 @@ contract InsuranceFund is IInsuranceFund, PerpFiOwnableUpgrade, BlockContext, Re
 
     function setMinter(IMinter _minter) public onlyOwner {
         minter = _minter;
-        perpToken = minter.getPerpToken();
+        IfnxToken = minter.getIfnxToken();
     }
 
     function setInflationMonitor(IInflationMonitor _inflationMonitor) external onlyOwner {
@@ -265,10 +265,10 @@ contract InsuranceFund is IInsuranceFund, PerpFiOwnableUpgrade, BlockContext, Re
 
         // if all the quote tokens can't afford the debt, ask staking token to mint
         if (_requiredQuoteAmount.toUint() > 0) {
-            Decimal.decimal memory requiredPerpAmount =
-                exchange.getOutputPrice(perpToken, _quoteToken, _requiredQuoteAmount);
-            minter.mintForLoss(requiredPerpAmount);
-            swapInput(perpToken, _quoteToken, requiredPerpAmount, Decimal.zero());
+            Decimal.decimal memory requiredIfnxAmount =
+                exchange.getOutputPrice(IfnxToken, _quoteToken, _requiredQuoteAmount);
+            minter.mintForLoss(requiredIfnxAmount);
+            swapInput(IfnxToken, _quoteToken, requiredIfnxAmount, Decimal.zero());
         }
     }
 
@@ -292,13 +292,13 @@ contract InsuranceFund is IInsuranceFund, PerpFiOwnableUpgrade, BlockContext, Re
         // insertion sort
         for (uint256 i = 0; i < getQuoteTokenLength(); i++) {
             IERC20 currentToken = quoteTokens[i];
-            Decimal.decimal memory currentPerpValue =
-                exchange.getInputPrice(currentToken, perpToken, balanceOf(currentToken));
+            Decimal.decimal memory currentIfnxValue =
+                exchange.getInputPrice(currentToken, IfnxToken, balanceOf(currentToken));
 
             for (uint256 j = i; j > 0; j--) {
-                Decimal.decimal memory subsetPerpValue =
-                    exchange.getInputPrice(tokens[j - 1], perpToken, balanceOf(tokens[j - 1]));
-                if (currentPerpValue.toUint() > subsetPerpValue.toUint()) {
+                Decimal.decimal memory subsetIfnxValue =
+                    exchange.getInputPrice(tokens[j - 1], IfnxToken, balanceOf(tokens[j - 1]));
+                if (currentIfnxValue.toUint() > subsetIfnxValue.toUint()) {
                     tokens[j] = tokens[j - 1];
                     tokens[j - 1] = currentToken;
                 }
