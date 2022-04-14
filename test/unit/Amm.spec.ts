@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { BigNumber } from "ethers";
+import { BigNumber, Wallet } from "ethers";
 import { waffle } from "hardhat";
 import { AmmFake, API3PriceFeedMock, ERC20Fake } from "../../types";
 import { deployAmm, deployAPI3MockPriceFeed, deployErc20Fake, Dir } from "../helper/contract";
@@ -11,8 +11,8 @@ describe("Amm Unit Test", () => {
   let amm: AmmFake;
   let priceFeed: API3PriceFeedMock;
   let quoteToken: ERC20Fake;
-  let admin: string;
-  let alice: string;
+  let admin: Wallet;
+  let alice: Wallet;
   let fundingPeriod: BigNumber;
   let fundingBufferPeriod: BigNumber;
 
@@ -30,19 +30,19 @@ describe("Amm Unit Test", () => {
 
   beforeEach(async () => {
     const wallets = waffle.provider.getWallets();
-    admin = wallets[0].address;
-    alice = wallets[1].address;
+    admin = wallets[0];
+    alice = wallets[1];
 
     priceFeed = await deployAPI3MockPriceFeed(toFullDigit(ETH_PRICE));
     quoteToken = await deployErc20Fake(toFullDigit(20000000));
     amm = await deployAmm({
-      deployer: admin,
+      deployer: admin.address,
       quoteAssetTokenAddr: quoteToken.address,
       priceFeedAddr: priceFeed.address,
       fluctuation: toFullDigit(0),
       fundingPeriod: BigNumber.from(3600), // 1 hour
     });
-    await amm.setCounterParty(admin);
+    await amm.setCounterParty(admin.address);
 
     fundingPeriod = await amm.fundingPeriod();
     fundingBufferPeriod = await amm.fundingBufferPeriod();
@@ -51,9 +51,9 @@ describe("Amm Unit Test", () => {
   describe("default value", () => {
     it("updated after amm added", async () => {
       const liquidityChangedSnapshot = await amm.getLiquidityChangedSnapshots(0);
-      expect(liquidityChangedSnapshot.quoteAssetReserve).eq(toFullDigit(1000));
-      expect(liquidityChangedSnapshot.baseAssetReserve).eq(toFullDigit(100));
-      expect(liquidityChangedSnapshot.cumulativeNotional).eq(0);
+      expect(liquidityChangedSnapshot.quoteAssetReserve[0]).eq(toFullDigit(1000));
+      expect(liquidityChangedSnapshot.baseAssetReserve[0]).eq(toFullDigit(100));
+      expect(liquidityChangedSnapshot.cumulativeNotional[0]).eq(0);
     });
   });
 
@@ -87,7 +87,7 @@ describe("Amm Unit Test", () => {
 
     it("can't do almost everything when it's beginning", async () => {
       const error = "amm was closed";
-      await expect(amm.settleFunding({ from: admin })).to.revertedWith(error);
+      await expect(amm.connect(admin).settleFunding()).to.revertedWith(error);
       await expect(
         amm.swapInput(Dir.ADD_TO_AMM, toDecimal(600), toDecimal(0), false)
       ).to.revertedWith(error);
@@ -100,7 +100,7 @@ describe("Amm Unit Test", () => {
       await amm.setOpen(true);
       await amm.setOpen(false);
       const error = "amm was closed";
-      await expect(amm.settleFunding({ from: admin })).to.revertedWith(error);
+      await expect(amm.connect(admin).settleFunding()).to.revertedWith(error);
       await expect(
         amm.swapInput(Dir.ADD_TO_AMM, toDecimal(600), toDecimal(0), false)
       ).to.revertedWith(error);
@@ -110,8 +110,8 @@ describe("Amm Unit Test", () => {
     });
 
     it("force error: stranger close amm", async () => {
-      await expect(amm.setOpen(false, { from: alice })).to.revertedWith(
-        "PerpFiOwnableUpgrade: caller is not the owner"
+      await expect(amm.connect(alice).setOpen(false)).to.revertedWith(
+        "IfnxFiOwnableUpgrade: caller is not the owner"
       );
     });
   });
@@ -124,8 +124,8 @@ describe("Amm Unit Test", () => {
       const fee = await amm.calcFee(toDecimal(10));
 
       // [0] is tx fee, [1] is spread
-      expect(fee[0]).to.eq(toFullDigit(0.1));
-      expect(fee[1]).to.eq(toFullDigit(0.1));
+      expect(fee[0][0]).to.eq(toFullDigit(0.1));
+      expect(fee[1][0]).to.eq(toFullDigit(0.1));
     });
 
     it("set different fee ratio", async () => {
@@ -134,8 +134,8 @@ describe("Amm Unit Test", () => {
       await amm.setSpreadRatio(toDecimal(0.05));
 
       const fee = await amm.calcFee(toDecimal(100));
-      expect(fee[0]).to.eq(toFullDigit(10));
-      expect(fee[1]).to.eq(toFullDigit(5));
+      expect(fee[0][0]).to.eq(toFullDigit(10));
+      expect(fee[1][0]).to.eq(toFullDigit(5));
     });
 
     it("set fee ratio to zero", async () => {
@@ -144,21 +144,21 @@ describe("Amm Unit Test", () => {
       await amm.setSpreadRatio(toDecimal(0.05));
 
       const fee = await amm.calcFee(toDecimal(100));
-      expect(fee[0]).to.eq(toFullDigit(0));
-      expect(fee[1]).to.eq(toFullDigit(5));
+      expect(fee[0][0]).to.eq(toFullDigit(0));
+      expect(fee[1][0]).to.eq(toFullDigit(5));
     });
 
     it("calcFee with input `0` ", async () => {
       const fee = await amm.calcFee(toDecimal(0));
 
-      expect(fee[0]).to.eq(toFullDigit(0));
-      expect(fee[1]).to.eq(toFullDigit(0));
+      expect(fee[0][0]).to.eq(toFullDigit(0));
+      expect(fee[1][0]).to.eq(toFullDigit(0));
     });
 
     it("force error, only owner can set fee/spread ratio", async () => {
-      const error = "PerpFiOwnableUpgrade: caller is not the owner";
-      await expect(amm.setTollRatio(toDecimal(0.2), { from: alice }), error).to.revertedWith(error);
-      await expect(amm.setSpreadRatio(toDecimal(0.2), { from: alice }), error).to.revertedWith(
+      const error = "IfnxFiOwnableUpgrade: caller is not the owner";
+      await expect(amm.connect(alice).setTollRatio(toDecimal(0.2)), error).to.revertedWith(error);
+      await expect(amm.connect(alice).setSpreadRatio(toDecimal(0.2)), error).to.revertedWith(
         error
       );
     });
@@ -172,39 +172,39 @@ describe("Amm Unit Test", () => {
       // amount = 100(quote asset reserved) - (100 * 1000) / (1000 + 50) = 4.7619...
       // price = 50 / 4.7619 = 10.499
       const amount = await amm.getInputPrice(Dir.ADD_TO_AMM, toDecimal(50));
-      expect(amount).to.eq("4761904761904761904");
+      expect(amount[0].toString()).to.eq("4761904761904761904");
     });
 
     it("getInputPrice, remove from amm ", async () => {
       // amount = (100 * 1000) / (1000 - 50) - 100(quote asset reserved) = 5.2631578947368
       // price = 50 / 5.263 = 9.5
       const amount = await amm.getInputPrice(Dir.REMOVE_FROM_AMM, toDecimal(50));
-      expect(amount).to.eq("5263157894736842106");
+      expect(amount[0].toString()).to.eq("5263157894736842106");
     });
 
     it("getOutputPrice, add to amm ", async () => {
       // amount = 1000(base asset reversed) - (100 * 1000) / (100 + 5) = 47.619047619047619048
       // price = 47.619 / 5 = 9.52
       const amount = await amm.getOutputPrice(Dir.ADD_TO_AMM, toDecimal(5));
-      expect(amount).to.eq("47619047619047619047");
+      expect(amount[0].toString()).to.eq("47619047619047619047");
     });
 
     it("getOutputPrice, add to amm with dividable output", async () => {
       // a dividable number should not plus 1 at mantissa
       const amount = await amm.getOutputPrice(Dir.ADD_TO_AMM, toDecimal(25));
-      expect(amount).to.eq(toFullDigit(200));
+      expect(amount[0].toString()).to.eq(toFullDigit(200));
     });
 
     it("getOutputPrice, remove from amm ", async () => {
       // amount = (100 * 1000) / (100 - 5) - 1000(base asset reversed) = 52.631578947368
       // price = 52.631 / 5 = 10.52
       const amount = await amm.getOutputPrice(Dir.REMOVE_FROM_AMM, toDecimal(5));
-      expect(amount).to.eq("52631578947368421053");
+      expect(amount[0].toString()).to.eq("52631578947368421053");
     });
 
     it("getOutputPrice, remove from amm  with dividable output", async () => {
       const amount = await amm.getOutputPrice(Dir.REMOVE_FROM_AMM, toDecimal(37.5));
-      expect(amount).to.eq(toFullDigit(600));
+      expect(amount[0]).to.eq(toFullDigit(600));
     });
   });
 
@@ -772,7 +772,7 @@ describe("Amm Unit Test", () => {
         // average is 9.04 =
         // (8.12 x 5 snapshots x 14 secs + 9.03 x 5 x 14 + 10 x 5 x 14) / 210
         const twap = await amm.getTwapPrice(210);
-        expect(twap).to.eq("9041666666666666665");
+        expect(twap[0]).to.eq("9041666666666666665");
       });
 
       it("the timestamp of latest snapshot is now, the latest snapshot wont have any effect ", async () => {
@@ -782,25 +782,25 @@ describe("Amm Unit Test", () => {
         // average is 9.04 =
         // (8.12 x 5 snapshots x 14 secs + 9.03 x 5 x 14 + 10 x 5 x 14) / 210
         const twap = await amm.getTwapPrice(210);
-        expect(twap).to.eq("9041666666666666665");
+        expect(twap[0]).to.eq("9041666666666666665");
       });
 
       it("asking interval more than snapshots have", async () => {
         // only have 31 snapshots.
         // average is 9.07 =
         // (8.12 x 10 snapshots x 14 secs + 9.03 x 10 x 14 + 10 x 11 x 14) / (31 x 14))
-        expect(await amm.getTwapPrice(900)).to.eq("9072580645161290321");
+        expect((await amm.getTwapPrice(900))[0]).to.eq("9072580645161290321");
       });
 
       it("asking interval less than latest snapshot, return latest price directly", async () => {
         // price is 8.1
         await amm.swapInput(Dir.REMOVE_FROM_AMM, toDecimal(100), toDecimal(0), false);
         await forward(300);
-        expect(await amm.getTwapPrice(210)).to.eq("8099999999999999998");
+        expect((await amm.getTwapPrice(210))[0]).to.eq("8099999999999999998");
       });
 
       it("price with interval 0 should be the same as spot price", async () => {
-        expect(await amm.getTwapPrice(0)).to.eq(await amm.getSpotPrice());
+        expect((await amm.getTwapPrice(0))[0]).to.eq((await amm.getSpotPrice())[0]);
       });
     });
 
@@ -828,7 +828,7 @@ describe("Amm Unit Test", () => {
           // (990099009900990099 x 21 snapshots x 14 secs + 1096491228070175439 x 21 x 14 + 1221001221001221002 x 22 x 14 +
           //  990099009900990099 x 1 snapshots x 4 secs) / 900
           const twap = await amm.getInputTwap(Dir.ADD_TO_AMM, toDecimal(10));
-          expect(twap).to.eq("1103873668968336329");
+          expect(twap[0]).to.eq("1103873668968336329");
         });
 
         it("the timestamp of latest snapshot is now, the latest snapshot wont have any effect ", async () => {
@@ -847,19 +847,19 @@ describe("Amm Unit Test", () => {
           await amm.swapInput(Dir.REMOVE_FROM_AMM, toDecimal(100), toDecimal(0), false);
 
           const twap = await amm.getInputTwap(Dir.ADD_TO_AMM, toDecimal(10));
-          expect(twap).to.eq("1103873668968336329");
+          expect(twap[0]).to.eq("1103873668968336329");
         });
 
         it("accumulative time of snapshots is less than 15 mins ", async () => {
           // average is 1098903664504027596 =
           // (990099009900990099 x 11 snapshots x 14 secs + 1096491228070175439 x 10 x 14 + 1221001221001221002 x 10 x 14) / (31 x 14)
           const twap = await amm.getInputTwap(Dir.ADD_TO_AMM, toDecimal(10));
-          expect(twap).to.eq("1098903664504027596");
+          expect(twap[0]).to.eq("1098903664504027596");
         });
 
         it("input asset is 0, should return 0", async () => {
           const twap = await amm.getInputTwap(Dir.ADD_TO_AMM, toDecimal(0));
-          expect(twap).eq("0");
+          expect(twap[0]).eq("0");
         });
       });
 
@@ -886,19 +886,19 @@ describe("Amm Unit Test", () => {
           // (90909090909090909079 x 21 snapshots x 14 secs + 82420091324200913231 x 21 x 14 + 74311926605504587146 x 22 x 14 +
           //  90909090909090909079 x 1 snapshots x 4 secs) / 900
           const twap = await amm.getOutputTwap(Dir.ADD_TO_AMM, toDecimal(10));
-          expect(twap).to.eq("82456099260799524707");
+          expect(twap[0]).to.eq("82456099260799524707");
         });
 
         it("accumulative time of snapshots is less than 15 mins ", async () => {
           // average is 82816779977324354961 =
           // (90909090909090909079 x 11 snapshots x 14 secs + 82420091324200913231 x 10 x 14 + 74311926605504587146 x 10 x 14) / (31 x 14)
           const twap = await amm.getOutputTwap(Dir.ADD_TO_AMM, toDecimal(10));
-          expect(twap).to.eq("82816779977324354961");
+          expect(twap[0]).to.eq("82816779977324354961");
         });
 
         it("input asset is 0, should return 0", async () => {
           const twap = await amm.getOutputTwap(Dir.ADD_TO_AMM, toDecimal(0));
-          expect(twap).eq("0");
+          expect(twap[0]).eq("0");
         });
       });
     });
@@ -907,7 +907,7 @@ describe("Amm Unit Test", () => {
   describe("isOverSpreadLimit", () => {
     beforeEach(async () => {
       await amm.setOpen(true);
-      expect(await amm.getSpotPrice()).eq(toFullDigit(10));
+      expect((await amm.getSpotPrice())[0]).eq(toFullDigit(10));
     });
 
     it("will fail if price feed return 0", async () => {
@@ -948,7 +948,7 @@ describe("Amm Unit Test", () => {
           toDecimal(100)
         );
 
-        expect(amount).eq(toFullDigit(37.5));
+        expect(amount[0]).eq(toFullDigit(37.5));
       });
 
       it("should return 150B  when ask for 600Q input at B100/Q1000 reserve and remove from Amm", async () => {
@@ -959,7 +959,7 @@ describe("Amm Unit Test", () => {
           toDecimal(100)
         );
 
-        expect(amount).eq(toFullDigit(150));
+        expect(amount[0]).eq(toFullDigit(150));
       });
 
       it("should get expected (amount - 1) when the base asset amount is not dividable and add to Amm", async () => {
@@ -972,7 +972,7 @@ describe("Amm Unit Test", () => {
 
         // 1000 * 100 / 1200 = 83.33
         // 100 - 83.33 = 16.66..7 - 1
-        expect(amount).eq("16666666666666666666");
+        expect(amount[0]).eq("16666666666666666666");
       });
 
       it("should get expected amount when the base asset amount is not dividable but remove from Amm", async () => {
@@ -984,7 +984,7 @@ describe("Amm Unit Test", () => {
         );
 
         // trader will get 1 wei more negative position size
-        expect(amount).eq("11111111111111111112");
+        expect(amount[0]).eq("11111111111111111112");
       });
 
       it("reach trading limit", async () => {
@@ -995,7 +995,7 @@ describe("Amm Unit Test", () => {
             toDecimal(1000),
             toDecimal(100)
           )
-        ).to.not.rejectedWith("over trading limit");
+        ).to.not.revertedWith("over trading limit");
       });
 
       it("force error, value of quote asset is 0", async () => {
@@ -1019,7 +1019,7 @@ describe("Amm Unit Test", () => {
           toDecimal(100)
         );
 
-        expect(amount).eq(toFullDigit(375).toString());
+        expect(amount[0]).eq(toFullDigit(375).toString());
       });
       it("should need 250Q for 20B output at B100/Q1000 reserve when remove from Amm", async () => {
         const amount = await amm.getOutputPriceWithReservesPublic(
@@ -1029,7 +1029,7 @@ describe("Amm Unit Test", () => {
           toDecimal(100)
         );
 
-        expect(amount).eq(toFullDigit(250).toString());
+        expect(amount[0]).eq(toFullDigit(250).toString());
       });
 
       it("should get expected (amount + 1) when the quote asset amount is not dividable and remove Amm", async () => {
@@ -1042,7 +1042,7 @@ describe("Amm Unit Test", () => {
 
         // 1000 * 100 / 75 = 1333.33
         // 1333.33 - 1000 = 33.33...3 + 1
-        expect(amount).eq("333333333333333333334");
+        expect(amount[0]).eq("333333333333333333334");
       });
 
       it("should get expected amount when the base asset amount is not dividable but add to Amm", async () => {
@@ -1054,7 +1054,7 @@ describe("Amm Unit Test", () => {
         );
 
         // trader will get 1 wei less quoteAsset
-        expect(amount).eq("166666666666666666666");
+        expect(amount[0]).eq("166666666666666666666");
       });
 
       it("force error, value of base asset is 0", async () => {
@@ -1084,7 +1084,7 @@ describe("Amm Unit Test", () => {
           toDecimal(80)
         );
 
-        expect(quoteAssetAmmPrice).eq(toFullDigit(250));
+        expect(quoteAssetAmmPrice[0]).eq(toFullDigit(250));
       });
 
       it("without fee, getOutputPrice(getInputPrice(x).amount) == x (base settlement)", async () => {
@@ -1101,7 +1101,7 @@ describe("Amm Unit Test", () => {
           toDecimal(125)
         );
 
-        expect(amount).eq(toFullDigit(200));
+        expect(amount[0]).eq(toFullDigit(200));
       });
 
       it("without fee, getInputPrice(getOutputPrice(x).amount) == x (quote settlement)", async () => {
@@ -1118,7 +1118,7 @@ describe("Amm Unit Test", () => {
           toDecimal(160)
         );
 
-        expect(baseAssetAmount).eq(toFullDigit(60));
+        expect(baseAssetAmount[0]).eq(toFullDigit(60));
       });
 
       it("without fee, getInputPrice(getOutputPrice(x).amount) == x (base settlement)", async () => {
@@ -1135,7 +1135,7 @@ describe("Amm Unit Test", () => {
           toDecimal(40)
         );
 
-        expect(baseAssetAmount).eq(toFullDigit(60));
+        expect(baseAssetAmount[0]).eq(toFullDigit(60));
       });
     });
 
@@ -1143,48 +1143,48 @@ describe("Amm Unit Test", () => {
       it("swapInput, add to amm", async () => {
         // add 200 quote, amm: 83.33...4:1200. trader: 12.66
         expect(
-          await amm.getInputPriceWithReservesPublic(
+          (await amm.getInputPriceWithReservesPublic(
             Dir.ADD_TO_AMM,
             toDecimal(200),
             toDecimal(1000),
             toDecimal(100)
-          )
+          ))[0]
         ).eq("16666666666666666666");
       });
 
       it("swapInput, remove from amm", async () => {
         // remove 100 quote, amm: 111.111...1 + 1 wei:900. trader: -11.11...1 - 1wei
         expect(
-          await amm.getInputPriceWithReservesPublic(
+          (await amm.getInputPriceWithReservesPublic(
             Dir.REMOVE_FROM_AMM,
             toDecimal(100),
             toDecimal(1000),
             toDecimal(100)
-          )
+          ))[0]
         ).eq("11111111111111111112");
       });
 
       it("swapOutput, add to amm", async () => {
         // add 20 base, amm: 120:83.33...+ 1 wei. trader: 166.66..6
         expect(
-          await amm.getOutputPriceWithReservesPublic(
+          (await amm.getOutputPriceWithReservesPublic(
             Dir.ADD_TO_AMM,
             toDecimal(20),
             toDecimal(1000),
             toDecimal(100)
-          )
+          ))[0]
         ).eq("166666666666666666666");
       });
 
       it("swapOutput, remove from amm", async () => {
         // remove 10 base, amm: 90:1111.11...1 + 1 wei. trader: -111.11 - 1 wei
         expect(
-          await amm.getOutputPriceWithReservesPublic(
+          (await amm.getOutputPriceWithReservesPublic(
             Dir.REMOVE_FROM_AMM,
             toDecimal(10),
             toDecimal(1000),
             toDecimal(100)
-          )
+          ))[0]
         ).eq("111111111111111111112");
       });
     });
@@ -1209,8 +1209,7 @@ describe("Amm Unit Test", () => {
       });
 
       it("force error, caller is not counterParty/clearingHouse", async () => {
-        const addresses = waffle.provider.getWallets();
-        await expect(amm.settleFunding({ from: addresses[1].address })).to.revertedWith(
+        await expect(amm.connect(alice).settleFunding()).to.revertedWith(
           "caller is not counterParty"
         );
       });

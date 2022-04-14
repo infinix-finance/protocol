@@ -2,9 +2,9 @@
 pragma solidity 0.6.9;
 pragma experimental ABIEncoderV2;
 
-import { IERC20 } from "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/IERC20.sol";
-import { Decimal } from "../utils/Decimal.sol";
-import { SignedDecimal } from "../utils/SignedDecimal.sol";
+import {IERC20} from "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/IERC20.sol";
+import {Decimal} from "../utils/Decimal.sol";
+import {SignedDecimal} from "../utils/SignedDecimal.sol";
 
 interface IAmm {
     /**
@@ -12,7 +12,10 @@ interface IAmm {
      * @param ADD_TO_AMM add asset to Amm
      * @param REMOVE_FROM_AMM remove asset from Amm
      */
-    enum Dir { ADD_TO_AMM, REMOVE_FROM_AMM }
+    enum Dir {
+        ADD_TO_AMM,
+        REMOVE_FROM_AMM
+    }
 
     struct LiquidityChangedSnapshot {
         SignedDecimal.signedDecimal cumulativeNotional;
@@ -107,7 +110,10 @@ interface IAmm {
     // can not be overridden by state variable due to type `Deciaml.decimal`
     function getSettlementPrice() external view returns (Decimal.decimal memory);
 
-    function getBaseAssetDeltaThisFundingPeriod() external view returns (SignedDecimal.signedDecimal memory);
+    function getBaseAssetDeltaThisFundingPeriod()
+        external
+        view
+        returns (SignedDecimal.signedDecimal memory);
 
     function getCumulativeNotional() external view returns (SignedDecimal.signedDecimal memory);
 
@@ -115,7 +121,10 @@ interface IAmm {
 
     function getOpenInterestNotionalCap() external view returns (Decimal.decimal memory);
 
-    function getLiquidityChangedSnapshots(uint256 i) external view returns (LiquidityChangedSnapshot memory);
+    function getLiquidityChangedSnapshots(uint256 i)
+        external
+        view
+        returns (LiquidityChangedSnapshot memory);
 
     function getBaseAssetDelta() external view returns (SignedDecimal.signedDecimal memory);
 

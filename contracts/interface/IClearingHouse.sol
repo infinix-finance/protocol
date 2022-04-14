@@ -2,12 +2,15 @@
 pragma solidity 0.6.9;
 pragma experimental ABIEncoderV2;
 
-import { Decimal } from "../utils/Decimal.sol";
-import { SignedDecimal } from "../utils/SignedDecimal.sol";
-import { IAmm } from "./IAmm.sol";
+import {Decimal} from "../utils/Decimal.sol";
+import {SignedDecimal} from "../utils/SignedDecimal.sol";
+import {IAmm} from "./IAmm.sol";
 
 interface IClearingHouse {
-    enum Side { BUY, SELL }
+    enum Side {
+        BUY,
+        SELL
+    }
 
     /// @notice This struct records personal position information
     /// @param size denominated in amm.baseAsset
@@ -46,7 +49,10 @@ interface IClearingHouse {
     function payFunding(IAmm _amm) external;
 
     // VIEW FUNCTIONS
-    function getMarginRatio(IAmm _amm, address _trader) external view returns (SignedDecimal.signedDecimal memory);
+    function getMarginRatio(IAmm _amm, address _trader)
+        external
+        view
+        returns (SignedDecimal.signedDecimal memory);
 
     function getPosition(IAmm _amm, address _trader) external view returns (Position memory);
 }

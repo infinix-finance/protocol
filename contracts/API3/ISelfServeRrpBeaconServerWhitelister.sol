@@ -2,10 +2,7 @@
 pragma solidity >=0.6.0 <=0.9.0;
 
 interface ISelfServeRrpBeaconServerWhitelister {
-    event SetBeaconIdToExpirationTimestamp(
-        bytes32 indexed beaconId,
-        uint64 expirationTimestamp
-    );
+    event SetBeaconIdToExpirationTimestamp(bytes32 indexed beaconId, uint64 expirationTimestamp);
     event SetBeaconIdToIndefiniteWhitelistStatus(
         bytes32 indexed beaconId,
         bool indefiniteWhitelistStatus
@@ -17,10 +14,8 @@ interface ISelfServeRrpBeaconServerWhitelister {
         bool indefiniteWhitelistStatus
     );
 
-    function setBeaconIdToExpirationTimestamp(
-        bytes32 _beaconId,
-        uint64 _expirationTimestamp
-    ) external;
+    function setBeaconIdToExpirationTimestamp(bytes32 _beaconId, uint64 _expirationTimestamp)
+        external;
 
     function setBeaconIdToIndefiniteWhitelistStatus(
         bytes32 _beaconId,
@@ -29,18 +24,9 @@ interface ISelfServeRrpBeaconServerWhitelister {
 
     function whitelistReader(bytes32 _beaconId, address _reader) external;
 
-    function beaconIdToExpirationTimestamp(bytes32 _beaconId)
-        external
-        view
-        returns (uint64);
+    function beaconIdToExpirationTimestamp(bytes32 _beaconId) external view returns (uint64);
 
-    function beaconIdToIndefiniteWhitelistStatus(bytes32 _beaconId)
-        external
-        view
-        returns (bool);
+    function beaconIdToIndefiniteWhitelistStatus(bytes32 _beaconId) external view returns (bool);
 
-    function rrpBeaconServer()
-        external
-        view
-        returns (address);
+    function rrpBeaconServer() external view returns (address);
 }

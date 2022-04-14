@@ -17,7 +17,7 @@ describe("InsuranceFund Spec", () => {
 
   beforeEach(async () => {
     const InsuranceFundFactory = await ethers.getContractFactory("InsuranceFund");
-    const instance = (await InsuranceFundFactory.deploy()) as InsuranceFund;
+    insuranceFund = (await InsuranceFundFactory.deploy()) as InsuranceFund;
     await insuranceFund.initialize();
 
     quoteToken1 = await deployErc20Fake(toFullDigit(0), "NAME1", "SYMBOL1");

@@ -99,18 +99,18 @@ export async function deployAmm(params: {
   } = params;
 
   const AmmFactory = await ethers.getContractFactory("AmmFake");
+
   return (await AmmFactory.deploy(
     quoteAssetReserve,
     baseAssetReserve,
     toFullDigit(0.9), // tradeLimitRatio
     fundingPeriod,
     priceFeedAddr,
-    // ethers.utils.hexlify(ethers.utils.toUtf8Bytes(priceFeedKey)),
-    "0x4554482f55534400000000000000000000000000000000000000000000000000",
+    ethers.utils.formatBytes32String(priceFeedKey),
     quoteAssetTokenAddr,
     fluctuation,
     tollRatio,
-    spreadRatio,
+    spreadRatio
     // { from: deployer }
   )) as AmmFake;
 }

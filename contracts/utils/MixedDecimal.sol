@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity 0.6.9;
 
-import { Decimal } from "./Decimal.sol";
-import { SignedDecimal } from "./SignedDecimal.sol";
-import { SignedSafeMath } from "@openzeppelin/contracts-ethereum-package/contracts/math/SignedSafeMath.sol";
+import {Decimal} from "./Decimal.sol";
+import {SignedDecimal} from "./SignedDecimal.sol";
+import {SignedSafeMath} from "@openzeppelin/contracts-ethereum-package/contracts/math/SignedSafeMath.sol";
 
 /// @dev To handle a signedDecimal add/sub/mul/div a decimal and provide convert decimal to signedDecimal helper
 library MixedDecimal {
@@ -11,7 +11,8 @@ library MixedDecimal {
     using SignedSafeMath for int256;
 
     uint256 private constant _INT256_MAX = 2**255 - 1;
-    string private constant ERROR_NON_CONVERTIBLE = "MixedDecimal: uint value is bigger than _INT256_MAX";
+    string private constant ERROR_NON_CONVERTIBLE =
+        "MixedDecimal: uint value is bigger than _INT256_MAX";
 
     modifier convertible(Decimal.decimal memory x) {
         require(_INT256_MAX >= x.d, ERROR_NON_CONVERTIBLE);

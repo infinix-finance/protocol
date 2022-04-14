@@ -3,7 +3,7 @@ pragma solidity >=0.6.0 <=0.9.0;
 import "prb-math/contracts/PRBMathUD60x18.sol";
 
 contract MockPriceFeed {
-    using PRBMathUD60x18 for uint256; 
+    using PRBMathUD60x18 for uint256;
 
     uint256 price;
 

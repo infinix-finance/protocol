@@ -79,8 +79,7 @@ interface IRrpBeaconServer {
         address setter
     ) external;
 
-    function setUpdatePermissionStatus(address updateRequester, bool status)
-        external;
+    function setUpdatePermissionStatus(address updateRequester, bool status) external;
 
     function requestBeaconUpdate(
         bytes32 beaconId,
@@ -91,15 +90,9 @@ interface IRrpBeaconServer {
 
     function fulfill(bytes32 requestId, bytes calldata data) external;
 
-    function readBeacon(bytes32 beaconId)
-        external
-        view
-        returns (int224 value, uint32 timestamp);
+    function readBeacon(bytes32 beaconId) external view returns (int224 value, uint32 timestamp);
 
-    function readerCanReadBeacon(bytes32 beaconId, address reader)
-        external
-        view
-        returns (bool);
+    function readerCanReadBeacon(bytes32 beaconId, address reader) external view returns (bool);
 
     function beaconIdToReaderToWhitelistStatus(bytes32 beaconId, address reader)
         external
@@ -112,10 +105,10 @@ interface IRrpBeaconServer {
         address setter
     ) external view returns (bool indefiniteWhitelistStatus);
 
-    function sponsorToUpdateRequesterToPermissionStatus(
-        address sponsor,
-        address updateRequester
-    ) external view returns (bool permissionStatus);
+    function sponsorToUpdateRequesterToPermissionStatus(address sponsor, address updateRequester)
+        external
+        view
+        returns (bool permissionStatus);
 
     function deriveBeaconId(bytes32 templateId, bytes calldata parameters)
         external

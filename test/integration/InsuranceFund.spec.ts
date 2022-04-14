@@ -1,4 +1,5 @@
 import { expect, use } from "chai";
+import { Wallet } from "ethers";
 import { waffle } from "hardhat";
 import {
   AmmFake,
@@ -17,9 +18,9 @@ describe("InsuranceFund", () => {
   let ifnxToken: IfnxToken;
   let insuranceFund: InsuranceFundFake;
   let mockExchange: ExchangeWrapperMock;
-  let dao: string;
-  let bob: string;
-  let carol: string;
+  let dao: Wallet;
+  let bob: Wallet;
+  let carol: Wallet;
   let quoteToken: ERC20Fake;
   let quoteToken2: ERC20Fake;
   let quoteToken3: ERC20Fake;
@@ -30,18 +31,19 @@ describe("InsuranceFund", () => {
   let amm4: AmmMock;
 
   beforeEach(async () => {
-    const wallets = waffle.provider.getWallets();
-    dao = wallets[0].address;
-    bob = wallets[1].address;
-    carol = wallets[2].address;
+    const wallets = await waffle.provider.getWallets();
 
-    const contracts = await fullDeploy({ sender: dao });
+    dao = wallets[0];
+    bob = wallets[1];
+    carol = wallets[2];
+
+    const contracts = await fullDeploy({ sender: dao.address });
     quoteToken = contracts.quoteToken;
     insuranceFund = contracts.insuranceFund;
     ifnxToken = contracts.ifnxToken;
     mockExchange = await deployMockExchangeWrapper();
 
-    await insuranceFund.setBeneficiary(dao, { from: dao });
+    await insuranceFund.connect(dao).setBeneficiary(dao.address);
     await insuranceFund.setExchange(mockExchange.address);
     await mockExchange.mockSetSwapRatio(toDecimal(1));
     await ifnxToken.addMinter(insuranceFund.address);
@@ -63,8 +65,8 @@ describe("InsuranceFund", () => {
 
   describe("withdraw", () => {
     beforeEach(async () => {
-      await quoteToken.transfer(bob, toFullDigit(1000, +(await quoteToken.decimals())));
-      expect(await quoteToken.balanceOf(bob)).to.eq(
+      await quoteToken.transfer(bob.address, toFullDigit(1000, +(await quoteToken.decimals())));
+      expect(await quoteToken.balanceOf(bob.address)).to.eq(
         toFullDigit(1000, +(await quoteToken.decimals()))
       );
 
@@ -77,9 +79,7 @@ describe("InsuranceFund", () => {
     });
 
     it("withdraw, transfer to withdrawer", async () => {
-      const receipt = await insuranceFund.withdraw(quoteToken.address, toDecimal(200), {
-        from: dao,
-      });
+      const receipt = await insuranceFund.connect(dao).withdraw(quoteToken.address, toDecimal(200));
       expect(receipt).to.emit(insuranceFund, "Withdrawn").withArgs(dao, toFullDigit(200));
     });
 

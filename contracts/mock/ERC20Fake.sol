@@ -2,9 +2,7 @@
 pragma solidity 0.6.9;
 pragma experimental ABIEncoderV2;
 
-import {
-    ERC20PresetMinterPauserUpgradeSafe
-} from "@openzeppelin/contracts-ethereum-package/contracts/presets/ERC20PresetMinterPauser.sol";
+import {ERC20PresetMinterPauserUpgradeSafe} from "@openzeppelin/contracts-ethereum-package/contracts/presets/ERC20PresetMinterPauser.sol";
 
 // TODO rename to UpgradableMintableERC20
 contract ERC20Fake is ERC20PresetMinterPauserUpgradeSafe {

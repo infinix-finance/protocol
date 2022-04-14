@@ -1,5 +1,6 @@
+import BNJS from "bignumber.js";
+import BN from "bn.js";
 import { BigNumber } from "ethers";
-import BN from "bignumber.js";
 
 export const DEFAULT_TOKEN_DECIMALS = 18;
 export const ONE_DAY = 60 * 60 * 24;
@@ -12,9 +13,9 @@ export interface Decimal {
 
 // noinspection JSMethodCanBeStatic
 export function toFullDigit(val: number | string, decimals = DEFAULT_TOKEN_DECIMALS): BigNumber {
-  const tokenDigit = new BN("10").exponentiatedBy(decimals);
-  const bigNumber = new BN(val).multipliedBy(tokenDigit).toFixed(0);
-  return BigNumber.from(bigNumber);
+  const tokenDigit = new BNJS("10").exponentiatedBy(decimals);
+  const bigNumber = new BNJS(val).multipliedBy(tokenDigit).toFixed(0);
+  return BigNumber.from(new BN(bigNumber).toString());
 }
 
 export function toFullDigitStr(val: number | string): string {
@@ -25,8 +26,8 @@ export function toDecimal(val: number | string): Decimal {
   return { d: toFullDigit(val).toString() };
 }
 
-export function fromDecimal(val: Decimal, decimals = DEFAULT_TOKEN_DECIMALS): BigNumber {
-  return BigNumber.from(val.d)
-    .mul(BigNumber.from(10).pow(BigNumber.from(decimals)))
-    .div(BigNumber.from(10).pow(BigNumber.from(DEFAULT_TOKEN_DECIMALS)));
+export function fromDecimal(val: Decimal, decimals = DEFAULT_TOKEN_DECIMALS): BN {
+  return new BN(val.d.toString())
+    .mul(new BN(10).pow(new BN(decimals)))
+    .div(new BN(10).pow(new BN(DEFAULT_TOKEN_DECIMALS)));
 }
