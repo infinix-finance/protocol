@@ -4,7 +4,7 @@ pragma experimental ABIEncoderV2;
 
 import "../Amm.sol";
 
-contract MockAmm is Amm {
+contract AmmFake is Amm {
     constructor(
         uint256 _dcQuoteAssetReserve,
         uint256 _dcBaseAssetReserve,
@@ -65,7 +65,13 @@ contract MockAmm is Amm {
         Decimal.decimal memory _quoteAssetPoolAmount,
         Decimal.decimal memory _baseAssetPoolAmount
     ) public view returns (Decimal.decimal memory) {
-        return getInputPriceWithReserves(_dir, _quoteAssetAmount, _quoteAssetPoolAmount, _baseAssetPoolAmount);
+        return
+            getInputPriceWithReserves(
+                _dir,
+                _quoteAssetAmount,
+                _quoteAssetPoolAmount,
+                _baseAssetPoolAmount
+            );
     }
 
     function getOutputPriceWithReservesPublic(
@@ -74,10 +80,19 @@ contract MockAmm is Amm {
         Decimal.decimal memory _quoteAssetPoolAmount,
         Decimal.decimal memory _baseAssetPoolAmount
     ) public view returns (Decimal.decimal memory) {
-        return getOutputPriceWithReserves(_dir, _baseAssetAmount, _quoteAssetPoolAmount, _baseAssetPoolAmount);
+        return
+            getOutputPriceWithReserves(
+                _dir,
+                _baseAssetAmount,
+                _quoteAssetPoolAmount,
+                _baseAssetPoolAmount
+            );
     }
 
-    function mockSetReserve(Decimal.decimal memory _quoteReserve, Decimal.decimal memory _baseReserve) public {
+    function mockSetReserve(
+        Decimal.decimal memory _quoteReserve,
+        Decimal.decimal memory _baseReserve
+    ) public {
         quoteAssetReserve = _quoteReserve;
         baseAssetReserve = _baseReserve;
     }

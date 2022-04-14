@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity 0.6.9;
 
-import { SignedSafeMath } from "@openzeppelin/contracts-ethereum-package/contracts/math/SignedSafeMath.sol";
+import {SignedSafeMath} from "@openzeppelin/contracts-ethereum-package/contracts/math/SignedSafeMath.sol";
 
 /// @dev Implements simple signed fixed point math add, sub, mul and div operations.
 library SignedDecimalMath {

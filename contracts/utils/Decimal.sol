@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity >=0.6.0 <=0.9.0;
 
-import { SafeMath } from "@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol";
-import { DecimalMath } from "./DecimalMath.sol";
+import {SafeMath} from "@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol";
+import {DecimalMath} from "./DecimalMath.sol";
 
 library Decimal {
     using DecimalMath for uint256;
