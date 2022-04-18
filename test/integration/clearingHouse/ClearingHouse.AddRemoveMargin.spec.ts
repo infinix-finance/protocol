@@ -15,7 +15,7 @@ import { Side } from "../../helper/contract";
 import { fullDeploy } from "../../helper/deploy";
 import { toDecimal, toFullDigit } from "../../helper/number";
 
-describe.only("ClearingHouse add/remove margin Test", () => {
+describe("ClearingHouse add/remove margin Test", () => {
   let wallets: Wallet[];
   let admin: Wallet;
   let alice: Wallet;
