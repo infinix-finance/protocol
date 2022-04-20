@@ -5,7 +5,7 @@ import { deployErc20Fake } from "../helper/contract";
 import { deployAmmMock } from "../helper/mockContract";
 import { toFullDigit } from "../helper/number";
 
-describe("InsuranceFund Spec", () => {
+describe("InsuranceFund Unit Test", () => {
   let insuranceFund: InsuranceFund;
   let amm1!: AmmMock;
   let amm2: AmmMock;
