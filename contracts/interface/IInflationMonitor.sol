@@ -2,7 +2,7 @@
 pragma solidity 0.6.9;
 pragma experimental ABIEncoderV2;
 
-import { Decimal } from "../utils/Decimal.sol";
+import {Decimal} from "../utils/Decimal.sol";
 
 interface IInflationMonitor {
     function isOverMintThreshold() external view returns (bool);

@@ -2,8 +2,8 @@
 pragma solidity 0.6.9;
 pragma experimental ABIEncoderV2;
 
-import { Decimal } from "../utils/Decimal.sol";
-import { IERC20 } from "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/IERC20.sol";
+import {Decimal} from "../utils/Decimal.sol";
+import {IERC20} from "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/IERC20.sol";
 
 interface IExchangeWrapper {
     function swapInput(
@@ -34,5 +34,8 @@ interface IExchangeWrapper {
         Decimal.decimal calldata outputTokenBought
     ) external view returns (Decimal.decimal memory);
 
-    function getSpotPrice(IERC20 inputToken, IERC20 outputToken) external view returns (Decimal.decimal memory);
+    function getSpotPrice(IERC20 inputToken, IERC20 outputToken)
+        external
+        view
+        returns (Decimal.decimal memory);
 }

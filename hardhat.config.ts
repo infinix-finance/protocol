@@ -6,12 +6,9 @@ import "solidity-coverage";
 import "hardhat-contract-sizer";
 import "hardhat-gas-reporter";
 import "@nomiclabs/hardhat-etherscan";
-
-import { HardhatUserConfig } from "hardhat/types";
-import { task } from "hardhat/config";
+import { HardhatUserConfig } from "hardhat/config";
 
 require("dotenv").config();
-
 
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
@@ -40,10 +37,12 @@ export default {
           },
         },
       },
-    ]
+    ],
   },
   networks: {
-    hardhat: {},
+    hardhat: {
+      allowUnlimitedContractSize: true,
+    },
     rinkeby: {
       url: process.env.RINKEBY_URL,
       chainId: 4,
