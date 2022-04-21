@@ -241,8 +241,8 @@ contract ClearingHouse is
      * @dev only owner can call
      * @param _initialMarginRatio new initial margin ratio
      */
-    function setInitialMarginRatio(uint256 _initialMarginRatio) external onlyOwner {
-        initMarginRatio = Decimal.decimal(_initialMarginRatio);
+    function setInitialMarginRatio(Decimal.decimal memory _initialMarginRatio) external onlyOwner {
+        initMarginRatio = _initialMarginRatio;
         emit InitMarginRatioChanged(initMarginRatio.toUint());
     }
 
@@ -271,8 +271,8 @@ contract ClearingHouse is
      * @dev only owner can call
      * @param _liquidationFeeRatio new liquidation fee ratio in 18 digits
      */
-    function setLiquidationFeeRatio(uint256 _liquidationFeeRatio) external onlyOwner {
-        liquidationFeeRatio = Decimal.decimal(_liquidationFeeRatio);
+    function setLiquidationFeeRatio(Decimal.decimal memory _liquidationFeeRatio) external onlyOwner {
+        liquidationFeeRatio = _liquidationFeeRatio;
         emit LiquidationFeeRatioChanged(liquidationFeeRatio.toUint());
     }
 
@@ -281,8 +281,8 @@ contract ClearingHouse is
      * @dev only owner can call
      * @param _maintenanceMarginRatio new maintenance margin ratio in 18 digits
      */
-    function setMaintenanceMarginRatio(uint256 _maintenanceMarginRatio) external onlyOwner {
-        maintenanceMarginRatio = Decimal.decimal(_maintenanceMarginRatio);
+    function setMaintenanceMarginRatio(Decimal.decimal memory _maintenanceMarginRatio) external onlyOwner {
+        maintenanceMarginRatio = _maintenanceMarginRatio;
         emit MarginRatioChanged(maintenanceMarginRatio.toUint());
     }
 
