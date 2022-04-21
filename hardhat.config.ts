@@ -61,10 +61,10 @@ export default {
       allowUnlimitedContractSize: true,
     },
     rinkeby: {
-      url: process.env.RINKEBY_URL,
+      url: process.env.RINKEBY_URL || "",
       chainId: 4,
       accounts: {
-        mnemonic: process.env.MNEMONIC,
+        mnemonic: process.env.MNEMONIC || "",
       },
     },
   },
@@ -84,7 +84,7 @@ export default {
     disambiguatePaths: false,
   },
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
+    apiKey: process.env.ETHERSCAN_API_KEY || "",
   },
   gasReporter: {
     currency: "USD",
