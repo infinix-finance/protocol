@@ -2,10 +2,9 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { run } from "hardhat";
 
-
 const deployInsuranceFund: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const {
-    deployments: { execute, deploy, log},
+    deployments: { execute, deploy },
     getNamedAccounts,
   } = hre;
   const { deployer } = await getNamedAccounts();
@@ -22,23 +21,16 @@ const deployInsuranceFund: DeployFunction = async function (hre: HardhatRuntimeE
     log: true,
   });
 
-  if (deployResult.newlyDeployed) {
-    log(
-      `*** InsuranceFund deployed at ${deployResult.address} using ${deployResult.receipt?.gasUsed} ***`
-    );
-  }
-
-  await execute('InsuranceFund', {from: deployer, log: true}, 'initialize');
+  await execute("InsuranceFund", { from: deployer, log: true }, "initialize");
 
   try {
-    await new Promise(r => setTimeout(r, 30000));
+    await new Promise((r) => setTimeout(r, 30000));
     await run("verify:verify", {
-      address: deployResult.address
+      address: deployResult.address,
     });
   } catch (error) {
     console.log(error);
   }
-
 };
 
 export default deployInsuranceFund;

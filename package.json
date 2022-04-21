@@ -5,6 +5,9 @@
     "coverage": "npx hardhat coverage",
     "compile": "npx hardhat compile",
     "test": "npx hardhat test",
+    "accounts": "npx hardhat accounts",
+    "balances": "npx hardhat balances",
+    "deploy:testnet": "npx hardhat deploy --network rinkeby",
     "prettier:solidity": "npx prettier --write contracts/**/*.sol"
   },
   "repository": {

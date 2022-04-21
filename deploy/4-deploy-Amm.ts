@@ -9,23 +9,20 @@ import {
   QUOTE_ASSET,
   FLUNCTUATION_LIMIT_RATIO,
   TOLL_RATIO,
-  SPREAD_RATIO
+  SPREAD_RATIO,
 } from "../constants/constants";
 import { run } from "hardhat";
 
-
 const deployAmm: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const {
-    deployments: { execute, deploy, log},
+    deployments: { execute, deploy },
     getNamedAccounts,
   } = hre;
   const { deployer } = await getNamedAccounts();
 
   if (process.env.WITH_PROXY) return;
 
-  const oracle =  await hre.deployments.get('Api3Oracle');
-
-
+  const API3PriceFeed = await hre.deployments.get("API3PriceFeed");
 
   const deployResult = await deploy("Amm", {
     from: deployer,
@@ -45,7 +42,7 @@ const deployAmm: DeployFunction = async function (hre: HardhatRuntimeEnvironment
     //         QUOTE_ASSET,
     //         FLUNCTUATION_LIMIT_RATIO,
     //         TOLL_RATIO,
-    //         SPREAD_RATIO 
+    //         SPREAD_RATIO
     //       ]
     //     }
     //   }
@@ -54,19 +51,15 @@ const deployAmm: DeployFunction = async function (hre: HardhatRuntimeEnvironment
     log: true,
   });
 
-
-  if (deployResult.newlyDeployed) {
-    log(
-      `*** Amm deployed at ${deployResult.address} using ${deployResult.receipt?.gasUsed} ***`
-    );
-  }
-
-  await execute('Amm', {from: deployer, log: true}, 'initialize',
+  await execute(
+    "Amm",
+    { from: deployer, log: true },
+    "initialize",
     QUOTE_ASSET_RESERVE,
     BASE_ASSET_RESERVE,
     TRADE_LIMIT_RATIO,
     FUNDING_PERIOD,
-    oracle.address,
+    API3PriceFeed.address,
     PRICE_FEED_KEY,
     QUOTE_ASSET,
     FLUNCTUATION_LIMIT_RATIO,
@@ -74,18 +67,16 @@ const deployAmm: DeployFunction = async function (hre: HardhatRuntimeEnvironment
     SPREAD_RATIO
   );
 
-
   try {
-    await new Promise(r => setTimeout(r, 30000));
+    await new Promise((r) => setTimeout(r, 30000));
     await run("verify:verify", {
-      address: deployResult.address
+      address: deployResult.address,
     });
   } catch (error) {
     console.log(error);
   }
-
 };
 
 export default deployAmm;
 deployAmm.tags = ["Amm"];
-deployAmm.dependencies = ["Api3Oracle"];
+deployAmm.dependencies = ["API3PriceFeed"];
