@@ -7,7 +7,7 @@ import { deployIfnxTokenMock } from "../helper/mockContract";
 import { toFullDigit } from "../helper/number";
 
 // skip, won't be in v1
-describe.skip("Supply Schedule Unit Test", () => {
+describe("Supply Schedule Unit Test", () => {
   let admin: Wallet;
   let alice: Wallet;
   let ifnxToken: IfnxTokenMock;
@@ -71,7 +71,7 @@ describe.skip("Supply Schedule Unit Test", () => {
 
   describe("mintableSupply", () => {
     it("zero when it's not mintable", async () => {
-      expect(await supplySchedule.mintableSupply()).eq(0);
+      expect((await supplySchedule.mintableSupply()).d).eq(0);
     });
 
     it("based on inflationRate before decay end", async () => {
@@ -80,7 +80,7 @@ describe.skip("Supply Schedule Unit Test", () => {
       await ifnxToken.setTotalSupply(toFullDigit(100));
 
       // 100 * 1% = 1
-      expect(await supplySchedule.mintableSupply()).eq(toFullDigit(1));
+      expect((await supplySchedule.mintableSupply()).d).eq(toFullDigit(1));
     });
 
     it("will keeps the fixed inflationRate after decay end", async () => {
@@ -91,7 +91,7 @@ describe.skip("Supply Schedule Unit Test", () => {
       await ifnxToken.setTotalSupply(toFullDigit(100));
 
       // 100 * 0.04749% ~= 0.04749
-      expect(await supplySchedule.mintableSupply()).eq("47497069730730000");
+      expect((await supplySchedule.mintableSupply()).d).eq("47497069730730000");
     });
   });
 });

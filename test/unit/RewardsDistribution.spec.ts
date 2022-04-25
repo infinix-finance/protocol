@@ -6,7 +6,7 @@ import { deployRewardsDistribution } from "../helper/contract";
 import { toDecimal, toFullDigit } from "../helper/number";
 
 // skip, won't be in v1
-describe.skip("RewardsDistributionSpec", () => {
+describe("RewardsDistributionSpec", () => {
   let accounts: Wallet[];
   let rewardsDistribution: RewardsDistribution;
 
@@ -21,12 +21,12 @@ describe.skip("RewardsDistributionSpec", () => {
       await rewardsDistribution.addRewardsDistribution(accounts[6].address, toDecimal(200));
 
       const recipient0 = await rewardsDistribution.distributions(0);
-      expect(recipient0[0]).eq(accounts[5]);
-      expect(recipient0[1]).eq(toFullDigit(100));
+      expect(recipient0[0]).eq(accounts[5].address);
+      expect(recipient0[1].d).eq(toFullDigit(100));
 
       const recipient1 = await rewardsDistribution.distributions(1);
-      expect(recipient1[0]).eq(accounts[6]);
-      expect(recipient1[1]).eq(toFullDigit(200));
+      expect(recipient1[0]).eq(accounts[6].address);
+      expect(recipient1[1].d).eq(toFullDigit(200));
     });
   });
 
@@ -35,8 +35,8 @@ describe.skip("RewardsDistributionSpec", () => {
       await rewardsDistribution.addRewardsDistribution(accounts[5].address, toDecimal(100));
       await rewardsDistribution.editRewardsDistribution(0, accounts[6].address, toDecimal(200));
       const recipient = await rewardsDistribution.distributions(0);
-      expect(recipient[0]).eq(accounts[6]);
-      expect(recipient[1]).eq(toFullDigit(200));
+      expect(recipient[0]).eq(accounts[6].address);
+      expect(recipient[1].d).eq(toFullDigit(200));
     });
 
     // expectRevert section
@@ -61,8 +61,8 @@ describe.skip("RewardsDistributionSpec", () => {
       await rewardsDistribution.removeRewardsDistribution(0);
 
       const recipient0 = await rewardsDistribution.distributions(0);
-      expect(recipient0[0]).eq(accounts[6]);
-      expect(recipient0[1]).eq(toFullDigit(200));
+      expect(recipient0[0]).eq(accounts[6].address);
+      expect(recipient0[1].d).eq(toFullDigit(200));
 
       let error;
       try {
