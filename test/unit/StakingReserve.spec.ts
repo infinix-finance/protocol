@@ -9,7 +9,7 @@ import { deployIfnxTokenMock } from "../helper/mockContract";
 describe("StakingReserve Spec", () => {
   let admin: Wallet;
   let alice: Wallet;
-  let perpToken: IfnxTokenMock;
+  let ifnxToken: IfnxTokenMock;
   let clearingHouse: Wallet;
   let stakingReserve: StakingReserve;
   let vestingPeriod: number;
@@ -22,9 +22,9 @@ describe("StakingReserve Spec", () => {
     const supplyScheduleMock = addresses[2];
     vestingPeriod = 1;
 
-    perpToken = await deployIfnxTokenMock();
+    ifnxToken = await deployIfnxTokenMock();
     stakingReserve = await deployStakingReserve(
-      perpToken.address,
+      ifnxToken.address,
       supplyScheduleMock.address,
       clearingHouse.address,
       ethers.BigNumber.from(vestingPeriod)
