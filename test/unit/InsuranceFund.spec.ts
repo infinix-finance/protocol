@@ -78,6 +78,22 @@ describe("InsuranceFund Unit Test", () => {
       await expect(insuranceFund.removeAmm(amm1.address)).to.revertedWith("amm not existed");
     });
 
-    // it("isExistedAmm")
+    it("isExistedAmm", async () => {
+      await insuranceFund.addAmm(amm1.address);
+
+      expect(await insuranceFund.isExistedAmm(amm1.address)).to.be.eq(true);
+      expect(await insuranceFund.isExistedAmm(amm2.address)).to.be.eq(false);
+    });
+
+    it("getAllAmms", async () => {
+      await insuranceFund.addAmm(amm1.address);
+      await insuranceFund.addAmm(amm2.address);
+      
+      const amms = await insuranceFund.getAllAmms();
+
+      expect(amms.length).to.be.eq(2);
+      expect(amm1.address).to.be.eq(amms[0]);
+      expect(amm2.address).to.be.eq(amms[1]);
+    });
   });
 });
