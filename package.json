@@ -5,6 +5,9 @@
     "coverage": "npx hardhat coverage",
     "compile": "npx hardhat compile",
     "test": "npx hardhat test",
+    "accounts": "npx hardhat accounts",
+    "balances": "npx hardhat balances",
+    "deploy:testnet": "npx hardhat deploy --network rinkeby",
     "prettier:solidity": "npx prettier --write contracts/**/*.sol"
   },
   "repository": {
@@ -44,12 +47,14 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
+    "@nomiclabs/hardhat-etherscan": "^3.0.3",
     "@eth-optimism/smock": "^1.1.10",
     "@nomiclabs/ethereumjs-vm": "^4.2.2",
     "@opengsn/gsn": "^2.1.0",
     "@openzeppelin/contracts-ethereum-package": "^3.0.0",
     "@openzeppelin/test-helpers": "^0.5.15",
     "@typechain/hardhat": "^2.3.0",
+    "dotenv": "^16.0.0",
     "prb-math": "1.0.3",
     "solhint": "^3.3.6",
     "solidity-bytes-utils": "0.1.2",

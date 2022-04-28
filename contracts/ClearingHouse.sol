@@ -243,7 +243,7 @@ contract ClearingHouse is
      */
     function setInitialMarginRatio(Decimal.decimal memory _initialMarginRatio) external onlyOwner {
         initMarginRatio = _initialMarginRatio;
-        emit InitMarginRatioChanged(_initialMarginRatio.toUint());
+        emit InitMarginRatioChanged(initMarginRatio.toUint());
     }
 
     /**
