@@ -1,5 +1,5 @@
 import { ethers } from "hardhat";
-import { AmmMock } from "../../types";
+import { AmmMock, IfnxTokenMock } from "../../types";
 
 export async function deployAmmMock(): Promise<AmmMock> {
   const AmmMockFactory = await ethers.getContractFactory("AmmMock");
@@ -22,9 +22,10 @@ export async function deployAmmMock(): Promise<AmmMock> {
 //     return FeeRewardPoolMock.new()
 // }
 
-// export async function deployPerpTokenMock(): Promise<PerpTokenMockInstance> {
-//     return PerpTokenMock.new()
-// }
+export async function deployIfnxTokenMock(): Promise<IfnxTokenMock> {
+  const IfnxTokenMockFactory = await ethers.getContractFactory("IfnxTokenMock");
+    return (await IfnxTokenMockFactory.deploy()) as IfnxTokenMock;
+}
 
 // export async function deployRootBridgeMock(): Promise<RootBridgeMockInstance> {
 //     return RootBridgeMock.new()

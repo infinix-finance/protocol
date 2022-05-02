@@ -5,9 +5,11 @@ import {
   AmmFake,
   AmmReader,
   API3PriceFeedMock,
+  BalancerMock,
   ClearingHouseFake,
   ClearingHouseViewer,
   ClientBridge,
+  CUsdtMock,
   ERC20Fake,
   ExchangeWrapper,
   ExchangeWrapperMock,
@@ -188,36 +190,38 @@ export async function deployInsuranceFund(
   return instance;
 }
 
-// export async function deployExchangeWrapper(
-//   balancerPoolAddr: string,
-//   compoundCUsdtAddr: string,
-//   InfxToken: string
-// ): Promise<ExchangeWrapper> {
-//   const ExchangeWrapperFactory = await ethers.getContractFactory("ExchangeWrapper");
-//   const instance = (await ExchangeWrapperFactory.deploy()) as ExchangeWrapper;
-//   await instance.initialize(balancerPoolAddr, compoundCUsdtAddr, InfxToken);
-//   return instance;
-// }
+export async function deployExchangeWrapper(
+  balancerPoolAddr: string,
+  compoundCUsdtAddr: string,
+  InfxToken: string
+): Promise<ExchangeWrapper> {
+  const ExchangeWrapperFactory = await ethers.getContractFactory("ExchangeWrapper");
+  const instance = (await ExchangeWrapperFactory.deploy()) as ExchangeWrapper;
+  await instance.initialize(balancerPoolAddr, compoundCUsdtAddr, InfxToken);
+  return instance;
+}
 
 export async function deployMockExchangeWrapper(): Promise<ExchangeWrapperMock> {
   const ExchangeWrapperMockFactory = await ethers.getContractFactory("ExchangeWrapperMock");
   return (await ExchangeWrapperMockFactory.deploy()) as ExchangeWrapperMock;
 }
 
-// export async function deployMockBalancer(
-//   InfxAddr: string,
-//   cUSDTAddr: string
-// ): Promise<BalancerMockInstance> {
-//   const instance = await BalancerMock.new();
-//   instance.initialize(InfxAddr, cUSDTAddr);
-//   return instance;
-// }
+export async function deployMockBalancer(
+  InfxAddr: string,
+  cUSDTAddr: string
+): Promise<BalancerMock> {
+  const BalancerMockFactory = await ethers.getContractFactory("BalancerMock");
+  const instance = await BalancerMockFactory.deploy();
+  instance.initialize(InfxAddr, cUSDTAddr);
+  return instance;
+}
 
-// export async function deployMockCUsdt(): Promise<CUsdtMockInstance> {
-//   const instance = await CUsdtMock.new();
-//   await instance.initializeERC20Fake(toFullDigit(100000), "CToken", "CUsdt", 8);
-//   return instance;
-// }
+export async function deployMockCUsdt(): Promise<CUsdtMock> {
+  const CUsdtMockFactory = await ethers.getContractFactory("CUsdtMock");
+  const instance = await CUsdtMockFactory.deploy();
+  await instance.initializeERC20Fake(toFullDigit(100000), "CToken", "CUsdt", 8);
+  return instance;
+}
 
 export async function deployStakingReserve(
   InfxToken: string,
