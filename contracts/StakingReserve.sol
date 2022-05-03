@@ -139,7 +139,7 @@ contract StakingReserve is
             _amount.toUint() <= getUnlockedBalance(sender).toUint(),
             "Stake more than all balance"
         );
-        require(supplySchedule.isStarted(), "PERP reward has not started");
+        require(supplySchedule.isStarted(), "IFNX reward has not started");
 
         uint256 epochDuration = supplySchedule.mintDuration();
         uint256 afterNextEpochIndex = nextEpochIndex().add(1);
@@ -310,7 +310,7 @@ contract StakingReserve is
 
     /**
      * everyone can query total balance to check current collateralization ratio.
-     * TotalBalance of time weighted locked PERP for coming epoch
+     * TotalBalance of time weighted locked IFNX for coming epoch
      */
     function getTotalBalance() public view returns (Decimal.decimal memory) {
         return totalEffectiveStakeMap[nextEpochIndex()];

@@ -1,14 +1,14 @@
 import { expect } from "chai";
 import { Wallet } from "ethers";
 import { ethers, waffle } from "hardhat";
-import { RewardsDistribution } from "../../types";
+import { RewardsDistributionFake } from "../../types";
 import { deployRewardsDistribution } from "../helper/contract";
 import { toDecimal, toFullDigit } from "../helper/number";
 
 // skip, won't be in v1
 describe("RewardsDistributionSpec", () => {
   let accounts: Wallet[];
-  let rewardsDistribution: RewardsDistribution;
+  let rewardsDistribution: RewardsDistributionFake;
 
   beforeEach(async () => {
     accounts = await waffle.provider.getWallets();

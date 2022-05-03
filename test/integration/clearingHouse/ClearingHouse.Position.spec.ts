@@ -14,7 +14,7 @@ import { PnlCalcOption, Side } from "../../helper/contract";
 import { fullDeploy } from "../../helper/deploy";
 import { toDecimal, toFullDigit, toFullDigitStr } from "../../helper/number";
 
-describe.only("ClearingHouse - open/close position Test", () => {
+describe("ClearingHouse - open/close position Test", () => {
   const MAX_INT = BigNumber.from(2).pow(BigNumber.from(255)).sub(BigNumber.from(1));
   let addresses: Wallet[];
   let admin: Wallet;

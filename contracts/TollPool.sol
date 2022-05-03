@@ -99,6 +99,12 @@ contract TollPool is IfnxFiOwnableUpgrade, DecimalERC20 {
         emit FeeTokenRemoved(address(_token));
     }
 
+    // TODO: Relationship between StakingReserve needs to be determined.
+    function notifyTokenAmount(IERC20 _token, Decimal.decimal calldata _amount) external {
+        require(clearingHouse == _msgSender(), "!clearingHouse");
+        require(_amount.toUint() > 0, "amount can't be 0");
+    }
+
     //
     // VIEW FUNCTIONS
     //

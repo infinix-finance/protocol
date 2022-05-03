@@ -1,7 +1,7 @@
 import { expect, use } from "chai";
 import { Wallet } from "ethers";
 import { ethers, waffle } from "hardhat";
-import { IfnxTokenMock, StakingReserve } from "../../types";
+import { IfnxTokenMock, StakingReserveFake } from "../../types";
 import { deployStakingReserve } from "../helper/contract";
 import { deployIfnxTokenMock } from "../helper/mockContract";
 
@@ -11,7 +11,7 @@ describe("StakingReserve Spec", () => {
   let alice: Wallet;
   let ifnxToken: IfnxTokenMock;
   let clearingHouse: Wallet;
-  let stakingReserve: StakingReserve;
+  let stakingReserve: StakingReserveFake;
   let vestingPeriod: number;
 
   beforeEach(async () => {
