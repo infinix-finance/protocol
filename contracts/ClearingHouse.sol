@@ -1231,6 +1231,7 @@ contract ClearingHouse is
             if (hasToll) {
                 require(address(feePool) != address(0), "Invalid feePool");
                 _transferFrom(quoteAsset, _from, address(feePool), toll);
+                feePool.notifyTokenAmount(quoteAsset, toll);
             }
 
             // fee = spread + toll

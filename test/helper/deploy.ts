@@ -75,6 +75,7 @@ export interface ContractDeployArgs {
   quoteAssetReserve?: BigNumber;
   baseAssetReserve?: BigNumber;
   startSchedule?: boolean;
+  stakingPoolAsFee?: boolean;
 }
 
 const quoteTokenDecimals = 6;
@@ -92,6 +93,7 @@ const DEFAULT_CONTRACT_DEPLOY_ARGS: ContractDeployArgs = {
   quoteAssetReserve: toFullDigit(1000),
   baseAssetReserve: toFullDigit(100),
   startSchedule: true,
+  stakingPoolAsFee: false,
 };
 
 export async function fullDeploy(args: ContractDeployArgs): Promise<PerpContracts> {
@@ -108,6 +110,7 @@ export async function fullDeploy(args: ContractDeployArgs): Promise<PerpContract
     quoteAssetReserve = DEFAULT_CONTRACT_DEPLOY_ARGS.quoteAssetReserve,
     baseAssetReserve = DEFAULT_CONTRACT_DEPLOY_ARGS.baseAssetReserve,
     startSchedule = DEFAULT_CONTRACT_DEPLOY_ARGS.startSchedule,
+    stakingPoolAsFee = DEFAULT_CONTRACT_DEPLOY_ARGS.stakingPoolAsFee,
   } = args;
 
   const metaTxGateway = await deployMetaTxGateway("Ifnx", "1", 1234); // default hardhat evm chain ID
@@ -164,7 +167,7 @@ export async function fullDeploy(args: ContractDeployArgs): Promise<PerpContract
 
   const tollPool = await deployTollPool(clearingHouse.address, clientBridge.address);
 
-  await clearingHouse.setTollPool(tollPool.address);
+  await clearingHouse.setTollPool(stakingPoolAsFee ? stakingReserve.address : tollPool.address);
 
   const rewardsDistribution = await deployRewardsDistribution(
     minter.address,
