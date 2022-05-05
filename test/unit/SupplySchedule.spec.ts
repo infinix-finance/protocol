@@ -7,7 +7,7 @@ import { deployIfnxTokenMock } from "../helper/mockContract";
 import { toFullDigit } from "../helper/number";
 
 // skip, won't be in v1
-describe("Supply Schedule Unit Test", () => {
+describe("SupplySchedule Unit Test", () => {
   let admin: Wallet;
   let alice: Wallet;
   let ifnxToken: IfnxTokenMock;

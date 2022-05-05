@@ -3,7 +3,7 @@ import { Wallet } from "ethers";
 import { ethers, waffle } from "hardhat";
 import { IfnxFiOwnableUpgradeFake } from "../../types";
 
-describe("IfnxFiOwnableUpgrade UT", () => {
+describe("IfnxFiOwnableUpgrade Unit Test", () => {
   let ifnxFiOwnable: IfnxFiOwnableUpgradeFake;
 
   let addresses: Wallet[];

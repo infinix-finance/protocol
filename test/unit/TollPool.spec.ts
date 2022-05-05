@@ -13,7 +13,7 @@ import { toFullDigit } from "../helper/number";
 
 const EMPTY_ADDRESS = "0x0000000000000000000000000000000000000000";
 
-describe("tollPoolSpec", () => {
+describe("TollPool Unit Test", () => {
   let admin: Wallet;
   let alice: Wallet;
   let feeTokenPoolDispatcherMock: Wallet;
