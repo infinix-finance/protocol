@@ -110,6 +110,18 @@ describe("ExchangeWrapper UT", () => {
     expect(spotPrice.d).to.eq(toFullDigit(1));
   });
 
+  it("getInputPrice, usdt in/out", async () => {
+    const amount = toDecimal(100);
+    const outputPrice = await exchangeWrapper.getInputPrice(tether.address, tether.address, amount);
+    expect(outputPrice.d).to.eq(amount.d);
+  });
+
+  it("getOutputPrice, usdt in/out", async () => {
+    const amount = toDecimal(100);
+    const outputPrice = await exchangeWrapper.getOutputPrice(tether.address, tether.address, amount);
+    expect(outputPrice.d).to.eq(amount.d);
+  });
+
   it("force error, only owner can setBalancerPool", async () => {
     await expect(exchangeWrapper.connect(alice).setBalancerPool(alice.address)).to.be.revertedWith(
       "IfnxFiOwnableUpgrade: caller is not the owner"
