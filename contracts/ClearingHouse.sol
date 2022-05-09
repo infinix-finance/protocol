@@ -287,10 +287,10 @@ contract ClearingHouse is
     }
 
     /**
-     * @notice set the toll pool address
+     * @notice set the fee pool address
      * @dev only owner can call
      */
-    function setTollPool(address _feePool) external onlyOwner {
+    function setFeePool(address _feePool) external onlyOwner {
         feePool = IMultiTokenRewardRecipient(_feePool);
     }
 

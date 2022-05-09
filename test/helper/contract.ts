@@ -22,7 +22,6 @@ import {
   RewardsDistributionFake,
   StakingReserveFake,
   SupplyScheduleFake,
-  TollPool,
 } from "../../types";
 
 import { Decimal, toFullDigit } from "./number";
@@ -365,16 +364,6 @@ export async function deployMetaTxGateway(
 //   await instance.initialize(InfxToken, vestingPeriod);
 //   return instance;
 // }
-
-export async function deployTollPool(
-  clearingHouse: string,
-  clientBridge: string
-): Promise<TollPool> {
-  const TollPoolFactory = await ethers.getContractFactory("TollPool");
-  const instance = (await TollPoolFactory.deploy()) as TollPool;
-  await instance.initialize(clearingHouse, clientBridge);
-  return instance;
-}
 
 // export async function deployFeeTokenPoolDispatcherL1(): Promise<FeeTokenPoolDispatcherL1Instance> {
 //   const instance = await FeeTokenPoolDispatcherL1.new();

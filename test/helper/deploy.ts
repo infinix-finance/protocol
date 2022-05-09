@@ -16,7 +16,6 @@ import {
   RewardsDistributionFake,
   StakingReserveFake,
   SupplyScheduleFake,
-  TollPool,
 } from "../../types";
 import {
   deployAmm,
@@ -37,7 +36,6 @@ import {
   deployRewardsDistribution,
   deployStakingReserve,
   deploySupplySchedule,
-  deployTollPool,
 } from "./contract";
 
 import { toDecimal, toFullDigit } from "./number";
@@ -58,7 +56,6 @@ export interface PerpContracts {
   clearingHouseViewer: ClearingHouseViewer;
   inflationMonitor: InflationMonitorFake;
   minter: Minter;
-  tollPool: TollPool;
   clientBridge: ClientBridge;
 }
 
@@ -93,7 +90,6 @@ const DEFAULT_CONTRACT_DEPLOY_ARGS: ContractDeployArgs = {
   quoteAssetReserve: toFullDigit(1000),
   baseAssetReserve: toFullDigit(100),
   startSchedule: true,
-  stakingPoolAsFee: false,
 };
 
 export async function fullDeploy(args: ContractDeployArgs): Promise<PerpContracts> {
@@ -110,7 +106,6 @@ export async function fullDeploy(args: ContractDeployArgs): Promise<PerpContract
     quoteAssetReserve = DEFAULT_CONTRACT_DEPLOY_ARGS.quoteAssetReserve,
     baseAssetReserve = DEFAULT_CONTRACT_DEPLOY_ARGS.baseAssetReserve,
     startSchedule = DEFAULT_CONTRACT_DEPLOY_ARGS.startSchedule,
-    stakingPoolAsFee = DEFAULT_CONTRACT_DEPLOY_ARGS.stakingPoolAsFee,
   } = args;
 
   const metaTxGateway = await deployMetaTxGateway("Ifnx", "1", 1234); // default hardhat evm chain ID
@@ -165,9 +160,7 @@ export async function fullDeploy(args: ContractDeployArgs): Promise<PerpContract
     metaTxGateway.address
   );
 
-  const tollPool = await deployTollPool(clearingHouse.address, clientBridge.address);
-
-  await clearingHouse.setTollPool(stakingPoolAsFee ? stakingReserve.address : tollPool.address);
+  await clearingHouse.setTollPool(stakingReserve.address);
 
   const rewardsDistribution = await deployRewardsDistribution(
     minter.address,
@@ -202,7 +195,6 @@ export async function fullDeploy(args: ContractDeployArgs): Promise<PerpContract
   await minter.setRewardsDistribution(rewardsDistribution.address);
   await minter.setInflationMonitor(inflationMonitor.address);
   await minter.setInsuranceFund(insuranceFund.address);
-  await tollPool.addFeeToken(quoteToken.address);
 
   if (startSchedule) {
     await supplySchedule.startSchedule();
@@ -225,7 +217,6 @@ export async function fullDeploy(args: ContractDeployArgs): Promise<PerpContract
     clearingHouseViewer,
     inflationMonitor,
     minter,
-    tollPool,
     clientBridge,
   };
 }
