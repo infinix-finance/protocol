@@ -7,7 +7,7 @@ const BN_TOKEN_DIGIT = ethers.utils.parseUnits("1.0", DEFAULT_TOKEN_DECIMALS);
 const INVALID_INT_256 = "0x8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
 const INT_256_MAX = "0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
 
-describe("Decimal/SignedDecimal/MixedDecimal", () => {
+describe("Decimal/SignedDecimal/MixedDecimal Unit Test", () => {
   let decimal: DecimalFake;
   let signDecimal: SignedDecimalFake;
   let mixedDecimal: MixedDecimalFake;

@@ -6,7 +6,7 @@ import { deployRewardsDistribution } from "../helper/contract";
 import { toDecimal, toFullDigit } from "../helper/number";
 
 // skip, won't be in v1
-describe("RewardsDistributionSpec", () => {
+describe("RewardsDistribution Unit Test", () => {
   let accounts: Wallet[];
   let rewardsDistribution: RewardsDistributionFake;
 

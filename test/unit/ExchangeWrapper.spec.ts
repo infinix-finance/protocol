@@ -20,7 +20,7 @@ import {
 import { toDecimal, toFullDigit } from "../helper/number";
 
 // skip, won't be in v1
-describe("ExchangeWrapper UT", () => {
+describe("ExchangeWrapper Unit Test", () => {
   let addresses: Wallet[];
   let admin: Wallet;
   let alice: Wallet;

@@ -6,7 +6,7 @@ import { deployStakingReserve } from "../helper/contract";
 import { deployIfnxTokenMock } from "../helper/mockContract";
 
 // skip, won't be in v1
-describe("StakingReserve Spec", () => {
+describe("StakingReserve Unit Test", () => {
   let admin: Wallet;
   let alice: Wallet;
   let ifnxToken: IfnxTokenMock;

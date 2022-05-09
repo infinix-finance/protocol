@@ -5,7 +5,7 @@ import { MetaTxGateway, MetaTxRecipientMock } from "../../types";
 import { deployMetaTxGateway } from "../helper/contract";
 import { EIP712Domain, signEIP712MetaTx } from "../helper/web3";
 
-describe("MetaTxGateway Spec", () => {
+describe("MetaTxGateway Unit Test", () => {
   let domain: EIP712Domain;
 
   let admin: Wallet;
