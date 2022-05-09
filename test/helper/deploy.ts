@@ -160,7 +160,7 @@ export async function fullDeploy(args: ContractDeployArgs): Promise<PerpContract
     metaTxGateway.address
   );
 
-  await clearingHouse.setTollPool(stakingReserve.address);
+  await clearingHouse.setFeePool(stakingReserve.address);
 
   const rewardsDistribution = await deployRewardsDistribution(
     minter.address,
