@@ -11,7 +11,6 @@ import {
   InsuranceFundFake,
   Minter,
   SupplyScheduleFake,
-  TollPool,
 } from "../../types";
 import { deployAmm, deployErc20Fake, Side } from "../helper/contract";
 import { fullDeploy } from "../helper/deploy";
@@ -28,7 +27,6 @@ describe("Protocol shutdown test", () => {
   let quoteToken: ERC20Fake;
   let insuranceFund: InsuranceFundFake;
   let mockPriceFeed!: API3PriceFeedMock;
-  let tollPool: TollPool;
   let supplySchedule: SupplyScheduleFake;
   let ifnxToken: IfnxToken;
   let inflationMonitor: InflationMonitorFake;
@@ -46,7 +44,6 @@ describe("Protocol shutdown test", () => {
     await amm.setGlobalShutdown(insuranceFund.address);
     await amm.setCounterParty(clearingHouse.address);
     await amm.setOpen(true);
-    await tollPool.addFeeToken(quote.address);
 
     return { quote, amm };
   }
@@ -85,7 +82,6 @@ describe("Protocol shutdown test", () => {
     ifnxToken = contracts.ifnxToken;
     inflationMonitor = contracts.inflationMonitor;
     minter = contracts.minter;
-    tollPool = contracts.tollPool;
   });
 
   describe("global shutdown test", () => {
