@@ -4,6 +4,7 @@ import {
   AMBBridgeMock,
   AmmFake,
   AmmReader,
+  API3PriceFeed,
   API3PriceFeedMock,
   BalancerMock,
   ClearingHouseFake,
@@ -22,6 +23,8 @@ import {
   RewardsDistributionFake,
   StakingReserveFake,
   SupplyScheduleFake,
+  RrpBeaconServerFake,
+  SelfServeRrpBeaconServerWhitelisterMock,
 } from "../../types";
 
 import { Decimal, toFullDigit } from "./number";
@@ -380,3 +383,20 @@ export async function deployMetaTxGateway(
 //   await instance.initialize(erc20, stakedInfxToken, feeTokenPoolDispatcherL1);
 //   return instance;
 // }
+
+export async function deployApi3PriceFeed(whitelister: string): Promise<API3PriceFeed> {
+  const API3PriceFeedFactory = await ethers.getContractFactory("API3PriceFeed");
+  return (await API3PriceFeedFactory.deploy(whitelister)) as API3PriceFeed;
+}
+
+export async function deployRrpBeaconServerFake(): Promise<RrpBeaconServerFake> {
+  const RrpBeaconServerFakeFactory = await ethers.getContractFactory("RrpBeaconServerFake");
+  return (await RrpBeaconServerFakeFactory.deploy()) as RrpBeaconServerFake;
+}
+
+export async function deploySelfServeRrpBeaconServerWhitelisterMock(): Promise<SelfServeRrpBeaconServerWhitelisterMock> {
+  const SelfServeRrpBeaconServerWhitelisterMockFactory = await ethers.getContractFactory(
+    "SelfServeRrpBeaconServerWhitelisterMock"
+  );
+  return (await SelfServeRrpBeaconServerWhitelisterMockFactory.deploy()) as SelfServeRrpBeaconServerWhitelisterMock;
+}
