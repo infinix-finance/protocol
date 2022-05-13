@@ -1,14 +1,11 @@
 import { BigNumber } from "ethers";
 import { artifacts, ethers } from "hardhat";
 import {
-  AMBBridgeMock,
   AmmFake,
   AmmReader,
   API3PriceFeedMock,
-  BalancerMock,
   ClearingHouseFake,
   ClearingHouseViewer,
-  ClientBridge,
   CUsdtMock,
   ERC20Fake,
   ExchangeWrapper,
@@ -16,13 +13,13 @@ import {
   IfnxToken,
   InflationMonitorFake,
   InsuranceFundFake,
+  JoeRouterMock,
   MetaTxGateway,
   Minter,
   MultiTokenMediatorMock,
   RewardsDistributionFake,
   StakingReserveFake,
   SupplyScheduleFake,
-  TollPool,
 } from "../../types";
 
 import { Decimal, toFullDigit } from "./number";
@@ -191,13 +188,12 @@ export async function deployInsuranceFund(
 }
 
 export async function deployExchangeWrapper(
-  balancerPoolAddr: string,
-  compoundCUsdtAddr: string,
-  InfxToken: string
+  joeRouterAddr: string,
+  ifnxToken: string
 ): Promise<ExchangeWrapper> {
   const ExchangeWrapperFactory = await ethers.getContractFactory("ExchangeWrapper");
   const instance = (await ExchangeWrapperFactory.deploy()) as ExchangeWrapper;
-  await instance.initialize(balancerPoolAddr, compoundCUsdtAddr, InfxToken);
+  await instance.initialize(joeRouterAddr, ifnxToken);
   return instance;
 }
 
@@ -206,13 +202,9 @@ export async function deployMockExchangeWrapper(): Promise<ExchangeWrapperMock> 
   return (await ExchangeWrapperMockFactory.deploy()) as ExchangeWrapperMock;
 }
 
-export async function deployMockBalancer(
-  InfxAddr: string,
-  cUSDTAddr: string
-): Promise<BalancerMock> {
-  const BalancerMockFactory = await ethers.getContractFactory("BalancerMock");
-  const instance = await BalancerMockFactory.deploy();
-  instance.initialize(InfxAddr, cUSDTAddr);
+export async function deployMockJoeRouter(): Promise<JoeRouterMock> {
+  const JoeRouterMockFactory = await ethers.getContractFactory("JoeRouterMock");
+  const instance = await JoeRouterMockFactory.deploy();
   return instance;
 }
 
@@ -224,14 +216,14 @@ export async function deployMockCUsdt(): Promise<CUsdtMock> {
 }
 
 export async function deployStakingReserve(
-  InfxToken: string,
+  ifnxToken: string,
   supplySchedule: string,
   clearingHouse: string,
   vestingPeriod: BigNumber
 ): Promise<StakingReserveFake> {
   const StakingReserveFakeFactory = await ethers.getContractFactory("StakingReserveFake");
   const instance = (await StakingReserveFakeFactory.deploy()) as StakingReserveFake;
-  await instance.initialize(InfxToken, supplySchedule, clearingHouse, vestingPeriod);
+  await instance.initialize(ifnxToken, supplySchedule, clearingHouse, vestingPeriod);
   return instance;
 }
 
@@ -244,30 +236,6 @@ export async function deployRewardsDistribution(
   await instance.initialize(minter, stakingReserve);
   return instance;
 }
-
-// export async function deployL2PriceFeed(
-//   clientBridge: string,
-//   keeper: string
-// ): Promise<L2PriceFeedFakeInstance> {
-//   const instance = await L2PriceFeedFake.new();
-//   await instance.initialize(clientBridge, keeper);
-//   return instance;
-// }
-
-// export async function deployChainlinkL1(
-//   rootBridgeAddress: string,
-//   priceFeedL2Address: string
-// ): Promise<ChainlinkL1FakeInstance> {
-//   const instance = await ChainlinkL1Fake.new();
-//   await instance.initialize(rootBridgeAddress, priceFeedL2Address);
-//   return instance;
-// }
-
-// export async function deployChainlinkPriceFeed(): Promise<ChainlinkPriceFeedFakeInstance> {
-//   const instance = await ChainlinkPriceFeedFake.new();
-//   await instance.initialize();
-//   return instance;
-// }
 
 export async function deploySupplySchedule(
   minter: string,
@@ -288,41 +256,16 @@ export async function deployInflationMonitor(minter: string): Promise<InflationM
   return instance;
 }
 
-export async function deployMinter(InfxToken: string): Promise<Minter> {
+export async function deployMinter(ifnxToken: string): Promise<Minter> {
   const MinterFactory = await ethers.getContractFactory("Minter");
   const instance = (await MinterFactory.deploy()) as Minter;
-  await instance.initialize(InfxToken);
-  return instance;
-}
-
-// export async function deployRootBridge(
-//   ambBridge: string,
-//   tokenMediator: string
-// ): Promise<RootBridgeInstance> {
-//   const instance = await RootBridge.new();
-//   await instance.initialize(ambBridge, tokenMediator);
-//   return instance;
-// }
-
-export async function deployClientBridge(
-  ambBridge: string,
-  tokenMediator: string,
-  trustedForwarder: string
-): Promise<ClientBridge> {
-  const ClientBridgeFactory = await ethers.getContractFactory("ClientBridge");
-  const instance = (await ClientBridgeFactory.deploy()) as ClientBridge;
-  await instance.initialize(ambBridge, tokenMediator, trustedForwarder);
+  await instance.initialize(ifnxToken);
   return instance;
 }
 
 export async function deployMockMultiToken(): Promise<MultiTokenMediatorMock> {
   const MultiTokenMediatorMockFactory = await ethers.getContractFactory("MultiTokenMediatorMock");
   return (await MultiTokenMediatorMockFactory.deploy()) as MultiTokenMediatorMock;
-}
-
-export async function deployMockAMBBridge(): Promise<AMBBridgeMock> {
-  const AMBBridgeMockFactory = await ethers.getContractFactory("AMBBridgeMock");
-  return (await AMBBridgeMockFactory.deploy()) as AMBBridgeMock;
 }
 
 export async function deployMetaTxGateway(
@@ -335,59 +278,3 @@ export async function deployMetaTxGateway(
   instance.initialize(name, version, chainIdL1);
   return instance;
 }
-
-// export async function deployL1KeeperReward(InfxToken: string): Promise<KeeperRewardL1Instance> {
-//   const instance = await KeeperRewardL1.new();
-//   await instance.initialize(InfxToken);
-//   return instance;
-// }
-
-// export async function deployL2KeeperReward(InfxToken: string): Promise<KeeperRewardL2Instance> {
-//   const instance = await KeeperRewardL2.new();
-//   await instance.initialize(InfxToken);
-//   return instance;
-// }
-
-// export async function deployStakedInfxToken(
-//   InfxToken: string,
-//   cooldownPeriod: BigNumber
-// ): Promise<StakedInfxTokenFakeInstance> {
-//   const instance = await StakedInfxToken.new();
-//   await instance.initialize(InfxToken, cooldownPeriod);
-//   return instance;
-// }
-
-// export async function deployInfxRewardVesting(
-//   InfxToken: string,
-//   vestingPeriod: BigNumber = new BigNumber(12 * 7 * 24 * 60 * 60)
-// ): Promise<InfxRewardVestingFakeInstance> {
-//   const instance = await InfxRewardVesting.new();
-//   await instance.initialize(InfxToken, vestingPeriod);
-//   return instance;
-// }
-
-export async function deployTollPool(
-  clearingHouse: string,
-  clientBridge: string
-): Promise<TollPool> {
-  const TollPoolFactory = await ethers.getContractFactory("TollPool");
-  const instance = (await TollPoolFactory.deploy()) as TollPool;
-  await instance.initialize(clearingHouse, clientBridge);
-  return instance;
-}
-
-// export async function deployFeeTokenPoolDispatcherL1(): Promise<FeeTokenPoolDispatcherL1Instance> {
-//   const instance = await FeeTokenPoolDispatcherL1.new();
-//   await instance.initialize();
-//   return instance;
-// }
-
-// export async function deployFeeRewardPoolL1(
-//   erc20: string,
-//   stakedInfxToken: string,
-//   feeTokenPoolDispatcherL1: string
-// ): Promise<FeeRewardPoolL1FakeInstance> {
-//   const instance = await FeeRewardPoolL1.new();
-//   await instance.initialize(erc20, stakedInfxToken, feeTokenPoolDispatcherL1);
-//   return instance;
-// }

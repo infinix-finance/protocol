@@ -66,11 +66,11 @@ contract RewardsDistribution is IfnxFiOwnableUpgrade, BlockContext, DecimalERC20
         defaultRecipient = _defaultRecipient;
     }
 
-    function distributeRewards(IERC20 _IfnxToken, Decimal.decimal memory _amount) public {
+    function distributeRewards(IERC20 _ifnxToken, Decimal.decimal memory _amount) public {
         require(_msgSender() == rewardsController, "!_rewardsController");
 
         require(
-            _balanceOf(_IfnxToken, address(this)).toUint() >= _amount.toUint(),
+            _balanceOf(_ifnxToken, address(this)).toUint() >= _amount.toUint(),
             "not enough Ifnx"
         );
 
@@ -85,7 +85,7 @@ contract RewardsDistribution is IfnxFiOwnableUpgrade, BlockContext, DecimalERC20
                 remainder = remainder.subD(distributions[i].amount);
 
                 // Transfer the Ifnx
-                _transfer(_IfnxToken, distributions[i].destination, distributions[i].amount);
+                _transfer(_ifnxToken, distributions[i].destination, distributions[i].amount);
 
                 bytes memory payload = abi.encodeWithSignature(
                     "notifyRewardAmount(uint256)",
@@ -104,7 +104,7 @@ contract RewardsDistribution is IfnxFiOwnableUpgrade, BlockContext, DecimalERC20
         }
 
         // staker will share all the remaining Ifnx reward
-        _transfer(_IfnxToken, address(defaultRecipient), remainder);
+        _transfer(_ifnxToken, address(defaultRecipient), remainder);
         defaultRecipient.notifyRewardAmount(remainder);
 
         emit RewardDistributed(_amount.toUint(), _blockTimestamp());

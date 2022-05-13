@@ -5,7 +5,6 @@ import {
   API3PriceFeedMock,
   ClearingHouseFake,
   ClearingHouseViewer,
-  ClientBridge,
   ERC20Fake,
   ExchangeWrapperMock,
   IfnxToken,
@@ -16,7 +15,6 @@ import {
   RewardsDistributionFake,
   StakingReserveFake,
   SupplyScheduleFake,
-  TollPool,
 } from "../../types";
 import {
   deployAmm,
@@ -24,20 +22,17 @@ import {
   deployAPI3MockPriceFeed,
   deployClearingHouse,
   deployClearingHouseViewer,
-  deployClientBridge,
   deployErc20Fake,
   deployIfnxToken,
   deployInflationMonitor,
   deployInsuranceFund,
   deployMetaTxGateway,
   deployMinter,
-  deployMockAMBBridge,
   deployMockExchangeWrapper,
   deployMockMultiToken,
   deployRewardsDistribution,
   deployStakingReserve,
   deploySupplySchedule,
-  deployTollPool,
 } from "./contract";
 
 import { toDecimal, toFullDigit } from "./number";
@@ -58,8 +53,6 @@ export interface PerpContracts {
   clearingHouseViewer: ClearingHouseViewer;
   inflationMonitor: InflationMonitorFake;
   minter: Minter;
-  tollPool: TollPool;
-  clientBridge: ClientBridge;
 }
 
 export interface ContractDeployArgs {
@@ -75,7 +68,6 @@ export interface ContractDeployArgs {
   quoteAssetReserve?: BigNumber;
   baseAssetReserve?: BigNumber;
   startSchedule?: boolean;
-  stakingPoolAsFee?: boolean;
 }
 
 const quoteTokenDecimals = 6;
@@ -93,7 +85,6 @@ const DEFAULT_CONTRACT_DEPLOY_ARGS: ContractDeployArgs = {
   quoteAssetReserve: toFullDigit(1000),
   baseAssetReserve: toFullDigit(100),
   startSchedule: true,
-  stakingPoolAsFee: false,
 };
 
 export async function fullDeploy(args: ContractDeployArgs): Promise<PerpContracts> {
@@ -110,7 +101,6 @@ export async function fullDeploy(args: ContractDeployArgs): Promise<PerpContract
     quoteAssetReserve = DEFAULT_CONTRACT_DEPLOY_ARGS.quoteAssetReserve,
     baseAssetReserve = DEFAULT_CONTRACT_DEPLOY_ARGS.baseAssetReserve,
     startSchedule = DEFAULT_CONTRACT_DEPLOY_ARGS.startSchedule,
-    stakingPoolAsFee = DEFAULT_CONTRACT_DEPLOY_ARGS.stakingPoolAsFee,
   } = args;
 
   const metaTxGateway = await deployMetaTxGateway("Ifnx", "1", 1234); // default hardhat evm chain ID
@@ -157,17 +147,7 @@ export async function fullDeploy(args: ContractDeployArgs): Promise<PerpContract
     ifnxRewardVestingPeriod!
   );
 
-  const ambBridge = await deployMockAMBBridge();
-  const tokenMediator = await deployMockMultiToken();
-  const clientBridge = await deployClientBridge(
-    ambBridge.address,
-    tokenMediator.address,
-    metaTxGateway.address
-  );
-
-  const tollPool = await deployTollPool(clearingHouse.address, clientBridge.address);
-
-  await clearingHouse.setTollPool(stakingPoolAsFee ? stakingReserve.address : tollPool.address);
+  await clearingHouse.setFeePool(stakingReserve.address);
 
   const rewardsDistribution = await deployRewardsDistribution(
     minter.address,
@@ -202,7 +182,6 @@ export async function fullDeploy(args: ContractDeployArgs): Promise<PerpContract
   await minter.setRewardsDistribution(rewardsDistribution.address);
   await minter.setInflationMonitor(inflationMonitor.address);
   await minter.setInsuranceFund(insuranceFund.address);
-  await tollPool.addFeeToken(quoteToken.address);
 
   if (startSchedule) {
     await supplySchedule.startSchedule();
@@ -225,7 +204,5 @@ export async function fullDeploy(args: ContractDeployArgs): Promise<PerpContract
     clearingHouseViewer,
     inflationMonitor,
     minter,
-    tollPool,
-    clientBridge,
   };
 }
