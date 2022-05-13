@@ -3,6 +3,7 @@ import { artifacts, ethers } from "hardhat";
 import {
   AmmFake,
   AmmReader,
+  API3PriceFeed,
   API3PriceFeedMock,
   ClearingHouseFake,
   ClearingHouseViewer,
@@ -20,6 +21,8 @@ import {
   RewardsDistributionFake,
   StakingReserveFake,
   SupplyScheduleFake,
+  RrpBeaconServerFake,
+  SelfServeRrpBeaconServerWhitelisterMock,
 } from "../../types";
 
 import { Decimal, toFullDigit } from "./number";
@@ -277,4 +280,67 @@ export async function deployMetaTxGateway(
   const instance = (await MetaTxGatewayFactory.deploy()) as MetaTxGateway;
   instance.initialize(name, version, chainIdL1);
   return instance;
+}
+
+// export async function deployL1KeeperReward(InfxToken: string): Promise<KeeperRewardL1Instance> {
+//   const instance = await KeeperRewardL1.new();
+//   await instance.initialize(InfxToken);
+//   return instance;
+// }
+
+// export async function deployL2KeeperReward(InfxToken: string): Promise<KeeperRewardL2Instance> {
+//   const instance = await KeeperRewardL2.new();
+//   await instance.initialize(InfxToken);
+//   return instance;
+// }
+
+// export async function deployStakedInfxToken(
+//   InfxToken: string,
+//   cooldownPeriod: BigNumber
+// ): Promise<StakedInfxTokenFakeInstance> {
+//   const instance = await StakedInfxToken.new();
+//   await instance.initialize(InfxToken, cooldownPeriod);
+//   return instance;
+// }
+
+// export async function deployInfxRewardVesting(
+//   InfxToken: string,
+//   vestingPeriod: BigNumber = new BigNumber(12 * 7 * 24 * 60 * 60)
+// ): Promise<InfxRewardVestingFakeInstance> {
+//   const instance = await InfxRewardVesting.new();
+//   await instance.initialize(InfxToken, vestingPeriod);
+//   return instance;
+// }
+
+// export async function deployFeeTokenPoolDispatcherL1(): Promise<FeeTokenPoolDispatcherL1Instance> {
+//   const instance = await FeeTokenPoolDispatcherL1.new();
+//   await instance.initialize();
+//   return instance;
+// }
+
+// export async function deployFeeRewardPoolL1(
+//   erc20: string,
+//   stakedInfxToken: string,
+//   feeTokenPoolDispatcherL1: string
+// ): Promise<FeeRewardPoolL1FakeInstance> {
+//   const instance = await FeeRewardPoolL1.new();
+//   await instance.initialize(erc20, stakedInfxToken, feeTokenPoolDispatcherL1);
+//   return instance;
+// }
+
+export async function deployApi3PriceFeed(whitelister: string): Promise<API3PriceFeed> {
+  const API3PriceFeedFactory = await ethers.getContractFactory("API3PriceFeed");
+  return (await API3PriceFeedFactory.deploy(whitelister)) as API3PriceFeed;
+}
+
+export async function deployRrpBeaconServerFake(): Promise<RrpBeaconServerFake> {
+  const RrpBeaconServerFakeFactory = await ethers.getContractFactory("RrpBeaconServerFake");
+  return (await RrpBeaconServerFakeFactory.deploy()) as RrpBeaconServerFake;
+}
+
+export async function deploySelfServeRrpBeaconServerWhitelisterMock(): Promise<SelfServeRrpBeaconServerWhitelisterMock> {
+  const SelfServeRrpBeaconServerWhitelisterMockFactory = await ethers.getContractFactory(
+    "SelfServeRrpBeaconServerWhitelisterMock"
+  );
+  return (await SelfServeRrpBeaconServerWhitelisterMockFactory.deploy()) as SelfServeRrpBeaconServerWhitelisterMock;
 }
