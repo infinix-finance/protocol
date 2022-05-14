@@ -319,10 +319,11 @@ contract ExchangeWrapper is IfnxFiOwnableUpgrade, IExchangeWrapper, DecimalERC20
 
         uint256 spotPrice = getTraderJoeSpotPrice(swapPath);
 
-        // the amount returned from getSpotPrice includes decimals difference between tokens.
-        // for example, input/output token pair, USDC(8 decimals)/PERP(18 decimals) and 2 USDC buy 1 PERP,
-        // it returns 0.5e-10*e18, in the other direction(PERP/USDC), it returns 2e10*e18
+        // // the amount returned from getSpotPrice includes decimals difference between tokens.
+        // // for example, input/output token pair, USDC(8 decimals)/PERP(18 decimals) and 2 USDC buy 1 PERP,
+        // // it returns 0.5e-10*e18, in the other direction(PERP/USDC), it returns 2e10*e18
         Decimal.decimal memory price = Decimal.decimal(spotPrice);
+
         uint256 decimalsOfInput = _getTokenDecimals(address(_inputToken));
         uint256 decimalsOfOutput = _getTokenDecimals(address(_outputToken));
         if (decimalsOfInput < decimalsOfOutput) {

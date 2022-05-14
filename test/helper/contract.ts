@@ -7,7 +7,6 @@ import {
   API3PriceFeedMock,
   ClearingHouseFake,
   ClearingHouseViewer,
-  CUsdtMock,
   ERC20Fake,
   ExchangeWrapper,
   ExchangeWrapperMock,
@@ -208,13 +207,6 @@ export async function deployMockExchangeWrapper(): Promise<ExchangeWrapperMock> 
 export async function deployMockJoeRouter(): Promise<JoeRouterMock> {
   const JoeRouterMockFactory = await ethers.getContractFactory("JoeRouterMock");
   const instance = await JoeRouterMockFactory.deploy();
-  return instance;
-}
-
-export async function deployMockCUsdt(): Promise<CUsdtMock> {
-  const CUsdtMockFactory = await ethers.getContractFactory("CUsdtMock");
-  const instance = await CUsdtMockFactory.deploy();
-  await instance.initializeERC20Fake(toFullDigit(100000), "CToken", "CUsdt", 8);
   return instance;
 }
 

@@ -10,9 +10,12 @@ contract JoeRouterMock {
     function getAmountsOut(uint256 amountIn, address[] memory path)
         external
         view
-        returns (uint256)
+        returns (uint256[] memory amounts)
     {
-        return spotPrice;
+        amounts = new uint256[](path.length);
+        for (uint256 i; i < path.length; i++) {
+            amounts[i] = spotPrice;
+        }
     }
 
     function mockSetSpotPrice(uint256 price) public {

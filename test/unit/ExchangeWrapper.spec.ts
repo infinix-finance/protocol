@@ -2,7 +2,6 @@ import { expect, use } from "chai";
 import { Wallet } from "ethers";
 import { ethers, waffle } from "hardhat";
 import {
-  CUsdtMock,
   ERC20Fake,
   ExchangeWrapper,
   IERC20,
@@ -14,7 +13,6 @@ import {
   deployErc20Fake,
   deployExchangeWrapper,
   deployMockJoeRouter,
-  deployMockCUsdt,
 } from "../helper/contract";
 import { toDecimal, toFullDigit } from "../helper/number";
 
@@ -28,7 +26,6 @@ describe("ExchangeWrapper Unit Test", () => {
   let tether: TetherToken;
   let usdc: TetherToken;
   let erc20Fake: ERC20Fake;
-  let CUsdt: CUsdtMock;
   let joeRouter: JoeRouterMock;
 
   before(async () => {
@@ -40,10 +37,8 @@ describe("ExchangeWrapper Unit Test", () => {
     tether = await TetherTokenFactory.deploy(toFullDigit(1000), "Tether", "USDT", 6);
     usdc = await TetherTokenFactory.deploy(toFullDigit(1000), "USDC", "USDC", 6);
     erc20Fake = await deployErc20Fake(toFullDigit(10000), "NAME", "SYMBOL");
-    CUsdt = await deployMockCUsdt();
     joeRouter = await deployMockJoeRouter();
 
-    await CUsdt.mockSetUnderlying(tether.address);
     exchangeWrapper = await deployExchangeWrapper(joeRouter.address, erc20Fake.address);
   });
 
@@ -62,31 +57,6 @@ describe("ExchangeWrapper Unit Test", () => {
     // assuming n = 1 here
     await joeRouter.mockSetSpotPrice(toFullDigit(1000000000000));
     const r = await exchangeWrapper.getSpotPrice(erc20Fake.address, usdc.address);
-    expect(r.d).to.eq(toFullDigit(1));
-  });
-
-  it("getSpotPrice, tether in", async () => {
-    // cToken 8 decimals, erc20Fake 18 decimals
-    // spot price will be n*(e-(18-8))*e18 = n*(e-10)*e18 = n*e8
-    // assuming n = 1 here
-    await joeRouter.mockSetSpotPrice("100000000");
-    // set exchange ratio of cToken to 0.01, which means cUSDT:USDT = 1:1
-    // 0.01 represents the decimal difference 8 decimals of cUSDT and 6 decimals of USDT
-    await CUsdt.mockSetExchangeRateStored(toFullDigit(0.01));
-    const r = await exchangeWrapper.getSpotPrice(tether.address, erc20Fake.address);
-    expect(r.d).to.eq(toFullDigit(1));
-  });
-
-  it("getSpotPrice, tether out", async () => {
-    // cToken 8 decimals, erc20Fake 18 decimals
-    // spot price will be n*(e(18-8))*e18 = n*(e10)*e18 = n*e28
-    // assuming n = 1 here
-    await joeRouter.mockSetSpotPrice(toFullDigit(10000000000));
-    // set exchange ratio of cToken to 0.01, which means cUSDT:USDT = 1:1
-    // 0.01 represents the decimal difference 8 decimals of cUSDT and 6 decimals of USDT
-    await CUsdt.mockSetExchangeRateStored(toFullDigit(0.01));
-    await CUsdt.mockSetExchangeRateStored(toFullDigit(0.01));
-    const r = await exchangeWrapper.getSpotPrice(erc20Fake.address, tether.address);
     expect(r.d).to.eq(toFullDigit(1));
   });
 
