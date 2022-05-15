@@ -11,7 +11,8 @@ contract SelfServeRrpBeaconServerWhitelisterMock is ISelfServeRrpBeaconServerWhi
     constructor() public {}
 
     function setBeaconIdToExpirationTimestamp(bytes32 _beaconId, uint64 _expirationTimestamp)
-        external override
+        external
+        override
     {}
 
     function setBeaconIdToIndefiniteWhitelistStatus(
@@ -23,11 +24,21 @@ contract SelfServeRrpBeaconServerWhitelisterMock is ISelfServeRrpBeaconServerWhi
         whitelisted[_beaconId][_reader] = true;
     }
 
-    function beaconIdToExpirationTimestamp(bytes32 _beaconId) external view override returns (uint64) {
+    function beaconIdToExpirationTimestamp(bytes32 _beaconId)
+        external
+        view
+        override
+        returns (uint64)
+    {
         return 0;
     }
 
-    function beaconIdToIndefiniteWhitelistStatus(bytes32 _beaconId) external view override returns (bool) {
+    function beaconIdToIndefiniteWhitelistStatus(bytes32 _beaconId)
+        external
+        view
+        override
+        returns (bool)
+    {
         return true;
     }
 

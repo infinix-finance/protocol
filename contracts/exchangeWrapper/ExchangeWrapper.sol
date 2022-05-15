@@ -252,7 +252,9 @@ contract ExchangeWrapper is IfnxFiOwnableUpgrade, IExchangeWrapper, DecimalERC20
         // if max price is 0, set to (DEFAULT_MAX_PRICE_SLIPPAGE x spot price)
         if (_maxPrice.toUint() == 0) {
             uint256 spotPrice = getTraderJoeSpotPrice(swapPath);
-            _maxPrice = Decimal.decimal(spotPrice).mulD(Decimal.decimal(DEFAULT_MAX_PRICE_SLIPPAGE));
+            _maxPrice = Decimal.decimal(spotPrice).mulD(
+                Decimal.decimal(DEFAULT_MAX_PRICE_SLIPPAGE)
+            );
         }
 
         _approve(IERC20(_inputToken), address(joeRouter), _maxInputTokenSold);
@@ -260,7 +262,7 @@ contract ExchangeWrapper is IfnxFiOwnableUpgrade, IExchangeWrapper, DecimalERC20
         // swap
         uint256 tokenBought = _toUint(_outputToken, _outputTokenBought);
         uint256 maxTokenSold = _toUint(_inputToken, _maxInputTokenSold);
-        
+
         // Max price check before swap
         uint256 spotPriceBefore = getTraderJoeSpotPrice(swapPath);
         require(spotPriceBefore <= _maxPrice.toUint(), "ERR_BAD_LIMIT_PRICE");
@@ -277,7 +279,7 @@ contract ExchangeWrapper is IfnxFiOwnableUpgrade, IExchangeWrapper, DecimalERC20
         // Max price check after swap
         uint256 spotPriceAfter = getTraderJoeSpotPrice(swapPath);
         require(spotPriceAfter <= _maxPrice.toUint(), "ERR_BAD_LIMIT_PRICE");
-        
+
         require(inAmountInSelfDecimals > 0, "Balancer exchange error");
         emit TraderJoeSwap(inAmountInSelfDecimals, tokenBought);
 
@@ -310,8 +312,11 @@ contract ExchangeWrapper is IfnxFiOwnableUpgrade, IExchangeWrapper, DecimalERC20
         return _toDecimal(IERC20(_inToken), expectedTokenInAmount);
     }
 
-    
-    function implGetSpotPrice(IERC20 _inputToken, IERC20 _outputToken) internal view returns (Decimal.decimal memory) {
+    function implGetSpotPrice(IERC20 _inputToken, IERC20 _outputToken)
+        internal
+        view
+        returns (Decimal.decimal memory)
+    {
         if (_inputToken == _outputToken) return Decimal.one();
         address[] memory swapPath = new address[](2);
         swapPath[0] = address(_inputToken);

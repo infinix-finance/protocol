@@ -207,7 +207,12 @@ abstract contract StandardToken is BasicToken, ERC20 {
      * @param _spender The address which will spend the funds.
      * @param _value The amount of tokens to be spent.
      */
-    function approve(address _spender, uint256 _value) public virtual override onlyPayloadSize(2 * 32) {
+    function approve(address _spender, uint256 _value)
+        public
+        virtual
+        override
+        onlyPayloadSize(2 * 32)
+    {
         // To change the approve amount you first have to reduce the addresses`
         //  allowance to zero by calling `approve(_spender, 0)` if it is not
         //  already 0 to mitigate the race condition described here:
@@ -218,7 +223,13 @@ abstract contract StandardToken is BasicToken, ERC20 {
         Approval(msg.sender, _spender, _value);
     }
 
-    function allowance(address _owner, address _spender) public view virtual override returns (uint256 remaining) {
+    function allowance(address _owner, address _spender)
+        public
+        view
+        virtual
+        override
+        returns (uint256 remaining)
+    {
         return allowed[_owner][_spender];
     }
 }
@@ -374,7 +385,13 @@ contract TetherToken is Pausable, StandardToken, BlackList {
     ) public override whenNotPaused {
         require(!isBlackListed[_from]);
         if (deprecated) {
-            return UpgradedStandardToken(upgradedAddress).transferFromByLegacy(msg.sender, _from, _to, _value);
+            return
+                UpgradedStandardToken(upgradedAddress).transferFromByLegacy(
+                    msg.sender,
+                    _from,
+                    _to,
+                    _value
+                );
         } else {
             return super.transferFrom(_from, _to, _value);
         }
@@ -394,7 +411,12 @@ contract TetherToken is Pausable, StandardToken, BlackList {
 
     function approve(address _spender, uint256 _value) public override onlyPayloadSize(2 * 32) {
         if (deprecated) {
-            return UpgradedStandardToken(upgradedAddress).approveByLegacy(msg.sender, _spender, _value);
+            return
+                UpgradedStandardToken(upgradedAddress).approveByLegacy(
+                    msg.sender,
+                    _spender,
+                    _value
+                );
         } else {
             return super.approve(_spender, _value);
         }
@@ -402,7 +424,12 @@ contract TetherToken is Pausable, StandardToken, BlackList {
 
     // Forward ERC20 methods to upgraded contract if this one is deprecated
 
-    function allowance(address _owner, address _spender) public view override returns (uint256 remaining) {
+    function allowance(address _owner, address _spender)
+        public
+        view
+        override
+        returns (uint256 remaining)
+    {
         if (deprecated) {
             return StandardToken(upgradedAddress).allowance(_owner, _spender);
         } else {
