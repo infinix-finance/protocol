@@ -10,22 +10,38 @@ contract DecimalFake {
     constructor() public {}
 
     /// @dev multiple two decimals
-    function mul(Decimal.decimal memory x, Decimal.decimal memory y) public pure returns (Decimal.decimal memory z) {
+    function mul(Decimal.decimal memory x, Decimal.decimal memory y)
+        public
+        pure
+        returns (Decimal.decimal memory z)
+    {
         z = x.mulD(y);
     }
 
     /// @dev multiple a Decimal.decimal by a uint256
-    function mulScalar(Decimal.decimal memory x, uint256 y) public pure returns (Decimal.decimal memory z) {
+    function mulScalar(Decimal.decimal memory x, uint256 y)
+        public
+        pure
+        returns (Decimal.decimal memory z)
+    {
         z = x.mulScalar(y);
     }
 
     /// @dev divide two decimals
-    function div(Decimal.decimal memory x, Decimal.decimal memory y) public pure returns (Decimal.decimal memory z) {
+    function div(Decimal.decimal memory x, Decimal.decimal memory y)
+        public
+        pure
+        returns (Decimal.decimal memory z)
+    {
         z = x.divD(y);
     }
 
     /// @dev divide a Decimal.decimal by a uint256
-    function divScalar(Decimal.decimal memory x, uint256 y) public pure returns (Decimal.decimal memory z) {
+    function divScalar(Decimal.decimal memory x, uint256 y)
+        public
+        pure
+        returns (Decimal.decimal memory z)
+    {
         z = x.divScalar(y);
     }
 }

@@ -9,7 +9,11 @@ contract MixedDecimalFake {
 
     constructor() public {}
 
-    function fromDecimal(Decimal.decimal memory x) public pure returns (SignedDecimal.signedDecimal memory z) {
+    function fromDecimal(Decimal.decimal memory x)
+        public
+        pure
+        returns (SignedDecimal.signedDecimal memory z)
+    {
         z = MixedDecimal.fromDecimal(x);
     }
 

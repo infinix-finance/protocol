@@ -5,7 +5,6 @@ import {
   API3PriceFeedMock,
   ClearingHouseFake,
   ClearingHouseViewer,
-  ClientBridge,
   ERC20Fake,
   ExchangeWrapperMock,
   IfnxToken,
@@ -23,14 +22,12 @@ import {
   deployAPI3MockPriceFeed,
   deployClearingHouse,
   deployClearingHouseViewer,
-  deployClientBridge,
   deployErc20Fake,
   deployIfnxToken,
   deployInflationMonitor,
   deployInsuranceFund,
   deployMetaTxGateway,
   deployMinter,
-  deployMockAMBBridge,
   deployMockExchangeWrapper,
   deployMockMultiToken,
   deployRewardsDistribution,
@@ -56,7 +53,6 @@ export interface PerpContracts {
   clearingHouseViewer: ClearingHouseViewer;
   inflationMonitor: InflationMonitorFake;
   minter: Minter;
-  clientBridge: ClientBridge;
 }
 
 export interface ContractDeployArgs {
@@ -72,7 +68,6 @@ export interface ContractDeployArgs {
   quoteAssetReserve?: BigNumber;
   baseAssetReserve?: BigNumber;
   startSchedule?: boolean;
-  stakingPoolAsFee?: boolean;
 }
 
 const quoteTokenDecimals = 6;
@@ -152,14 +147,6 @@ export async function fullDeploy(args: ContractDeployArgs): Promise<PerpContract
     ifnxRewardVestingPeriod!
   );
 
-  const ambBridge = await deployMockAMBBridge();
-  const tokenMediator = await deployMockMultiToken();
-  const clientBridge = await deployClientBridge(
-    ambBridge.address,
-    tokenMediator.address,
-    metaTxGateway.address
-  );
-
   await clearingHouse.setFeePool(stakingReserve.address);
 
   const rewardsDistribution = await deployRewardsDistribution(
@@ -217,6 +204,5 @@ export async function fullDeploy(args: ContractDeployArgs): Promise<PerpContract
     clearingHouseViewer,
     inflationMonitor,
     minter,
-    clientBridge,
   };
 }

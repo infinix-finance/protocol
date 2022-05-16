@@ -41,7 +41,7 @@ contract InsuranceFund is IInsuranceFund, IfnxFiOwnableUpgrade, BlockContext, Re
 
     // contract dependencies
     IExchangeWrapper public exchange;
-    IERC20 public IfnxToken;
+    IERC20 public ifnxToken;
     IMinter public minter;
     IInflationMonitor public inflationMonitor;
     address private beneficiary;
@@ -135,7 +135,7 @@ contract InsuranceFund is IInsuranceFund, IfnxFiOwnableUpgrade, BlockContext, Re
         if (balanceOf(_token).toUint() > 0) {
             address outputToken = getTokenWithMaxValue();
             if (outputToken == address(0)) {
-                outputToken = address(IfnxToken);
+                outputToken = address(ifnxToken);
             }
             swapInput(_token, IERC20(outputToken), balanceOf(_token), Decimal.zero());
         }
@@ -177,7 +177,7 @@ contract InsuranceFund is IInsuranceFund, IfnxFiOwnableUpgrade, BlockContext, Re
 
     function setMinter(IMinter _minter) public onlyOwner {
         minter = _minter;
-        IfnxToken = minter.getIfnxToken();
+        ifnxToken = minter.getIfnxToken();
     }
 
     function setInflationMonitor(IInflationMonitor _inflationMonitor) external onlyOwner {
@@ -266,9 +266,9 @@ contract InsuranceFund is IInsuranceFund, IfnxFiOwnableUpgrade, BlockContext, Re
         // if all the quote tokens can't afford the debt, ask staking token to mint
         if (_requiredQuoteAmount.toUint() > 0) {
             Decimal.decimal memory requiredIfnxAmount =
-                exchange.getOutputPrice(IfnxToken, _quoteToken, _requiredQuoteAmount);
+                exchange.getOutputPrice(ifnxToken, _quoteToken, _requiredQuoteAmount);
             minter.mintForLoss(requiredIfnxAmount);
-            swapInput(IfnxToken, _quoteToken, requiredIfnxAmount, Decimal.zero());
+            swapInput(ifnxToken, _quoteToken, requiredIfnxAmount, Decimal.zero());
         }
     }
 
@@ -293,11 +293,11 @@ contract InsuranceFund is IInsuranceFund, IfnxFiOwnableUpgrade, BlockContext, Re
         for (uint256 i = 0; i < getQuoteTokenLength(); i++) {
             IERC20 currentToken = quoteTokens[i];
             Decimal.decimal memory currentIfnxValue =
-                exchange.getInputPrice(currentToken, IfnxToken, balanceOf(currentToken));
+                exchange.getInputPrice(currentToken, ifnxToken, balanceOf(currentToken));
 
             for (uint256 j = i; j > 0; j--) {
                 Decimal.decimal memory subsetIfnxValue =
-                    exchange.getInputPrice(tokens[j - 1], IfnxToken, balanceOf(tokens[j - 1]));
+                    exchange.getInputPrice(tokens[j - 1], ifnxToken, balanceOf(tokens[j - 1]));
                 if (currentIfnxValue.toUint() > subsetIfnxValue.toUint()) {
                     tokens[j] = tokens[j - 1];
                     tokens[j - 1] = currentToken;

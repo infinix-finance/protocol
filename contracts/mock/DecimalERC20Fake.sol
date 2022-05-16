@@ -2,9 +2,9 @@
 pragma solidity 0.6.9;
 pragma experimental ABIEncoderV2;
 
-import { IERC20 } from "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/IERC20.sol";
-import { DecimalERC20 } from "../utils/DecimalERC20.sol";
-import { Decimal } from "../utils/Decimal.sol";
+import {IERC20} from "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/IERC20.sol";
+import {DecimalERC20} from "../utils/DecimalERC20.sol";
+import {Decimal} from "../utils/Decimal.sol";
 
 // a testing purpose container contract which used DecimalERC20 library
 contract DecimalERC20Fake is DecimalERC20 {
@@ -41,7 +41,11 @@ contract DecimalERC20Fake is DecimalERC20 {
         return _allowance(_token, _owner, _spender);
     }
 
-    function balanceOf(IERC20 _token, address _owner) external view returns (Decimal.decimal memory) {
+    function balanceOf(IERC20 _token, address _owner)
+        external
+        view
+        returns (Decimal.decimal memory)
+    {
         return _balanceOf(_token, _owner);
     }
 }

@@ -13,7 +13,7 @@ import {
 } from "../helper/contract";
 import { toDecimal, toFullDigit } from "../helper/number";
 
-describe("API3PriceFeed Unit Test", () => {
+describe.only("API3PriceFeed Unit Test", () => {
   let addresses: Wallet[];
   let admin: Wallet;
   let alice: Wallet;
@@ -58,8 +58,6 @@ describe("API3PriceFeed Unit Test", () => {
   it("getPrice", async () => {
     const priceFeedKey = ethers.utils.solidityKeccak256(["string"], ["priceFeedKey"]);
     const beaconId = ethers.utils.solidityKeccak256(["string"], ["beaconId"]);
-
-    await expect(priceFeed.getPrice(priceFeedKey)).to.be.revertedWith("PRICE_FEED: NOT WHITELISTED");
 
     await priceFeed.setBeacon(priceFeedKey, beaconId);
 

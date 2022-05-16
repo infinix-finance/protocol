@@ -2,11 +2,11 @@
 pragma solidity 0.6.9;
 pragma experimental ABIEncoderV2;
 
-import { ContextUpgradeSafe } from "@openzeppelin/contracts-ethereum-package/contracts/GSN/Context.sol";
-import { IERC20 } from "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/IERC20.sol";
-import { Initializable } from "@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol";
-import { Address } from "@openzeppelin/contracts-ethereum-package/contracts/utils/Address.sol";
-import { SafeMath } from "@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol";
+import {ContextUpgradeSafe} from "@openzeppelin/contracts-ethereum-package/contracts/GSN/Context.sol";
+import {IERC20} from "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/IERC20.sol";
+import {Initializable} from "@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol";
+import {Address} from "@openzeppelin/contracts-ethereum-package/contracts/utils/Address.sol";
+import {SafeMath} from "@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol";
 
 // TODO rename to ERC20NoDecimal
 contract ERC20MinimalFake is Initializable, ContextUpgradeSafe, IERC20 {
@@ -58,7 +58,13 @@ contract ERC20MinimalFake is Initializable, ContextUpgradeSafe, IERC20 {
      * @dev See {IERC20-allowance}.
      */
 
-    function allowance(address owner, address spender) public view virtual override returns (uint256) {
+    function allowance(address owner, address spender)
+        public
+        view
+        virtual
+        override
+        returns (uint256)
+    {
         return _allowances[owner][spender];
     }
 
@@ -97,7 +103,10 @@ contract ERC20MinimalFake is Initializable, ContextUpgradeSafe, IERC20 {
         _approve(
             sender,
             _msgSender(),
-            _allowances[sender][_msgSender()].sub(amount, "ERC20: transfer amount exceeds allowance")
+            _allowances[sender][_msgSender()].sub(
+                amount,
+                "ERC20: transfer amount exceeds allowance"
+            )
         );
         return true;
     }
@@ -133,11 +142,18 @@ contract ERC20MinimalFake is Initializable, ContextUpgradeSafe, IERC20 {
      * - `spender` must have allowance for the caller of at least
      * `subtractedValue`.
      */
-    function decreaseAllowance(address spender, uint256 subtractedValue) public virtual returns (bool) {
+    function decreaseAllowance(address spender, uint256 subtractedValue)
+        public
+        virtual
+        returns (bool)
+    {
         _approve(
             _msgSender(),
             spender,
-            _allowances[_msgSender()][spender].sub(subtractedValue, "ERC20: decreased allowance below zero")
+            _allowances[_msgSender()][spender].sub(
+                subtractedValue,
+                "ERC20: decreased allowance below zero"
+            )
         );
         return true;
     }

@@ -98,7 +98,6 @@ describe("StakingReserve", () => {
       tollRatio: toFullDigit(0.05),
       spreadRatio: toFullDigit(0.05),
       startSchedule: false,
-      stakingPoolAsFee: true
     });
     amm = contracts.amm;
     quoteToken = contracts.quoteToken;

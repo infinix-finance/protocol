@@ -23,7 +23,7 @@ contract Minter is IMinter, IfnxFiOwnableUpgrade {
     //    Can not change the order of below state variables     //
     //**********************************************************//
 
-    address private IfnxToken;
+    address private ifnxToken;
     SupplySchedule public supplySchedule;
     RewardsDistribution public rewardsDistribution;
     IInflationMonitor public inflationMonitor;
@@ -49,10 +49,10 @@ contract Minter is IMinter, IfnxFiOwnableUpgrade {
      * @notice openzeppelin doesn't support struct input
      * https://github.com/OpenZeppelin/openzeppelin-sdk/issues/1523
      */
-    function initialize(address _IfnxToken) public initializer {
+    function initialize(address _ifnxToken) public initializer {
         __Ownable_init();
 
-        IfnxToken = _IfnxToken;
+        ifnxToken = _ifnxToken;
     }
 
     //*************** ERC20 functions ***************//
@@ -65,8 +65,8 @@ contract Minter is IMinter, IfnxFiOwnableUpgrade {
         uint256 mintableSupply = supplySchedule.mintableSupply().toUint();
         require(mintableSupply > 0, "no supply is mintable");
 
-        IIfnxToken(IfnxToken).mint(address(rewardsDistribution), mintableSupply);
-        rewardsDistribution.distributeRewards(IERC20(IfnxToken), Decimal.decimal(mintableSupply));
+        IIfnxToken(ifnxToken).mint(address(rewardsDistribution), mintableSupply);
+        rewardsDistribution.distributeRewards(IERC20(ifnxToken), Decimal.decimal(mintableSupply));
 
         // record minting event before mutation to token supply
         supplySchedule.recordMintEvent();
@@ -81,7 +81,7 @@ contract Minter is IMinter, IfnxFiOwnableUpgrade {
 
         // minter role checking is inside `mint`
         // mint to insuranceFund
-        IIfnxToken(IfnxToken).mint(insuranceFund, _amount.toUint());
+        IIfnxToken(ifnxToken).mint(insuranceFund, _amount.toUint());
         inflationMonitor.appendMintedTokenHistory(_amount);
 
         emit IfnxMinted(_amount.toUint());
@@ -104,6 +104,6 @@ contract Minter is IMinter, IfnxFiOwnableUpgrade {
     }
 
     function getIfnxToken() external view override returns (IERC20) {
-        return IERC20(IfnxToken);
+        return IERC20(ifnxToken);
     }
 }

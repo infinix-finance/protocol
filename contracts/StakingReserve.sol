@@ -43,7 +43,7 @@ contract StakingReserve is
 
     struct StakeBalance {
         bool exist;
-        // denominated in perpToken
+        // denominated in ifnxToken
         Decimal.decimal totalBalance;
         uint256 rewardEpochCursor;
         uint256 feeEpochCursor;
@@ -82,7 +82,7 @@ contract StakingReserve is
 
     address[] public stakers;
 
-    address public perpToken;
+    address public ifnxToken;
     SupplySchedule private supplySchedule;
 
     /* @dev
@@ -111,7 +111,7 @@ contract StakingReserve is
     //
 
     function initialize(
-        address _perpToken,
+        address _ifnxToken,
         SupplySchedule _supplySchedule,
         address _feeNotifier,
         uint256 _vestingPeriod
@@ -119,7 +119,7 @@ contract StakingReserve is
         __Ownable_init();
         __ReentrancyGuard_init();
 
-        perpToken = _perpToken;
+        ifnxToken = _ifnxToken;
         supplySchedule = _supplySchedule;
         feeNotifier = _feeNotifier;
         vestingPeriod = _vestingPeriod;
@@ -211,7 +211,7 @@ contract StakingReserve is
         address sender = _msgSender();
         require(_amount.toUint() <= getUnlockedBalance(sender).toUint(), "Not enough balance");
         stakeBalanceMap[sender].totalBalance = stakeBalanceMap[sender].totalBalance.subD(_amount);
-        _transfer(IERC20(perpToken), sender, _amount);
+        _transfer(IERC20(ifnxToken), sender, _amount);
     }
 
     /**
@@ -282,7 +282,7 @@ contract StakingReserve is
             stakeBalanceMap[staker].rewardEpochCursor = epochRewardHistory.length.sub(
                 vestingPeriod
             );
-            _transfer(IERC20(perpToken), staker, reward);
+            _transfer(IERC20(ifnxToken), staker, reward);
             emit RewardWithdrawn(staker, reward.toUint());
         }
     }
@@ -468,6 +468,6 @@ contract StakingReserve is
             balance.rewardEpochCursor = nextEpochIndex();
         }
         balance.totalBalance = balance.totalBalance.addD(_amount);
-        _transferFrom(IERC20(perpToken), _sender, address(this), _amount);
+        _transferFrom(IERC20(ifnxToken), _sender, address(this), _amount);
     }
 }
