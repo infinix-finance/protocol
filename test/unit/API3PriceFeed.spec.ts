@@ -13,7 +13,7 @@ import {
 } from "../helper/contract";
 import { toDecimal, toFullDigit } from "../helper/number";
 
-describe.only("API3PriceFeed Unit Test", () => {
+describe("API3PriceFeed Unit Test", () => {
   let addresses: Wallet[];
   let admin: Wallet;
   let alice: Wallet;
