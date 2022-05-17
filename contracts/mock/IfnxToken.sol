@@ -859,7 +859,7 @@ contract IfnxFiOwnable is Context {
 contract IfnxToken is ERC20, IfnxFiOwnable {
     mapping(address => bool) public minters;
 
-    constructor(uint256 _initialSupply) public ERC20("Ifnxetual", "Ifnx") {
+    constructor(uint256 _initialSupply) public ERC20("Infinix", "Ifnx") {
         _mint(msg.sender, _initialSupply);
     }
 

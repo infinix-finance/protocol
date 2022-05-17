@@ -34,10 +34,10 @@ contract ClearingHouse is
     //
     // EVENTS
     //
-    event InitMarginRatioChanged(uint256 initMarginRatio);
-    event InsuranceFundChanged(address insuranceFund);
-    event MarginRatioChanged(uint256 marginRatio);
-    event LiquidationFeeRatioChanged(uint256 liquidationFeeRatio);
+    // event InitMarginRatioChanged(uint256 initMarginRatio);
+    // event InsuranceFundChanged(address insuranceFund);
+    // event MarginRatioChanged(uint256 marginRatio);
+    // event LiquidationFeeRatioChanged(uint256 liquidationFeeRatio);
     event BackstopLiquidityProviderChanged(address indexed account, bool indexed isProvider);
     event MarginChanged(address indexed sender, address indexed amm, int256 amount, int256 fundingPayment);
     event PositionAdjusted(
@@ -210,81 +210,30 @@ contract ClearingHouse is
     //
     // openzeppelin doesn't support struct input
     // https://github.com/OpenZeppelin/openzeppelin-sdk/issues/1523
-    // function initialize(
-    //     uint256 _initMarginRatio,
-    //     uint256 _maintenanceMarginRatio,
-    //     uint256 _liquidationFeeRatio,
-    //     IInsuranceFund _insuranceFund,
-    //     address _trustedForwarder
-    // ) public initializer {
-    // require(address(_insuranceFund) != address(0), "Invalid IInsuranceFund");
+    function initialize(
+        uint256 _initMarginRatio,
+        uint256 _maintenanceMarginRatio,
+        uint256 _liquidationFeeRatio,
+        IInsuranceFund _insuranceFund
+    ) public initializer {
+        require(address(_insuranceFund) != address(0), "Invalid IInsuranceFund");
 
-    // __OwnerPausable_init();
+        // __OwnerPausable_init();
+        __Ownable_init();
+        __Pausable_init();
 
-    // comment these out for reducing bytecode size
-    // __ReentrancyGuard_init();
+        // comment these out for reducing bytecode size
+        // __ReentrancyGuard_init();
 
-    // versionRecipient = "1.0.0"; // we are not using it atm
-    // initMarginRatio = Decimal.decimal(_initMarginRatio);
-    // maintenanceMarginRatio = Decimal.decimal(_maintenanceMarginRatio);
-    // liquidationFeeRatio = Decimal.decimal(_liquidationFeeRatio);
-    // insuranceFund = _insuranceFund;
-    // trustedForwarder = _trustedForwarder;
-    // }
+        initMarginRatio = Decimal.decimal(_initMarginRatio);
+        maintenanceMarginRatio = Decimal.decimal(_maintenanceMarginRatio);
+        liquidationFeeRatio = Decimal.decimal(_liquidationFeeRatio);
+        insuranceFund = _insuranceFund;
+    }
 
     //
     // External
     //
-
-    /**
-     * @notice set inital margin ratio
-     * @dev only owner can call
-     * @param _initialMarginRatio new initial margin ratio
-     */
-    function setInitialMarginRatio(Decimal.decimal memory _initialMarginRatio) external onlyOwner {
-        initMarginRatio = _initialMarginRatio;
-        emit InitMarginRatioChanged(initMarginRatio.toUint());
-    }
-
-    /**
-     * @notice set insurance fund
-     * @dev only owner can call
-     * @param _insuranceFund new insurance fund
-     */
-    function setInsuranceFund(IInsuranceFund _insuranceFund) external onlyOwner {
-        require(address(_insuranceFund) != address(0), "Invalid IInsuranceFund");
-        insuranceFund = _insuranceFund;
-        emit InsuranceFundChanged(address(_insuranceFund));
-    }
-
-    /**
-     * @notice set trusted forwarder
-     * @dev only owner can call
-     * @param _trustedForwarder set trusted forwarder address
-     */
-    function setTrustedForwarder(address _trustedForwarder) external onlyOwner {
-        trustedForwarder = _trustedForwarder;
-    }
-
-    /**
-     * @notice set liquidation fee ratio
-     * @dev only owner can call
-     * @param _liquidationFeeRatio new liquidation fee ratio in 18 digits
-     */
-    function setLiquidationFeeRatio(Decimal.decimal memory _liquidationFeeRatio) external onlyOwner {
-        liquidationFeeRatio = _liquidationFeeRatio;
-        emit LiquidationFeeRatioChanged(liquidationFeeRatio.toUint());
-    }
-
-    /**
-     * @notice set maintenance margin ratio
-     * @dev only owner can call
-     * @param _maintenanceMarginRatio new maintenance margin ratio in 18 digits
-     */
-    function setMaintenanceMarginRatio(Decimal.decimal memory _maintenanceMarginRatio) external onlyOwner {
-        maintenanceMarginRatio = _maintenanceMarginRatio;
-        emit MarginRatioChanged(maintenanceMarginRatio.toUint());
-    }
 
     /**
      * @notice set the fee pool address

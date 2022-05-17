@@ -9,7 +9,6 @@ import {
   ClearingHouseViewer,
   ERC20Fake,
   InsuranceFundFake,
-  MetaTxGateway,
   Minter,
   RewardsDistributionFake,
   StakingReserveFake,
@@ -28,7 +27,6 @@ describe("ClearingHouse Test", () => {
   let carol: Wallet;
   let relayer: Wallet;
 
-  let metaTxGateway: MetaTxGateway;
   let amm: AmmFake;
   let insuranceFund: InsuranceFundFake;
   let quoteToken: ERC20Fake;
@@ -103,7 +101,6 @@ describe("ClearingHouse Test", () => {
     relayer = wallets[4];
 
     const contracts = await fullDeploy({ sender: admin.address });
-    metaTxGateway = contracts.metaTxGateway;
     amm = contracts.amm;
     insuranceFund = contracts.insuranceFund;
     quoteToken = contracts.quoteToken;
