@@ -7,6 +7,7 @@ import {
   MAINTENANCE_MARGIN_RATIO,
   LIQUIDATION_FEE_RATIO,
 } from "../constants/constants";
+import { toDecimal } from "../test/helper/number";
 
 const deployClearingHouse: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const {
@@ -25,18 +26,30 @@ const deployClearingHouse: DeployFunction = async function (hre: HardhatRuntimeE
       proxyContract: "OpenZeppelinTransparentProxy",
       execute: {
         methodName: "initialize",
-        args: [
-          INIT_MARGIN_RATIO,
-          MAINTENANCE_MARGIN_RATIO,
-          LIQUIDATION_FEE_RATIO,
-          insuranceFund.address,
-        ],
+        args: [INIT_MARGIN_RATIO, insuranceFund.address],
       },
     },
     log: true,
   });
 
   console.log(`ClearingHouse is deployed at ${deployResult.address}\n`);
+
+  console.log(`Configuring ClearingHouse...`);
+  console.log(`>>> Setting maintenance margin ratio...`);
+  await execute(
+    "ClearingHouse",
+    { from: deployer, log: true },
+    "setMaintenanceMarginRatio",
+    toDecimal(MAINTENANCE_MARGIN_RATIO)
+  );
+  console.log(`>>> Setting liquidation fee ratio...`);
+  await execute(
+    "ClearingHouse",
+    { from: deployer, log: true },
+    "setLiquidationFeeRatio",
+    toDecimal(LIQUIDATION_FEE_RATIO)
+  );
+  console.log("\n");
 
   console.log(`Configuring InsuranceFund...`);
   console.log(`>>> Setting beneficiary...`);

@@ -62,18 +62,18 @@ const deployAmmUSDCETH: DeployFunction = async function (hre: HardhatRuntimeEnvi
   await execute("Amm", { from: deployer, log: true }, "setCounterParty", clearingHouse.address);
   console.log("\n");
 
-  console.log(`Configuring InsuranceFund...`);
-  console.log(`>>> Adding USDC/ETH Amm...`);
-  await execute("InsuranceFund", { from: deployer, log: true }, "addAmm", deployResult.address);
-  console.log("\n");
+  // console.log(`Configuring InsuranceFund...`);
+  // console.log(`>>> Adding USDC/ETH Amm...`);
+  // await execute("InsuranceFund", { from: deployer, log: true }, "addAmm", deployResult.address);
+  // console.log("\n");
 
-  console.log(`Opening USDC/ETH Amm...`);
-  await execute("Amm", { from: deployer, log: true }, "setOpen", true);
-  console.log("\n");
+  // console.log(`Opening USDC/ETH Amm...`);
+  // await execute("Amm", { from: deployer, log: true }, "setOpen", true);
+  // console.log("\n");
       
-  console.log(`Starting supply schedule...`);
-  await execute("SupplySchedule", { from: deployer, log: true }, "startSchedule");
-  console.log("\n");
+  // console.log(`Starting supply schedule...`);
+  // await execute("SupplySchedule", { from: deployer, log: true }, "startSchedule");
+  // console.log("\n");
 
   // try {
   //   await new Promise((r) => setTimeout(r, 30000));
