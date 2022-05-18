@@ -60,9 +60,9 @@ export default {
     hardhat: {
       allowUnlimitedContractSize: true,
     },
-    rinkeby: {
-      url: process.env.RINKEBY_URL || "",
-      chainId: 4,
+    goerli: {
+      url: process.env.GOERLI_URL || "",
+      chainId: 5,
       accounts: {
         mnemonic: process.env.MNEMONIC || "",
       },

@@ -27,7 +27,7 @@ const deployAmmUSDCETH: DeployFunction = async function (hre: HardhatRuntimeEnvi
   const insuranceFund = await hre.deployments.get("InsuranceFund");
   const clearingHouse = await hre.deployments.get("ClearingHouse");
 
-  console.log(`Deploying USDC/ETH Amm...`);
+  console.log(`Deploying ETH/USDC Amm...`);
 
   const deployResult = await deploy("Amm", {
     from: deployer,
@@ -53,9 +53,9 @@ const deployAmmUSDCETH: DeployFunction = async function (hre: HardhatRuntimeEnvi
     log: true,
   });
 
-  console.log(`USDC/ETH Amm is deployed at ${deployResult.address}\n`);
+  console.log(`ETH/USDC Amm is deployed at ${deployResult.address}\n`);
 
-  console.log(`Configuring USDC/ETH Amm...`);
+  console.log(`Configuring ETH/USDC Amm...`);
   console.log(`>>> Setting global shutdown...`);
   await execute("Amm", { from: deployer, log: true }, "setGlobalShutdown", insuranceFund.address);
   console.log(`>>> Setting counter party...`);
@@ -63,14 +63,14 @@ const deployAmmUSDCETH: DeployFunction = async function (hre: HardhatRuntimeEnvi
   console.log("\n");
 
   // console.log(`Configuring InsuranceFund...`);
-  // console.log(`>>> Adding USDC/ETH Amm...`);
+  // console.log(`>>> Adding ETH/USDC Amm...`);
   // await execute("InsuranceFund", { from: deployer, log: true }, "addAmm", deployResult.address);
   // console.log("\n");
 
-  // console.log(`Opening USDC/ETH Amm...`);
+  // console.log(`Opening ETH/USDC Amm...`);
   // await execute("Amm", { from: deployer, log: true }, "setOpen", true);
   // console.log("\n");
-      
+
   // console.log(`Starting supply schedule...`);
   // await execute("SupplySchedule", { from: deployer, log: true }, "startSchedule");
   // console.log("\n");
