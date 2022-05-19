@@ -7,7 +7,7 @@
     "test": "npx hardhat test",
     "accounts": "npx hardhat accounts",
     "balances": "npx hardhat balances",
-    "deploy:testnet": "npx hardhat deploy --network goerli",
+    "deploy:testnet": "npx hardhat deploy --network rinkeby",
     "prettier:solidity": "npx prettier --write contracts/**/*.sol"
   },
   "repository": {

@@ -62,27 +62,27 @@ const deployAmmUSDCETH: DeployFunction = async function (hre: HardhatRuntimeEnvi
   await execute("Amm", { from: deployer, log: true }, "setCounterParty", clearingHouse.address);
   console.log("\n");
 
-  // console.log(`Configuring InsuranceFund...`);
-  // console.log(`>>> Adding ETH/USDC Amm...`);
-  // await execute("InsuranceFund", { from: deployer, log: true }, "addAmm", deployResult.address);
-  // console.log("\n");
+  console.log(`Configuring InsuranceFund...`);
+  console.log(`>>> Adding ETH/USDC Amm...`);
+  await execute("InsuranceFund", { from: deployer, log: true }, "addAmm", deployResult.address);
+  console.log("\n");
 
-  // console.log(`Opening ETH/USDC Amm...`);
-  // await execute("Amm", { from: deployer, log: true }, "setOpen", true);
-  // console.log("\n");
+  console.log(`Opening ETH/USDC Amm...`);
+  await execute("Amm", { from: deployer, log: true }, "setOpen", true);
+  console.log("\n");
 
-  // console.log(`Starting supply schedule...`);
-  // await execute("SupplySchedule", { from: deployer, log: true }, "startSchedule");
-  // console.log("\n");
+  console.log(`Starting supply schedule...`);
+  await execute("SupplySchedule", { from: deployer, log: true }, "startSchedule");
+  console.log("\n");
 
-  // try {
-  //   await new Promise((r) => setTimeout(r, 30000));
-  //   await run("verify:verify", {
-  //     address: deployResult.address,
-  //   });
-  // } catch (error) {
-  //   console.log(error);
-  // }
+  try {
+    await new Promise((r) => setTimeout(r, 30000));
+    await run("verify:verify", {
+      address: deployResult.address,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export default deployAmmUSDCETH;
