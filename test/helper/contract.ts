@@ -14,9 +14,7 @@ import {
   InflationMonitorFake,
   InsuranceFundFake,
   JoeRouterMock,
-  MetaTxGateway,
   Minter,
-  MultiTokenMediatorMock,
   RewardsDistributionFake,
   StakingReserveFake,
   SupplyScheduleFake,
@@ -125,8 +123,7 @@ export async function deployClearingHouse(
   initMarginRatio: Decimal,
   maintenanceMarginRatio: Decimal,
   liquidationFeeRatio: Decimal,
-  insuranceFund: string,
-  trustedForwarder: string
+  insuranceFund: string
 ): Promise<ClearingHouseFake> {
   const ClearingHouseFakeFactory = await ethers.getContractFactory("ClearingHouseFake");
   const instance = (await ClearingHouseFakeFactory.deploy()) as ClearingHouseFake;
@@ -135,8 +132,7 @@ export async function deployClearingHouse(
     initMarginRatio.d.toString(),
     maintenanceMarginRatio.d.toString(),
     liquidationFeeRatio.d.toString(),
-    insuranceFund,
-    trustedForwarder
+    insuranceFund
   );
 
   return instance;
@@ -255,22 +251,6 @@ export async function deployMinter(ifnxToken: string): Promise<Minter> {
   const MinterFactory = await ethers.getContractFactory("Minter");
   const instance = (await MinterFactory.deploy()) as Minter;
   await instance.initialize(ifnxToken);
-  return instance;
-}
-
-export async function deployMockMultiToken(): Promise<MultiTokenMediatorMock> {
-  const MultiTokenMediatorMockFactory = await ethers.getContractFactory("MultiTokenMediatorMock");
-  return (await MultiTokenMediatorMockFactory.deploy()) as MultiTokenMediatorMock;
-}
-
-export async function deployMetaTxGateway(
-  name: string,
-  version: string,
-  chainIdL1: number
-): Promise<MetaTxGateway> {
-  const MetaTxGatewayFactory = await ethers.getContractFactory("MetaTxGateway");
-  const instance = (await MetaTxGatewayFactory.deploy()) as MetaTxGateway;
-  instance.initialize(name, version, chainIdL1);
   return instance;
 }
 

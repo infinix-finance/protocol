@@ -9,9 +9,9 @@ const deployClearingHouseViewer: DeployFunction = async function (hre: HardhatRu
   } = hre;
   const { deployer } = await getNamedAccounts();
 
-  if (process.env.WITH_PROXY) return;
-
   const clearingHouse = await hre.deployments.get("ClearingHouse");
+
+  console.log(`Deploying ClearingHouseViewer...`);
 
   const deployResult = await deploy("ClearingHouseViewer", {
     from: deployer,
@@ -19,15 +19,17 @@ const deployClearingHouseViewer: DeployFunction = async function (hre: HardhatRu
     log: true,
   });
 
-  try {
-    await new Promise((r) => setTimeout(r, 30000));
-    await run("verify:verify", {
-      address: deployResult.address,
-      constructorArguments: [clearingHouse.address],
-    });
-  } catch (error) {
-    console.log(error);
-  }
+  console.log(`ClearingHouseViewer is deployed at ${deployResult.address}\n`);
+
+  // try {
+  //   await new Promise((r) => setTimeout(r, 30000));
+  //   await run("verify:verify", {
+  //     address: deployResult.address,
+  //     constructorArguments: [clearingHouse.address],
+  //   });
+  // } catch (error) {
+  //   console.log(error);
+  // }
 };
 
 export default deployClearingHouseViewer;

@@ -9,7 +9,7 @@ const deployAmmReader: DeployFunction = async function (hre: HardhatRuntimeEnvir
   } = hre;
   const { deployer } = await getNamedAccounts();
 
-  if (process.env.WITH_PROXY) return;
+  console.log(`Deploying AmmReader...`);
 
   const deployResult = await deploy("AmmReader", {
     from: deployer,
@@ -17,14 +17,16 @@ const deployAmmReader: DeployFunction = async function (hre: HardhatRuntimeEnvir
     log: true,
   });
 
-  try {
-    await new Promise((r) => setTimeout(r, 30000));
-    await run("verify:verify", {
-      address: deployResult.address,
-    });
-  } catch (error) {
-    console.log(error);
-  }
+  console.log(`AmmReader is deployed at ${deployResult.address}\n`);
+
+  // try {
+  //   await new Promise((r) => setTimeout(r, 30000));
+  //   await run("verify:verify", {
+  //     address: deployResult.address,
+  //   });
+  // } catch (error) {
+  //   console.log(error);
+  // }
 };
 
 export default deployAmmReader;

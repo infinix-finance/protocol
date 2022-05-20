@@ -10,7 +10,6 @@ import {
   IfnxToken,
   InflationMonitorFake,
   InsuranceFundFake,
-  MetaTxGateway,
   Minter,
   RewardsDistributionFake,
   StakingReserveFake,
@@ -26,10 +25,8 @@ import {
   deployIfnxToken,
   deployInflationMonitor,
   deployInsuranceFund,
-  deployMetaTxGateway,
   deployMinter,
   deployMockExchangeWrapper,
-  deployMockMultiToken,
   deployRewardsDistribution,
   deployStakingReserve,
   deploySupplySchedule,
@@ -38,7 +35,6 @@ import {
 import { toDecimal, toFullDigit } from "./number";
 
 export interface PerpContracts {
-  metaTxGateway: MetaTxGateway;
   quoteToken: ERC20Fake;
   priceFeed: API3PriceFeedMock;
   ifnxToken: IfnxToken;
@@ -103,7 +99,6 @@ export async function fullDeploy(args: ContractDeployArgs): Promise<PerpContract
     startSchedule = DEFAULT_CONTRACT_DEPLOY_ARGS.startSchedule,
   } = args;
 
-  const metaTxGateway = await deployMetaTxGateway("Ifnx", "1", 1234); // default hardhat evm chain ID
   const quoteToken = await deployErc20Fake(
     quoteTokenAmount,
     "Tether",
@@ -133,10 +128,8 @@ export async function fullDeploy(args: ContractDeployArgs): Promise<PerpContract
     toDecimal(0.05),
     toDecimal(0.05),
     toDecimal(0.05),
-    insuranceFund.address,
-    metaTxGateway.address
+    insuranceFund.address
   );
-  await metaTxGateway.addToWhitelists(clearingHouse.address);
   const clearingHouseViewer = await deployClearingHouseViewer(clearingHouse.address);
 
   const stakingReserve = await deployStakingReserve(
@@ -189,7 +182,6 @@ export async function fullDeploy(args: ContractDeployArgs): Promise<PerpContract
   await amm.setOpen(true);
 
   return {
-    metaTxGateway,
     quoteToken,
     priceFeed,
     ifnxToken,
