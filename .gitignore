@@ -3,7 +3,6 @@ node_modules
 
 # Hardhat files
 cache
-artifacts
 types
 
 # IDE
@@ -20,6 +19,3 @@ coverage.json
 # dotenv environment variables file
 .env
 .env.test
-
-# Deployment
-deployments

@@ -1,0 +1,122 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "API3PriceFeedMock",
+  "sourceName": "contracts/mock/mocks/API3PriceFeedMock.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_price",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "key",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "price",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "roundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "PriceFeedDataSet",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getPrice",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "getTwapPrice",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_price",
+          "type": "uint256"
+        }
+      ],
+      "name": "setPrice",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_price",
+          "type": "uint256"
+        }
+      ],
+      "name": "setTwapPrice",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x608060405234801561001057600080fd5b506040516101683803806101688339818101604052602081101561003357600080fd5b5051600081905560015561011c8061004c6000396000f3fe6080604052348015600f57600080fd5b506004361060465760003560e01c806331d98b3f14604b57806335acc2c414607757806391b7f5ed146093578063a2173df41460ad575b600080fd5b606560048036036020811015605f57600080fd5b503560cd565b60408051918252519081900360200190f35b609160048036036020811015608b57600080fd5b503560d4565b005b60916004803603602081101560a757600080fd5b503560d9565b60656004803603604081101560c157600080fd5b508035906020013560de565b5060005490565b600155565b600055565b50506001549056fea26469706673582212207406c81257474b698ff2908422f415319f160ee1c7062878ba195e7a2796ccd664736f6c63430006090033",
+  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060465760003560e01c806331d98b3f14604b57806335acc2c414607757806391b7f5ed146093578063a2173df41460ad575b600080fd5b606560048036036020811015605f57600080fd5b503560cd565b60408051918252519081900360200190f35b609160048036036020811015608b57600080fd5b503560d4565b005b60916004803603602081101560a757600080fd5b503560d9565b60656004803603604081101560c157600080fd5b508035906020013560de565b5060005490565b600155565b600055565b50506001549056fea26469706673582212207406c81257474b698ff2908422f415319f160ee1c7062878ba195e7a2796ccd664736f6c63430006090033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}
