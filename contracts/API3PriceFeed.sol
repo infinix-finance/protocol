@@ -41,16 +41,6 @@ contract API3PriceFeed is IPriceFeed {
         return scaledVal.log2();
     }
 
-    // function getTwapPrice(
-    //     bytes32 _priceFeedKey,
-    //     uint256 _intervals
-    // ) external view returns(uint256){}
-
-    // function getPreviousPrice(
-    //     bytes32 _priceFeedKey,
-    //     uint256 at
-    // ) external view returns(uint256){}
-
     /// @dev sets _beaconId to _priceFeedKey
     /// @param _priceFeedKey price feed identifier/symbol of asset i.e ETH/USD
     /// @param _beaconId beacon id
