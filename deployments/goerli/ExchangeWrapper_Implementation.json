@@ -1,0 +1,620 @@
+{
+  "address": "0x48b729015a5e469F35F309ab85E4C31530514DF8",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "ifnxTokenAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "usdtAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "ExchangeSwap",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "inAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "out",
+          "type": "uint256"
+        }
+      ],
+      "name": "TraderJoeSwap",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract IERC20",
+          "name": "_token",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "d",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Decimal.decimal",
+          "name": "_amount",
+          "type": "tuple"
+        }
+      ],
+      "name": "approve",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "candidate",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract IERC20",
+          "name": "_inputToken",
+          "type": "address"
+        },
+        {
+          "internalType": "contract IERC20",
+          "name": "_outputToken",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "d",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Decimal.decimal",
+          "name": "_inputTokenSold",
+          "type": "tuple"
+        }
+      ],
+      "name": "getInputPrice",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "d",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Decimal.decimal",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract IERC20",
+          "name": "_inputToken",
+          "type": "address"
+        },
+        {
+          "internalType": "contract IERC20",
+          "name": "_outputToken",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "d",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Decimal.decimal",
+          "name": "_outputTokenBought",
+          "type": "tuple"
+        }
+      ],
+      "name": "getOutputPrice",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "d",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Decimal.decimal",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract IERC20",
+          "name": "_inputToken",
+          "type": "address"
+        },
+        {
+          "internalType": "contract IERC20",
+          "name": "_outputToken",
+          "type": "address"
+        }
+      ],
+      "name": "getSpotPrice",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "d",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Decimal.decimal",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_joeRouter",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_ifnxToken",
+          "type": "address"
+        }
+      ],
+      "name": "initialize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "joeRouter",
+      "outputs": [
+        {
+          "internalType": "contract IJoeRouter02",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_joeRouter",
+          "type": "address"
+        }
+      ],
+      "name": "setJoeRouter",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "setOwner",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract IERC20",
+          "name": "_inputToken",
+          "type": "address"
+        },
+        {
+          "internalType": "contract IERC20",
+          "name": "_outputToken",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "d",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Decimal.decimal",
+          "name": "_inputTokenSold",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "d",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Decimal.decimal",
+          "name": "_minOutputTokenBought",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "d",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Decimal.decimal",
+          "name": "_maxPrice",
+          "type": "tuple"
+        }
+      ],
+      "name": "swapInput",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "d",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Decimal.decimal",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract IERC20",
+          "name": "_inputToken",
+          "type": "address"
+        },
+        {
+          "internalType": "contract IERC20",
+          "name": "_outputToken",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "d",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Decimal.decimal",
+          "name": "_outputTokenBought",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "d",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Decimal.decimal",
+          "name": "_maxInputTokeSold",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "d",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Decimal.decimal",
+          "name": "_maxPrice",
+          "type": "tuple"
+        }
+      ],
+      "name": "swapOutput",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "d",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Decimal.decimal",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "updateOwner",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x5ab9d9d5e7320d2096b5e23e60f793c901576d44ff4bdeb358346906a68cf295",
+  "receipt": {
+    "to": null,
+    "from": "0xED228D934a1B4c1bA7Ef46a358944F9dAA39ebb1",
+    "contractAddress": "0x48b729015a5e469F35F309ab85E4C31530514DF8",
+    "transactionIndex": 0,
+    "gasUsed": "2050587",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0xd5b1dba9aae9f729b69eac3213680f694c776749890252f4006505af3ae31299",
+    "transactionHash": "0x5ab9d9d5e7320d2096b5e23e60f793c901576d44ff4bdeb358346906a68cf295",
+    "logs": [],
+    "blockNumber": 6903849,
+    "cumulativeGasUsed": "2050587",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "solcInputHash": "08eb1661fb44edbe8976d45f4d52705a",
+  "metadata": "{\"compiler\":{\"version\":\"0.6.9+commit.3e3065ac\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"ifnxTokenAmount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"usdtAmount\",\"type\":\"uint256\"}],\"name\":\"ExchangeSwap\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"inAmount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"out\",\"type\":\"uint256\"}],\"name\":\"TraderJoeSwap\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"contract IERC20\",\"name\":\"_token\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"d\",\"type\":\"uint256\"}],\"internalType\":\"struct Decimal.decimal\",\"name\":\"_amount\",\"type\":\"tuple\"}],\"name\":\"approve\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"candidate\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract IERC20\",\"name\":\"_inputToken\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"_outputToken\",\"type\":\"address\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"d\",\"type\":\"uint256\"}],\"internalType\":\"struct Decimal.decimal\",\"name\":\"_inputTokenSold\",\"type\":\"tuple\"}],\"name\":\"getInputPrice\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"d\",\"type\":\"uint256\"}],\"internalType\":\"struct Decimal.decimal\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract IERC20\",\"name\":\"_inputToken\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"_outputToken\",\"type\":\"address\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"d\",\"type\":\"uint256\"}],\"internalType\":\"struct Decimal.decimal\",\"name\":\"_outputTokenBought\",\"type\":\"tuple\"}],\"name\":\"getOutputPrice\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"d\",\"type\":\"uint256\"}],\"internalType\":\"struct Decimal.decimal\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract IERC20\",\"name\":\"_inputToken\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"_outputToken\",\"type\":\"address\"}],\"name\":\"getSpotPrice\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"d\",\"type\":\"uint256\"}],\"internalType\":\"struct Decimal.decimal\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_joeRouter\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_ifnxToken\",\"type\":\"address\"}],\"name\":\"initialize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"joeRouter\",\"outputs\":[{\"internalType\":\"contract IJoeRouter02\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_joeRouter\",\"type\":\"address\"}],\"name\":\"setJoeRouter\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"setOwner\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract IERC20\",\"name\":\"_inputToken\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"_outputToken\",\"type\":\"address\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"d\",\"type\":\"uint256\"}],\"internalType\":\"struct Decimal.decimal\",\"name\":\"_inputTokenSold\",\"type\":\"tuple\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"d\",\"type\":\"uint256\"}],\"internalType\":\"struct Decimal.decimal\",\"name\":\"_minOutputTokenBought\",\"type\":\"tuple\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"d\",\"type\":\"uint256\"}],\"internalType\":\"struct Decimal.decimal\",\"name\":\"_maxPrice\",\"type\":\"tuple\"}],\"name\":\"swapInput\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"d\",\"type\":\"uint256\"}],\"internalType\":\"struct Decimal.decimal\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract IERC20\",\"name\":\"_inputToken\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"_outputToken\",\"type\":\"address\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"d\",\"type\":\"uint256\"}],\"internalType\":\"struct Decimal.decimal\",\"name\":\"_outputTokenBought\",\"type\":\"tuple\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"d\",\"type\":\"uint256\"}],\"internalType\":\"struct Decimal.decimal\",\"name\":\"_maxInputTokeSold\",\"type\":\"tuple\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"d\",\"type\":\"uint256\"}],\"internalType\":\"struct Decimal.decimal\",\"name\":\"_maxPrice\",\"type\":\"tuple\"}],\"name\":\"swapOutput\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"d\",\"type\":\"uint256\"}],\"internalType\":\"struct Decimal.decimal\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"updateOwner\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{\"owner()\":{\"details\":\"Returns the address of the current owner.\"},\"renounceOwnership()\":{\"details\":\"Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner.\"},\"setOwner(address)\":{\"details\":\"Set ownership of the contract to a new account (`newOwner`). Can only be called by the current owner.\"},\"updateOwner()\":{\"details\":\"Transfers ownership of the contract to a new account (`_candidate`). Can only be called by the new owner.\"}}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"contracts/exchangeWrapper/ExchangeWrapper.sol\":\"ExchangeWrapper\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts-ethereum-package/contracts/GSN/Context.sol\":{\"content\":\"pragma solidity ^0.6.0;\\nimport \\\"../Initializable.sol\\\";\\n\\n/*\\n * @dev Provides information about the current execution context, including the\\n * sender of the transaction and its data. While these are generally available\\n * via msg.sender and msg.data, they should not be accessed in such a direct\\n * manner, since when dealing with GSN meta-transactions the account sending and\\n * paying for execution may not be the actual sender (as far as an application\\n * is concerned).\\n *\\n * This contract is only required for intermediate, library-like contracts.\\n */\\ncontract ContextUpgradeSafe is Initializable {\\n    // Empty internal constructor, to prevent people from mistakenly deploying\\n    // an instance of this contract, which should be used via inheritance.\\n\\n    function __Context_init() internal initializer {\\n        __Context_init_unchained();\\n    }\\n\\n    function __Context_init_unchained() internal initializer {\\n\\n\\n    }\\n\\n\\n    function _msgSender() internal view virtual returns (address payable) {\\n        return msg.sender;\\n    }\\n\\n    function _msgData() internal view virtual returns (bytes memory) {\\n        this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691\\n        return msg.data;\\n    }\\n\\n    uint256[50] private __gap;\\n}\\n\",\"keccak256\":\"0xe81686511d62f18b2d9c693c2c94c0a789c690de63aa90e15451ebf65c5bfd3e\"},\"@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol\":{\"content\":\"pragma solidity >=0.4.24 <0.7.0;\\n\\n\\n/**\\n * @title Initializable\\n *\\n * @dev Helper contract to support initializer functions. To use it, replace\\n * the constructor with a function that has the `initializer` modifier.\\n * WARNING: Unlike constructors, initializer functions must be manually\\n * invoked. This applies both to deploying an Initializable contract, as well\\n * as extending an Initializable contract via inheritance.\\n * WARNING: When used with inheritance, manual care must be taken to not invoke\\n * a parent initializer twice, or ensure that all initializers are idempotent,\\n * because this is not dealt with automatically as with constructors.\\n */\\ncontract Initializable {\\n\\n  /**\\n   * @dev Indicates that the contract has been initialized.\\n   */\\n  bool private initialized;\\n\\n  /**\\n   * @dev Indicates that the contract is in the process of being initialized.\\n   */\\n  bool private initializing;\\n\\n  /**\\n   * @dev Modifier to use in the initializer function of a contract.\\n   */\\n  modifier initializer() {\\n    require(initializing || isConstructor() || !initialized, \\\"Contract instance has already been initialized\\\");\\n\\n    bool isTopLevelCall = !initializing;\\n    if (isTopLevelCall) {\\n      initializing = true;\\n      initialized = true;\\n    }\\n\\n    _;\\n\\n    if (isTopLevelCall) {\\n      initializing = false;\\n    }\\n  }\\n\\n  /// @dev Returns true if and only if the function is running in the constructor\\n  function isConstructor() private view returns (bool) {\\n    // extcodesize checks the size of the code stored in an address, and\\n    // address returns the current address. Since the code is still not\\n    // deployed when running a constructor, any checks on its code size will\\n    // yield zero, making it an effective way to detect if a contract is\\n    // under construction or not.\\n    address self = address(this);\\n    uint256 cs;\\n    assembly { cs := extcodesize(self) }\\n    return cs == 0;\\n  }\\n\\n  // Reserved storage space to allow for layout changes in the future.\\n  uint256[50] private ______gap;\\n}\\n\",\"keccak256\":\"0x9bfec92e36234ecc99b5d37230acb6cd1f99560233753162204104a4897e8721\"},\"@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol\":{\"content\":\"pragma solidity ^0.6.0;\\n\\n/**\\n * @dev Wrappers over Solidity's arithmetic operations with added overflow\\n * checks.\\n *\\n * Arithmetic operations in Solidity wrap on overflow. This can easily result\\n * in bugs, because programmers usually assume that an overflow raises an\\n * error, which is the standard behavior in high level programming languages.\\n * `SafeMath` restores this intuition by reverting the transaction when an\\n * operation overflows.\\n *\\n * Using this library instead of the unchecked operations eliminates an entire\\n * class of bugs, so it's recommended to use it always.\\n */\\nlibrary SafeMath {\\n    /**\\n     * @dev Returns the addition of two unsigned integers, reverting on\\n     * overflow.\\n     *\\n     * Counterpart to Solidity's `+` operator.\\n     *\\n     * Requirements:\\n     * - Addition cannot overflow.\\n     */\\n    function add(uint256 a, uint256 b) internal pure returns (uint256) {\\n        uint256 c = a + b;\\n        require(c >= a, \\\"SafeMath: addition overflow\\\");\\n\\n        return c;\\n    }\\n\\n    /**\\n     * @dev Returns the subtraction of two unsigned integers, reverting on\\n     * overflow (when the result is negative).\\n     *\\n     * Counterpart to Solidity's `-` operator.\\n     *\\n     * Requirements:\\n     * - Subtraction cannot overflow.\\n     */\\n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return sub(a, b, \\\"SafeMath: subtraction overflow\\\");\\n    }\\n\\n    /**\\n     * @dev Returns the subtraction of two unsigned integers, reverting with custom message on\\n     * overflow (when the result is negative).\\n     *\\n     * Counterpart to Solidity's `-` operator.\\n     *\\n     * Requirements:\\n     * - Subtraction cannot overflow.\\n     */\\n    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\\n        require(b <= a, errorMessage);\\n        uint256 c = a - b;\\n\\n        return c;\\n    }\\n\\n    /**\\n     * @dev Returns the multiplication of two unsigned integers, reverting on\\n     * overflow.\\n     *\\n     * Counterpart to Solidity's `*` operator.\\n     *\\n     * Requirements:\\n     * - Multiplication cannot overflow.\\n     */\\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\\n        // Gas optimization: this is cheaper than requiring 'a' not being zero, but the\\n        // benefit is lost if 'b' is also tested.\\n        // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522\\n        if (a == 0) {\\n            return 0;\\n        }\\n\\n        uint256 c = a * b;\\n        require(c / a == b, \\\"SafeMath: multiplication overflow\\\");\\n\\n        return c;\\n    }\\n\\n    /**\\n     * @dev Returns the integer division of two unsigned integers. Reverts on\\n     * division by zero. The result is rounded towards zero.\\n     *\\n     * Counterpart to Solidity's `/` operator. Note: this function uses a\\n     * `revert` opcode (which leaves remaining gas untouched) while Solidity\\n     * uses an invalid opcode to revert (consuming all remaining gas).\\n     *\\n     * Requirements:\\n     * - The divisor cannot be zero.\\n     */\\n    function div(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return div(a, b, \\\"SafeMath: division by zero\\\");\\n    }\\n\\n    /**\\n     * @dev Returns the integer division of two unsigned integers. Reverts with custom message on\\n     * division by zero. The result is rounded towards zero.\\n     *\\n     * Counterpart to Solidity's `/` operator. Note: this function uses a\\n     * `revert` opcode (which leaves remaining gas untouched) while Solidity\\n     * uses an invalid opcode to revert (consuming all remaining gas).\\n     *\\n     * Requirements:\\n     * - The divisor cannot be zero.\\n     */\\n    function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\\n        // Solidity only automatically asserts when dividing by 0\\n        require(b > 0, errorMessage);\\n        uint256 c = a / b;\\n        // assert(a == b * c + a % b); // There is no case in which this doesn't hold\\n\\n        return c;\\n    }\\n\\n    /**\\n     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),\\n     * Reverts when dividing by zero.\\n     *\\n     * Counterpart to Solidity's `%` operator. This function uses a `revert`\\n     * opcode (which leaves remaining gas untouched) while Solidity uses an\\n     * invalid opcode to revert (consuming all remaining gas).\\n     *\\n     * Requirements:\\n     * - The divisor cannot be zero.\\n     */\\n    function mod(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return mod(a, b, \\\"SafeMath: modulo by zero\\\");\\n    }\\n\\n    /**\\n     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),\\n     * Reverts with custom message when dividing by zero.\\n     *\\n     * Counterpart to Solidity's `%` operator. This function uses a `revert`\\n     * opcode (which leaves remaining gas untouched) while Solidity uses an\\n     * invalid opcode to revert (consuming all remaining gas).\\n     *\\n     * Requirements:\\n     * - The divisor cannot be zero.\\n     */\\n    function mod(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {\\n        require(b != 0, errorMessage);\\n        return a % b;\\n    }\\n}\\n\",\"keccak256\":\"0x04d34b3cd5677bea25f8dfceb6dec0eaa071d4d4b789a43f13fe0c415ba4c296\"},\"@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/IERC20.sol\":{\"content\":\"pragma solidity ^0.6.0;\\n\\n/**\\n * @dev Interface of the ERC20 standard as defined in the EIP.\\n */\\ninterface IERC20 {\\n    /**\\n     * @dev Returns the amount of tokens in existence.\\n     */\\n    function totalSupply() external view returns (uint256);\\n\\n    /**\\n     * @dev Returns the amount of tokens owned by `account`.\\n     */\\n    function balanceOf(address account) external view returns (uint256);\\n\\n    /**\\n     * @dev Moves `amount` tokens from the caller's account to `recipient`.\\n     *\\n     * Returns a boolean value indicating whether the operation succeeded.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function transfer(address recipient, uint256 amount) external returns (bool);\\n\\n    /**\\n     * @dev Returns the remaining number of tokens that `spender` will be\\n     * allowed to spend on behalf of `owner` through {transferFrom}. This is\\n     * zero by default.\\n     *\\n     * This value changes when {approve} or {transferFrom} are called.\\n     */\\n    function allowance(address owner, address spender) external view returns (uint256);\\n\\n    /**\\n     * @dev Sets `amount` as the allowance of `spender` over the caller's tokens.\\n     *\\n     * Returns a boolean value indicating whether the operation succeeded.\\n     *\\n     * IMPORTANT: Beware that changing an allowance with this method brings the risk\\n     * that someone may use both the old and the new allowance by unfortunate\\n     * transaction ordering. One possible solution to mitigate this race\\n     * condition is to first reduce the spender's allowance to 0 and set the\\n     * desired value afterwards:\\n     * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729\\n     *\\n     * Emits an {Approval} event.\\n     */\\n    function approve(address spender, uint256 amount) external returns (bool);\\n\\n    /**\\n     * @dev Moves `amount` tokens from `sender` to `recipient` using the\\n     * allowance mechanism. `amount` is then deducted from the caller's\\n     * allowance.\\n     *\\n     * Returns a boolean value indicating whether the operation succeeded.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);\\n\\n    /**\\n     * @dev Emitted when `value` tokens are moved from one account (`from`) to\\n     * another (`to`).\\n     *\\n     * Note that `value` may be zero.\\n     */\\n    event Transfer(address indexed from, address indexed to, uint256 value);\\n\\n    /**\\n     * @dev Emitted when the allowance of a `spender` for an `owner` is set by\\n     * a call to {approve}. `value` is the new allowance.\\n     */\\n    event Approval(address indexed owner, address indexed spender, uint256 value);\\n}\\n\",\"keccak256\":\"0x6cc1cb934a3ac2137a7dcaed018af9e235392236ceecfd3687259702b9c767ad\"},\"contracts/exchangeWrapper/ExchangeWrapper.sol\":{\"content\":\"// SPDX-License-Identifier: GPL-3.0-or-later\\npragma solidity 0.6.9;\\npragma experimental ABIEncoderV2;\\n\\nimport {IfnxFiOwnableUpgrade} from \\\"../utils/IfnxFiOwnableUpgrade.sol\\\";\\nimport {IERC20} from \\\"@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/IERC20.sol\\\";\\nimport {IJoeRouter02} from \\\"./traderjoe/IJoeRouter02.sol\\\";\\nimport {IExchangeWrapper, Decimal} from \\\"../interface/IExchangeWrapper.sol\\\";\\nimport {DecimalERC20} from \\\"../utils/DecimalERC20.sol\\\";\\nimport {Decimal, SafeMath} from \\\"../utils/Decimal.sol\\\";\\n\\n// USDC/USDT decimal 6\\ncontract ExchangeWrapper is IfnxFiOwnableUpgrade, IExchangeWrapper, DecimalERC20 {\\n    using Decimal for Decimal.decimal;\\n    using SafeMath for *;\\n\\n    // default max price slippage is 20% of spot price. 12e17 = (1 + 20%) e18\\n    uint256 private constant DEFAULT_MAX_PRICE_SLIPPAGE = 12e17;\\n\\n    //\\n    // EVENTS\\n    //\\n    event ExchangeSwap(uint256 ifnxTokenAmount, uint256 usdtAmount);\\n    // for debug purpose in the future\\n    event TraderJoeSwap(uint256 inAmount, uint256 out);\\n\\n    //**********************************************************//\\n    //    The below state variables can not change the order    //\\n    //**********************************************************//\\n    IJoeRouter02 public joeRouter;\\n    IERC20 private ifnxToken;\\n    //**********************************************************//\\n    //    The above state variables can not change the order    //\\n    //**********************************************************//\\n\\n    //\\u25e5\\u25e4\\u25e5\\u25e4\\u25e5\\u25e4\\u25e5\\u25e4\\u25e5\\u25e4\\u25e5\\u25e4\\u25e5\\u25e4\\u25e5\\u25e4 add state variables below \\u25e5\\u25e4\\u25e5\\u25e4\\u25e5\\u25e4\\u25e5\\u25e4\\u25e5\\u25e4\\u25e5\\u25e4\\u25e5\\u25e4\\u25e5\\u25e4//\\n\\n    //\\u25e2\\u25e3\\u25e2\\u25e3\\u25e2\\u25e3\\u25e2\\u25e3\\u25e2\\u25e3\\u25e2\\u25e3\\u25e2\\u25e3\\u25e2\\u25e3 add state variables above \\u25e2\\u25e3\\u25e2\\u25e3\\u25e2\\u25e3\\u25e2\\u25e3\\u25e2\\u25e3\\u25e2\\u25e3\\u25e2\\u25e3\\u25e2\\u25e3//\\n    uint256[50] private __gap;\\n\\n    //\\n    // FUNCTIONS\\n    //\\n    function initialize(address _joeRouter, address _ifnxToken) external initializer {\\n        __Ownable_init();\\n\\n        ifnxToken = IERC20(_ifnxToken);\\n        setJoeRouter(_joeRouter);\\n    }\\n\\n    function swapInput(\\n        IERC20 _inputToken,\\n        IERC20 _outputToken,\\n        Decimal.decimal calldata _inputTokenSold,\\n        Decimal.decimal calldata _minOutputTokenBought,\\n        Decimal.decimal calldata _maxPrice\\n    ) external override returns (Decimal.decimal memory) {\\n        return\\n            implSwapInput(\\n                _inputToken,\\n                _outputToken,\\n                _inputTokenSold,\\n                _minOutputTokenBought,\\n                _maxPrice\\n            );\\n    }\\n\\n    function swapOutput(\\n        IERC20 _inputToken,\\n        IERC20 _outputToken,\\n        Decimal.decimal calldata _outputTokenBought,\\n        Decimal.decimal calldata _maxInputTokeSold,\\n        Decimal.decimal calldata _maxPrice\\n    ) external override returns (Decimal.decimal memory) {\\n        return\\n            implSwapOutput(\\n                _inputToken,\\n                _outputToken,\\n                _outputTokenBought,\\n                _maxInputTokeSold,\\n                _maxPrice\\n            );\\n    }\\n\\n    function getInputPrice(\\n        IERC20 _inputToken,\\n        IERC20 _outputToken,\\n        Decimal.decimal calldata _inputTokenSold\\n    ) external view override returns (Decimal.decimal memory) {\\n        Decimal.decimal memory spotPrice = implGetSpotPrice(_inputToken, _outputToken);\\n        return _inputTokenSold.mulD(spotPrice);\\n    }\\n\\n    function getOutputPrice(\\n        IERC20 _inputToken,\\n        IERC20 _outputToken,\\n        Decimal.decimal calldata _outputTokenBought\\n    ) external view override returns (Decimal.decimal memory) {\\n        Decimal.decimal memory spotPrice = implGetSpotPrice(_inputToken, _outputToken);\\n        return _outputTokenBought.divD(spotPrice);\\n    }\\n\\n    function getSpotPrice(IERC20 _inputToken, IERC20 _outputToken)\\n        external\\n        view\\n        override\\n        returns (Decimal.decimal memory)\\n    {\\n        return implGetSpotPrice(_inputToken, _outputToken);\\n    }\\n\\n    function approve(\\n        IERC20 _token,\\n        address _to,\\n        Decimal.decimal memory _amount\\n    ) public onlyOwner {\\n        _approve(_token, _to, _amount);\\n    }\\n\\n    function setJoeRouter(address _joeRouter) public onlyOwner {\\n        joeRouter = IJoeRouter02(_joeRouter);\\n    }\\n\\n    //\\n    // INTERNALS\\n    //\\n\\n    function implSwapInput(\\n        IERC20 _inputToken,\\n        IERC20 _outputToken,\\n        Decimal.decimal memory _inputTokenSold,\\n        Decimal.decimal memory _minOutputTokenBought,\\n        Decimal.decimal memory _maxPrice\\n    ) internal returns (Decimal.decimal memory outTokenAmount) {\\n        address sender = _msgSender();\\n\\n        //___0. transfer input token to exchangeWrapper\\n        _transferFrom(_inputToken, sender, address(this), _inputTokenSold);\\n\\n        //___1. swap\\n        outTokenAmount = traderJoeSwapIn(\\n            _inputToken,\\n            _outputToken,\\n            _inputTokenSold,\\n            _minOutputTokenBought,\\n            _maxPrice\\n        );\\n\\n        //___2. transfer back to sender\\n        _transfer(_outputToken, sender, outTokenAmount);\\n    }\\n\\n    function implSwapOutput(\\n        IERC20 _inputToken,\\n        IERC20 _outputToken,\\n        Decimal.decimal memory _outputTokenBought,\\n        Decimal.decimal memory _maxInputTokenSold,\\n        Decimal.decimal memory _maxPrice\\n    ) internal returns (Decimal.decimal memory) {\\n        address sender = _msgSender();\\n\\n        //___1. calc how much input tokens needed by given outTokenBought,\\n        Decimal.decimal memory expectedTokenInAmount = calcTraderJoeInGivenOut(\\n            address(_inputToken),\\n            address(_outputToken),\\n            _outputTokenBought\\n        );\\n        require(\\n            _maxInputTokenSold.cmp(expectedTokenInAmount) >= 0,\\n            \\\"max input amount less than expected\\\"\\n        );\\n\\n        //___2 transfer input tokens to exchangeWrapper\\n        _transferFrom(_inputToken, sender, address(this), expectedTokenInAmount);\\n\\n        //___3. swap\\n        Decimal.decimal memory requiredInAmount = traderJoeSwapOut(\\n            _inputToken,\\n            _outputToken,\\n            _outputTokenBought,\\n            _maxInputTokenSold,\\n            _maxPrice\\n        );\\n\\n        emit ExchangeSwap(requiredInAmount.toUint(), _outputTokenBought.toUint());\\n\\n        //___4. transfer back to sender\\n        _transfer(_outputToken, sender, _outputTokenBought);\\n\\n        return requiredInAmount;\\n    }\\n\\n    function traderJoeSwapIn(\\n        IERC20 _inputToken,\\n        IERC20 _outputToken,\\n        Decimal.decimal memory _inputTokenSold,\\n        Decimal.decimal memory _minOutputTokenBought,\\n        Decimal.decimal memory _maxPrice\\n    ) internal returns (Decimal.decimal memory) {\\n        address[] memory swapPath = new address[](2);\\n        swapPath[0] = address(_inputToken);\\n        swapPath[1] = address(_outputToken);\\n\\n        // if max price is 0, set to (DEFAULT_MAX_PRICE_SLIPPAGE x spot price)\\n        if (_maxPrice.toUint() == 0) {\\n            uint256 spotPrice = getTraderJoeSpotPrice(swapPath);\\n            _maxPrice = Decimal.decimal(spotPrice).mulD(\\n                Decimal.decimal(DEFAULT_MAX_PRICE_SLIPPAGE)\\n            );\\n        }\\n\\n        _approve(IERC20(_inputToken), address(joeRouter), _inputTokenSold);\\n\\n        uint256 tokenSold = _toUint(_inputToken, _inputTokenSold);\\n\\n        // swap\\n\\n        // Max price check before swap\\n        uint256 spotPriceBefore = getTraderJoeSpotPrice(swapPath);\\n        require(spotPriceBefore <= _maxPrice.toUint(), \\\"ERR_BAD_LIMIT_PRICE\\\");\\n\\n        uint256[] memory outputAmounts = joeRouter.swapExactTokensForTokens(\\n            tokenSold,\\n            _toUint(_outputToken, _minOutputTokenBought),\\n            swapPath,\\n            address(this),\\n            block.timestamp\\n        );\\n        uint256 outAmountInSelfDecimals = outputAmounts[1];\\n\\n        // Max price check after swap\\n        uint256 spotPriceAfter = getTraderJoeSpotPrice(swapPath);\\n        require(spotPriceAfter <= _maxPrice.toUint(), \\\"ERR_BAD_LIMIT_PRICE\\\");\\n\\n        require(outAmountInSelfDecimals > 0, \\\"Balancer exchange error\\\");\\n        emit TraderJoeSwap(tokenSold, outAmountInSelfDecimals);\\n\\n        return _toDecimal(_outputToken, outAmountInSelfDecimals);\\n    }\\n\\n    function traderJoeSwapOut(\\n        IERC20 _inputToken,\\n        IERC20 _outputToken,\\n        Decimal.decimal memory _outputTokenBought,\\n        Decimal.decimal memory _maxInputTokenSold,\\n        Decimal.decimal memory _maxPrice\\n    ) internal returns (Decimal.decimal memory tokenAmountIn) {\\n        address[] memory swapPath = new address[](2);\\n        swapPath[0] = address(_inputToken);\\n        swapPath[1] = address(_outputToken);\\n\\n        // if max price is 0, set to (DEFAULT_MAX_PRICE_SLIPPAGE x spot price)\\n        if (_maxPrice.toUint() == 0) {\\n            uint256 spotPrice = getTraderJoeSpotPrice(swapPath);\\n            _maxPrice = Decimal.decimal(spotPrice).mulD(\\n                Decimal.decimal(DEFAULT_MAX_PRICE_SLIPPAGE)\\n            );\\n        }\\n\\n        _approve(IERC20(_inputToken), address(joeRouter), _maxInputTokenSold);\\n\\n        // swap\\n        uint256 tokenBought = _toUint(_outputToken, _outputTokenBought);\\n        uint256 maxTokenSold = _toUint(_inputToken, _maxInputTokenSold);\\n\\n        // Max price check before swap\\n        uint256 spotPriceBefore = getTraderJoeSpotPrice(swapPath);\\n        require(spotPriceBefore <= _maxPrice.toUint(), \\\"ERR_BAD_LIMIT_PRICE\\\");\\n\\n        uint256[] memory inputAmounts = joeRouter.swapTokensForExactTokens(\\n            tokenBought,\\n            maxTokenSold,\\n            swapPath,\\n            address(this),\\n            block.timestamp\\n        );\\n        uint256 inAmountInSelfDecimals = inputAmounts[1];\\n\\n        // Max price check after swap\\n        uint256 spotPriceAfter = getTraderJoeSpotPrice(swapPath);\\n        require(spotPriceAfter <= _maxPrice.toUint(), \\\"ERR_BAD_LIMIT_PRICE\\\");\\n\\n        require(inAmountInSelfDecimals > 0, \\\"Balancer exchange error\\\");\\n        emit TraderJoeSwap(inAmountInSelfDecimals, tokenBought);\\n\\n        return _toDecimal(_inputToken, inAmountInSelfDecimals);\\n    }\\n\\n    function getTraderJoeSpotPrice(address[] memory path)\\n        internal\\n        view\\n        returns (uint256 spotPrice)\\n    {\\n        uint256[] memory amounts = joeRouter.getAmountsOut(1, path);\\n        spotPrice = amounts[1];\\n    }\\n\\n    function calcTraderJoeInGivenOut(\\n        address _inToken,\\n        address _outToken,\\n        Decimal.decimal memory _givenOutAmount\\n    ) internal view returns (Decimal.decimal memory) {\\n        address[] memory swapPath = new address[](2);\\n        swapPath[0] = _inToken;\\n        swapPath[1] = _outToken;\\n\\n        uint256 givenOut = _toUint(IERC20(_outToken), _givenOutAmount);\\n\\n        uint256[] memory amounts = joeRouter.getAmountsIn(givenOut, swapPath);\\n\\n        uint256 expectedTokenInAmount = amounts[1];\\n        return _toDecimal(IERC20(_inToken), expectedTokenInAmount);\\n    }\\n\\n    function implGetSpotPrice(IERC20 _inputToken, IERC20 _outputToken)\\n        internal\\n        view\\n        returns (Decimal.decimal memory)\\n    {\\n        if (_inputToken == _outputToken) return Decimal.one();\\n        address[] memory swapPath = new address[](2);\\n        swapPath[0] = address(_inputToken);\\n        swapPath[1] = address(_outputToken);\\n\\n        uint256 spotPrice = getTraderJoeSpotPrice(swapPath);\\n\\n        // // the amount returned from getSpotPrice includes decimals difference between tokens.\\n        // // for example, input/output token pair, USDC(8 decimals)/PERP(18 decimals) and 2 USDC buy 1 PERP,\\n        // // it returns 0.5e-10*e18, in the other direction(PERP/USDC), it returns 2e10*e18\\n        Decimal.decimal memory price = Decimal.decimal(spotPrice);\\n\\n        uint256 decimalsOfInput = _getTokenDecimals(address(_inputToken));\\n        uint256 decimalsOfOutput = _getTokenDecimals(address(_outputToken));\\n        if (decimalsOfInput < decimalsOfOutput) {\\n            price = _toDecimal(_inputToken, price.toUint());\\n        } else if (decimalsOfInput > decimalsOfOutput) {\\n            price = Decimal.decimal(_toUint(_outputToken, price));\\n        }\\n\\n        return price;\\n    }\\n}\\n\",\"keccak256\":\"0xdd2a851381280b5789279ff16d5210d909ca232f9d676be818ce07e246dc1b2c\",\"license\":\"GPL-3.0-or-later\"},\"contracts/exchangeWrapper/traderjoe/IJoeRouter01.sol\":{\"content\":\"// SPDX-License-Identifier: GPL-3.0\\n\\npragma solidity >=0.6.2;\\n\\ninterface IJoeRouter01 {\\n    function factory() external pure returns (address);\\n\\n    function WAVAX() external pure returns (address);\\n\\n    function addLiquidity(\\n        address tokenA,\\n        address tokenB,\\n        uint256 amountADesired,\\n        uint256 amountBDesired,\\n        uint256 amountAMin,\\n        uint256 amountBMin,\\n        address to,\\n        uint256 deadline\\n    )\\n        external\\n        returns (\\n            uint256 amountA,\\n            uint256 amountB,\\n            uint256 liquidity\\n        );\\n\\n    function addLiquidityAVAX(\\n        address token,\\n        uint256 amountTokenDesired,\\n        uint256 amountTokenMin,\\n        uint256 amountAVAXMin,\\n        address to,\\n        uint256 deadline\\n    )\\n        external\\n        payable\\n        returns (\\n            uint256 amountToken,\\n            uint256 amountAVAX,\\n            uint256 liquidity\\n        );\\n\\n    function removeLiquidity(\\n        address tokenA,\\n        address tokenB,\\n        uint256 liquidity,\\n        uint256 amountAMin,\\n        uint256 amountBMin,\\n        address to,\\n        uint256 deadline\\n    ) external returns (uint256 amountA, uint256 amountB);\\n\\n    function removeLiquidityAVAX(\\n        address token,\\n        uint256 liquidity,\\n        uint256 amountTokenMin,\\n        uint256 amountAVAXMin,\\n        address to,\\n        uint256 deadline\\n    ) external returns (uint256 amountToken, uint256 amountAVAX);\\n\\n    function removeLiquidityWithPermit(\\n        address tokenA,\\n        address tokenB,\\n        uint256 liquidity,\\n        uint256 amountAMin,\\n        uint256 amountBMin,\\n        address to,\\n        uint256 deadline,\\n        bool approveMax,\\n        uint8 v,\\n        bytes32 r,\\n        bytes32 s\\n    ) external returns (uint256 amountA, uint256 amountB);\\n\\n    function removeLiquidityAVAXWithPermit(\\n        address token,\\n        uint256 liquidity,\\n        uint256 amountTokenMin,\\n        uint256 amountAVAXMin,\\n        address to,\\n        uint256 deadline,\\n        bool approveMax,\\n        uint8 v,\\n        bytes32 r,\\n        bytes32 s\\n    ) external returns (uint256 amountToken, uint256 amountAVAX);\\n\\n    function swapExactTokensForTokens(\\n        uint256 amountIn,\\n        uint256 amountOutMin,\\n        address[] calldata path,\\n        address to,\\n        uint256 deadline\\n    ) external returns (uint256[] memory amounts);\\n\\n    function swapTokensForExactTokens(\\n        uint256 amountOut,\\n        uint256 amountInMax,\\n        address[] calldata path,\\n        address to,\\n        uint256 deadline\\n    ) external returns (uint256[] memory amounts);\\n\\n    function swapExactAVAXForTokens(\\n        uint256 amountOutMin,\\n        address[] calldata path,\\n        address to,\\n        uint256 deadline\\n    ) external payable returns (uint256[] memory amounts);\\n\\n    function swapTokensForExactAVAX(\\n        uint256 amountOut,\\n        uint256 amountInMax,\\n        address[] calldata path,\\n        address to,\\n        uint256 deadline\\n    ) external returns (uint256[] memory amounts);\\n\\n    function swapExactTokensForAVAX(\\n        uint256 amountIn,\\n        uint256 amountOutMin,\\n        address[] calldata path,\\n        address to,\\n        uint256 deadline\\n    ) external returns (uint256[] memory amounts);\\n\\n    function swapAVAXForExactTokens(\\n        uint256 amountOut,\\n        address[] calldata path,\\n        address to,\\n        uint256 deadline\\n    ) external payable returns (uint256[] memory amounts);\\n\\n    function quote(\\n        uint256 amountA,\\n        uint256 reserveA,\\n        uint256 reserveB\\n    ) external pure returns (uint256 amountB);\\n\\n    function getAmountOut(\\n        uint256 amountIn,\\n        uint256 reserveIn,\\n        uint256 reserveOut\\n    ) external pure returns (uint256 amountOut);\\n\\n    function getAmountIn(\\n        uint256 amountOut,\\n        uint256 reserveIn,\\n        uint256 reserveOut\\n    ) external pure returns (uint256 amountIn);\\n\\n    function getAmountsOut(uint256 amountIn, address[] calldata path)\\n        external\\n        view\\n        returns (uint256[] memory amounts);\\n\\n    function getAmountsIn(uint256 amountOut, address[] calldata path)\\n        external\\n        view\\n        returns (uint256[] memory amounts);\\n}\\n\",\"keccak256\":\"0xc4b21795190d167f46ee29b22f797439006946e995f88bc95ef128f4e0333dda\",\"license\":\"GPL-3.0\"},\"contracts/exchangeWrapper/traderjoe/IJoeRouter02.sol\":{\"content\":\"// SPDX-License-Identifier: GPL-3.0\\n\\npragma solidity >=0.6.2;\\n\\nimport {IJoeRouter01} from \\\"./IJoeRouter01.sol\\\";\\n\\ninterface IJoeRouter02 is IJoeRouter01 {\\n    function removeLiquidityAVAXSupportingFeeOnTransferTokens(\\n        address token,\\n        uint256 liquidity,\\n        uint256 amountTokenMin,\\n        uint256 amountAVAXMin,\\n        address to,\\n        uint256 deadline\\n    ) external returns (uint256 amountAVAX);\\n\\n    function removeLiquidityAVAXWithPermitSupportingFeeOnTransferTokens(\\n        address token,\\n        uint256 liquidity,\\n        uint256 amountTokenMin,\\n        uint256 amountAVAXMin,\\n        address to,\\n        uint256 deadline,\\n        bool approveMax,\\n        uint8 v,\\n        bytes32 r,\\n        bytes32 s\\n    ) external returns (uint256 amountAVAX);\\n\\n    function swapExactTokensForTokensSupportingFeeOnTransferTokens(\\n        uint256 amountIn,\\n        uint256 amountOutMin,\\n        address[] calldata path,\\n        address to,\\n        uint256 deadline\\n    ) external;\\n\\n    function swapExactAVAXForTokensSupportingFeeOnTransferTokens(\\n        uint256 amountOutMin,\\n        address[] calldata path,\\n        address to,\\n        uint256 deadline\\n    ) external payable;\\n\\n    function swapExactTokensForAVAXSupportingFeeOnTransferTokens(\\n        uint256 amountIn,\\n        uint256 amountOutMin,\\n        address[] calldata path,\\n        address to,\\n        uint256 deadline\\n    ) external;\\n}\\n\",\"keccak256\":\"0xf777cc103bc34fa6949f4f2408d419e1dcb877e2a79ad24d5e56fd05c8c91109\",\"license\":\"GPL-3.0\"},\"contracts/interface/IExchangeWrapper.sol\":{\"content\":\"// SPDX-License-Identifier: GPL-3.0-or-later\\npragma solidity 0.6.9;\\npragma experimental ABIEncoderV2;\\n\\nimport {Decimal} from \\\"../utils/Decimal.sol\\\";\\nimport {IERC20} from \\\"@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/IERC20.sol\\\";\\n\\ninterface IExchangeWrapper {\\n    function swapInput(\\n        IERC20 inputToken,\\n        IERC20 outputToken,\\n        Decimal.decimal calldata inputTokenSold,\\n        Decimal.decimal calldata minOutputTokenBought,\\n        Decimal.decimal calldata maxPrice\\n    ) external returns (Decimal.decimal memory);\\n\\n    function swapOutput(\\n        IERC20 inputToken,\\n        IERC20 outputToken,\\n        Decimal.decimal calldata outputTokenBought,\\n        Decimal.decimal calldata maxInputTokeSold,\\n        Decimal.decimal calldata maxPrice\\n    ) external returns (Decimal.decimal memory);\\n\\n    function getInputPrice(\\n        IERC20 inputToken,\\n        IERC20 outputToken,\\n        Decimal.decimal calldata inputTokenSold\\n    ) external view returns (Decimal.decimal memory);\\n\\n    function getOutputPrice(\\n        IERC20 inputToken,\\n        IERC20 outputToken,\\n        Decimal.decimal calldata outputTokenBought\\n    ) external view returns (Decimal.decimal memory);\\n\\n    function getSpotPrice(IERC20 inputToken, IERC20 outputToken)\\n        external\\n        view\\n        returns (Decimal.decimal memory);\\n}\\n\",\"keccak256\":\"0xb3094d49093608a1405cbd8d1b17050ea822435d553205a67c07136c3172b64b\",\"license\":\"GPL-3.0-or-later\"},\"contracts/utils/Decimal.sol\":{\"content\":\"// SPDX-License-Identifier: GPL-3.0-or-later\\npragma solidity >=0.6.0 <=0.9.0;\\n\\nimport {SafeMath} from \\\"@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol\\\";\\nimport {DecimalMath} from \\\"./DecimalMath.sol\\\";\\n\\nlibrary Decimal {\\n    using DecimalMath for uint256;\\n    using SafeMath for uint256;\\n\\n    struct decimal {\\n        uint256 d;\\n    }\\n\\n    function zero() internal pure returns (decimal memory) {\\n        return decimal(0);\\n    }\\n\\n    function one() internal pure returns (decimal memory) {\\n        return decimal(DecimalMath.unit(18));\\n    }\\n\\n    function toUint(decimal memory x) internal pure returns (uint256) {\\n        return x.d;\\n    }\\n\\n    function modD(decimal memory x, decimal memory y) internal pure returns (decimal memory) {\\n        return decimal(x.d.mul(DecimalMath.unit(18)) % y.d);\\n    }\\n\\n    function cmp(decimal memory x, decimal memory y) internal pure returns (int8) {\\n        if (x.d > y.d) {\\n            return 1;\\n        } else if (x.d < y.d) {\\n            return -1;\\n        }\\n        return 0;\\n    }\\n\\n    /// @dev add two decimals\\n    function addD(decimal memory x, decimal memory y) internal pure returns (decimal memory) {\\n        decimal memory t;\\n        t.d = x.d.add(y.d);\\n        return t;\\n    }\\n\\n    /// @dev subtract two decimals\\n    function subD(decimal memory x, decimal memory y) internal pure returns (decimal memory) {\\n        decimal memory t;\\n        t.d = x.d.sub(y.d);\\n        return t;\\n    }\\n\\n    /// @dev multiple two decimals\\n    function mulD(decimal memory x, decimal memory y) internal pure returns (decimal memory) {\\n        decimal memory t;\\n        t.d = x.d.muld(y.d);\\n        return t;\\n    }\\n\\n    /// @dev multiple a decimal by a uint256\\n    function mulScalar(decimal memory x, uint256 y) internal pure returns (decimal memory) {\\n        decimal memory t;\\n        t.d = x.d.mul(y);\\n        return t;\\n    }\\n\\n    /// @dev divide two decimals\\n    function divD(decimal memory x, decimal memory y) internal pure returns (decimal memory) {\\n        decimal memory t;\\n        t.d = x.d.divd(y.d);\\n        return t;\\n    }\\n\\n    /// @dev divide a decimal by a uint256\\n    function divScalar(decimal memory x, uint256 y) internal pure returns (decimal memory) {\\n        decimal memory t;\\n        t.d = x.d.div(y);\\n        return t;\\n    }\\n}\\n\",\"keccak256\":\"0x1db4f74edd20aa77b0ed6732de1d6fcbdfed4fe79e042f459dda6e26584ee574\",\"license\":\"GPL-3.0-or-later\"},\"contracts/utils/DecimalERC20.sol\":{\"content\":\"// SPDX-License-Identifier: GPL-3.0-or-later\\npragma solidity 0.6.9;\\n\\nimport {IERC20} from \\\"@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/IERC20.sol\\\";\\nimport {SafeMath} from \\\"@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol\\\";\\nimport {Decimal} from \\\"./Decimal.sol\\\";\\n\\nabstract contract DecimalERC20 {\\n    using SafeMath for uint256;\\n    using Decimal for Decimal.decimal;\\n\\n    mapping(address => uint256) private decimalMap;\\n\\n    //\\u25e5\\u25e4\\u25e5\\u25e4\\u25e5\\u25e4\\u25e5\\u25e4\\u25e5\\u25e4\\u25e5\\u25e4\\u25e5\\u25e4\\u25e5\\u25e4 add state variables below \\u25e5\\u25e4\\u25e5\\u25e4\\u25e5\\u25e4\\u25e5\\u25e4\\u25e5\\u25e4\\u25e5\\u25e4\\u25e5\\u25e4\\u25e5\\u25e4//\\n\\n    //\\u25e2\\u25e3\\u25e2\\u25e3\\u25e2\\u25e3\\u25e2\\u25e3\\u25e2\\u25e3\\u25e2\\u25e3\\u25e2\\u25e3\\u25e2\\u25e3 add state variables above \\u25e2\\u25e3\\u25e2\\u25e3\\u25e2\\u25e3\\u25e2\\u25e3\\u25e2\\u25e3\\u25e2\\u25e3\\u25e2\\u25e3\\u25e2\\u25e3//\\n    uint256[50] private __gap;\\n\\n    //\\n    // INTERNAL functions\\n    //\\n\\n    // CAUTION: do not input _from == _to s.t. this function will always fail\\n    function _transfer(\\n        IERC20 _token,\\n        address _to,\\n        Decimal.decimal memory _value\\n    ) internal {\\n        _updateDecimal(address(_token));\\n        Decimal.decimal memory balanceBefore = _balanceOf(_token, _to);\\n        uint256 roundedDownValue = _toUint(_token, _value);\\n\\n        // solhint-disable avoid-low-level-calls\\n        (bool success, bytes memory data) = address(_token).call(\\n            abi.encodeWithSelector(_token.transfer.selector, _to, roundedDownValue)\\n        );\\n\\n        require(\\n            success && (data.length == 0 || abi.decode(data, (bool))),\\n            \\\"DecimalERC20: transfer failed\\\"\\n        );\\n        _validateBalance(_token, _to, roundedDownValue, balanceBefore);\\n    }\\n\\n    function _transferFrom(\\n        IERC20 _token,\\n        address _from,\\n        address _to,\\n        Decimal.decimal memory _value\\n    ) internal {\\n        _updateDecimal(address(_token));\\n        Decimal.decimal memory balanceBefore = _balanceOf(_token, _to);\\n        uint256 roundedDownValue = _toUint(_token, _value);\\n\\n        // solhint-disable avoid-low-level-calls\\n        (bool success, bytes memory data) = address(_token).call(\\n            abi.encodeWithSelector(_token.transferFrom.selector, _from, _to, roundedDownValue)\\n        );\\n\\n        require(\\n            success && (data.length == 0 || abi.decode(data, (bool))),\\n            \\\"DecimalERC20: transferFrom failed\\\"\\n        );\\n        _validateBalance(_token, _to, roundedDownValue, balanceBefore);\\n    }\\n\\n    function _approve(\\n        IERC20 _token,\\n        address _spender,\\n        Decimal.decimal memory _value\\n    ) internal {\\n        _updateDecimal(address(_token));\\n        // to be compatible with some erc20 tokens like USDT\\n        __approve(_token, _spender, Decimal.zero());\\n        __approve(_token, _spender, _value);\\n    }\\n\\n    //\\n    // VIEW\\n    //\\n    function _allowance(\\n        IERC20 _token,\\n        address _owner,\\n        address _spender\\n    ) internal view returns (Decimal.decimal memory) {\\n        return _toDecimal(_token, _token.allowance(_owner, _spender));\\n    }\\n\\n    function _balanceOf(IERC20 _token, address _owner)\\n        internal\\n        view\\n        returns (Decimal.decimal memory)\\n    {\\n        return _toDecimal(_token, _token.balanceOf(_owner));\\n    }\\n\\n    function _totalSupply(IERC20 _token) internal view returns (Decimal.decimal memory) {\\n        return _toDecimal(_token, _token.totalSupply());\\n    }\\n\\n    function _toDecimal(IERC20 _token, uint256 _number)\\n        internal\\n        view\\n        returns (Decimal.decimal memory)\\n    {\\n        uint256 tokenDecimals = _getTokenDecimals(address(_token));\\n        if (tokenDecimals >= 18) {\\n            return Decimal.decimal(_number.div(10**(tokenDecimals.sub(18))));\\n        }\\n\\n        return Decimal.decimal(_number.mul(10**(uint256(18).sub(tokenDecimals))));\\n    }\\n\\n    function _toUint(IERC20 _token, Decimal.decimal memory _decimal)\\n        internal\\n        view\\n        returns (uint256)\\n    {\\n        uint256 tokenDecimals = _getTokenDecimals(address(_token));\\n        if (tokenDecimals >= 18) {\\n            return _decimal.toUint().mul(10**(tokenDecimals.sub(18)));\\n        }\\n        return _decimal.toUint().div(10**(uint256(18).sub(tokenDecimals)));\\n    }\\n\\n    function _getTokenDecimals(address _token) internal view returns (uint256) {\\n        uint256 tokenDecimals = decimalMap[_token];\\n        if (tokenDecimals == 0) {\\n            (bool success, bytes memory data) = _token.staticcall(\\n                abi.encodeWithSignature(\\\"decimals()\\\")\\n            );\\n            require(success && data.length != 0, \\\"DecimalERC20: get decimals failed\\\");\\n            tokenDecimals = abi.decode(data, (uint256));\\n        }\\n        return tokenDecimals;\\n    }\\n\\n    //\\n    // PRIVATE\\n    //\\n    function _updateDecimal(address _token) private {\\n        uint256 tokenDecimals = _getTokenDecimals(_token);\\n        if (decimalMap[_token] != tokenDecimals) {\\n            decimalMap[_token] = tokenDecimals;\\n        }\\n    }\\n\\n    function __approve(\\n        IERC20 _token,\\n        address _spender,\\n        Decimal.decimal memory _value\\n    ) private {\\n        // solhint-disable avoid-low-level-calls\\n        (bool success, bytes memory data) = address(_token).call(\\n            abi.encodeWithSelector(_token.approve.selector, _spender, _toUint(_token, _value))\\n        );\\n        require(\\n            success && (data.length == 0 || abi.decode(data, (bool))),\\n            \\\"DecimalERC20: approve failed\\\"\\n        );\\n    }\\n\\n    // To prevent from deflationary token, check receiver's balance is as expectation.\\n    function _validateBalance(\\n        IERC20 _token,\\n        address _to,\\n        uint256 _roundedDownValue,\\n        Decimal.decimal memory _balanceBefore\\n    ) private view {\\n        require(\\n            _balanceOf(_token, _to).cmp(\\n                _balanceBefore.addD(_toDecimal(_token, _roundedDownValue))\\n            ) == 0,\\n            \\\"DecimalERC20: balance inconsistent\\\"\\n        );\\n    }\\n}\\n\",\"keccak256\":\"0xf97ccdfa07abeda868c8cc6bf80035cf6a4c5c0aa972ffd9bc7fe5f6c62e5170\",\"license\":\"GPL-3.0-or-later\"},\"contracts/utils/DecimalMath.sol\":{\"content\":\"// SPDX-License-Identifier: GPL-3.0-or-later\\npragma solidity 0.6.9;\\n\\nimport {SafeMath} from \\\"@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol\\\";\\n\\n/// @dev Implements simple fixed point math add, sub, mul and div operations.\\n/// @author Alberto Cuesta Ca\\u00f1ada\\nlibrary DecimalMath {\\n    using SafeMath for uint256;\\n\\n    /// @dev Returns 1 in the fixed point representation, with `decimals` decimals.\\n    function unit(uint8 decimals) internal pure returns (uint256) {\\n        return 10**uint256(decimals);\\n    }\\n\\n    /// @dev Adds x and y, assuming they are both fixed point with 18 decimals.\\n    function addd(uint256 x, uint256 y) internal pure returns (uint256) {\\n        return x.add(y);\\n    }\\n\\n    /// @dev Subtracts y from x, assuming they are both fixed point with 18 decimals.\\n    function subd(uint256 x, uint256 y) internal pure returns (uint256) {\\n        return x.sub(y);\\n    }\\n\\n    /// @dev Multiplies x and y, assuming they are both fixed point with 18 digits.\\n    function muld(uint256 x, uint256 y) internal pure returns (uint256) {\\n        return muld(x, y, 18);\\n    }\\n\\n    /// @dev Multiplies x and y, assuming they are both fixed point with `decimals` digits.\\n    function muld(\\n        uint256 x,\\n        uint256 y,\\n        uint8 decimals\\n    ) internal pure returns (uint256) {\\n        return x.mul(y).div(unit(decimals));\\n    }\\n\\n    /// @dev Divides x between y, assuming they are both fixed point with 18 digits.\\n    function divd(uint256 x, uint256 y) internal pure returns (uint256) {\\n        return divd(x, y, 18);\\n    }\\n\\n    /// @dev Divides x between y, assuming they are both fixed point with `decimals` digits.\\n    function divd(\\n        uint256 x,\\n        uint256 y,\\n        uint8 decimals\\n    ) internal pure returns (uint256) {\\n        return x.mul(unit(decimals)).div(y);\\n    }\\n}\\n\",\"keccak256\":\"0x4879526465b70a7166efb7b32359e2713579ace533c766cc215c8e717ba8da5e\",\"license\":\"GPL-3.0-or-later\"},\"contracts/utils/IfnxFiOwnableUpgrade.sol\":{\"content\":\"// SPDX-License-Identifier: GPL-3.0-or-later\\npragma solidity 0.6.9;\\n\\nimport {ContextUpgradeSafe} from \\\"@openzeppelin/contracts-ethereum-package/contracts/GSN/Context.sol\\\";\\n\\n// copy from openzeppelin Ownable, only modify how the owner transfer\\n/**\\n * @dev Contract module which provides a basic access control mechanism, where\\n * there is an account (an owner) that can be granted exclusive access to\\n * specific functions.\\n *\\n * By default, the owner account will be the one that deploys the contract. This\\n * can later be changed with {transferOwnership}.\\n *\\n * This module is used through inheritance. It will make available the modifier\\n * `onlyOwner`, which can be applied to your functions to restrict their use to\\n * the owner.\\n */\\ncontract IfnxFiOwnableUpgrade is ContextUpgradeSafe {\\n    address private _owner;\\n    address private _candidate;\\n\\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\\n\\n    /**\\n     * @dev Initializes the contract setting the deployer as the initial owner.\\n     */\\n\\n    function __Ownable_init() internal initializer {\\n        __Context_init_unchained();\\n        __Ownable_init_unchained();\\n    }\\n\\n    function __Ownable_init_unchained() internal initializer {\\n        address msgSender = _msgSender();\\n        _owner = msgSender;\\n        emit OwnershipTransferred(address(0), msgSender);\\n    }\\n\\n    /**\\n     * @dev Returns the address of the current owner.\\n     */\\n    function owner() public view returns (address) {\\n        return _owner;\\n    }\\n\\n    function candidate() public view returns (address) {\\n        return _candidate;\\n    }\\n\\n    /**\\n     * @dev Throws if called by any account other than the owner.\\n     */\\n    modifier onlyOwner() {\\n        require(_owner == _msgSender(), \\\"IfnxFiOwnableUpgrade: caller is not the owner\\\");\\n        _;\\n    }\\n\\n    /**\\n     * @dev Leaves the contract without owner. It will not be possible to call\\n     * `onlyOwner` functions anymore. Can only be called by the current owner.\\n     *\\n     * NOTE: Renouncing ownership will leave the contract without an owner,\\n     * thereby removing any functionality that is only available to the owner.\\n     */\\n    function renounceOwnership() public virtual onlyOwner {\\n        emit OwnershipTransferred(_owner, address(0));\\n        _owner = address(0);\\n    }\\n\\n    /**\\n     * @dev Set ownership of the contract to a new account (`newOwner`).\\n     * Can only be called by the current owner.\\n     */\\n    function setOwner(address newOwner) public onlyOwner {\\n        require(newOwner != address(0), \\\"IfnxFiOwnableUpgrade: zero address\\\");\\n        require(newOwner != _owner, \\\"IfnxFiOwnableUpgrade: same as original\\\");\\n        require(newOwner != _candidate, \\\"IfnxFiOwnableUpgrade: same as candidate\\\");\\n        _candidate = newOwner;\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`_candidate`).\\n     * Can only be called by the new owner.\\n     */\\n    function updateOwner() public {\\n        require(_candidate != address(0), \\\"IfnxFiOwnableUpgrade: candidate is zero address\\\");\\n        require(_candidate == _msgSender(), \\\"IfnxFiOwnableUpgrade: not the new owner\\\");\\n\\n        emit OwnershipTransferred(_owner, _candidate);\\n        _owner = _candidate;\\n        _candidate = address(0);\\n    }\\n\\n    uint256[50] private __gap;\\n}\\n\",\"keccak256\":\"0xd04de8ce5b77f84da11af5b08c942c1774813b4ebc14fccedfd81d918b90ab88\",\"license\":\"GPL-3.0-or-later\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50612421806100206000396000f3fe608060405234801561001057600080fd5b50600436106100ea5760003560e01c8063715018a61161008c578063bc5920ba11610066578063bc5920ba146101a6578063c1094e5b146101ae578063c643ea63146101c1578063e5e75d1e146101d4576100ea565b8063715018a6146101835780638da5cb5b1461018b5780639577ee8214610193576100ea565b806333967151116100c85780633396715114610140578063485cc9551461015357806359f571e8146101665780636c8381f81461017b576100ea565b8063026b49a7146100ef57806313af40351461010457806315e84af914610117575b600080fd5b6101026100fd366004611b81565b6101e7565b005b610102610112366004611b81565b610247565b61012a610125366004611cd4565b610320565b604051610137919061230f565b60405180910390f35b61012a61014e366004611d24565b61033b565b610102610161366004611b9d565b610384565b61016e610435565b6040516101379190611e21565b61016e610444565b610102610453565b61016e6104d2565b6101026101a1366004611c8d565b6104e1565b610102610521565b61012a6101bc366004611ce6565b6105e4565b61012a6101cf366004611ce6565b610628565b61012a6101e2366004611d24565b610663565b6101ef6106a2565b6065546001600160a01b039081169116146102255760405162461bcd60e51b815260040161021c90612073565b60405180910390fd5b60cc80546001600160a01b0319166001600160a01b0392909216919091179055565b61024f6106a2565b6065546001600160a01b0390811691161461027c5760405162461bcd60e51b815260040161021c90612073565b6001600160a01b0381166102a25760405162461bcd60e51b815260040161021c906122cd565b6065546001600160a01b03828116911614156102d05760405162461bcd60e51b815260040161021c9061220e565b6066546001600160a01b03828116911614156102fe5760405162461bcd60e51b815260040161021c90611f73565b606680546001600160a01b0319166001600160a01b0392909216919091179055565b610328611b32565b61033283836106a6565b90505b92915050565b610343611b32565b61037a868661035736889003880188611d8f565b61036636889003880188611d8f565b61037536889003880188611d8f565b6107e0565b9695505050505050565b600054610100900460ff168061039d575061039d6108bf565b806103ab575060005460ff16155b6103c75760405162461bcd60e51b815260040161021c9061212e565b600054610100900460ff161580156103f2576000805460ff1961ff0019909116610100171660011790555b6103fa6108c5565b60cd80546001600160a01b0319166001600160a01b03841617905561041e836101e7565b8015610430576000805461ff00191690555b505050565b60cc546001600160a01b031681565b6066546001600160a01b031690565b61045b6106a2565b6065546001600160a01b039081169116146104885760405162461bcd60e51b815260040161021c90612073565b6065546040516000916001600160a01b0316907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908390a3606580546001600160a01b0319169055565b6065546001600160a01b031690565b6104e96106a2565b6065546001600160a01b039081169116146105165760405162461bcd60e51b815260040161021c90612073565b610430838383610958565b6066546001600160a01b03166105495760405162461bcd60e51b815260040161021c906121bf565b6105516106a2565b6066546001600160a01b0390811691161461057e5760405162461bcd60e51b815260040161021c90611f2c565b6066546065546040516001600160a01b0392831692909116907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a360668054606580546001600160a01b03199081166001600160a01b03841617909155169055565b6105ec611b32565b6105f4611b32565b6105fe85856106a6565b905061061f8161061336869003860186611d8f565b9063ffffffff61097e16565b95945050505050565b610630611b32565b610638611b32565b61064285856106a6565b905061061f8161065736869003860186611d8f565b9063ffffffff6109aa16565b61066b611b32565b61037a868661067f36889003880188611d8f565b61068e36889003880188611d8f565b61069d36889003880188611d8f565b6109cd565b3390565b6106ae611b32565b816001600160a01b0316836001600160a01b031614156106d7576106d0610a11565b9050610335565b6040805160028082526060808301845292602083019080368337019050509050838160008151811061070557fe5b60200260200101906001600160a01b031690816001600160a01b031681525050828160018151811061073357fe5b60200260200101906001600160a01b031690816001600160a01b031681525050600061075e82610a35565b9050610768611b32565b506040805160208101909152818152600061078287610ae1565b9050600061078f87610ae1565b9050808210156107b2576107ab886107a685610bc5565b610bc9565b92506107d4565b808211156107d45760405180602001604052806107cf8986610c5b565b905292505b50909695505050505050565b6107e8611b32565b60006107f26106a2565b90506107fc611b32565b610807888888610cd9565b9050600061081b868363ffffffff610e1a16565b60000b121561083c5760405162461bcd60e51b815260040161021c9061217c565b61084888833084610e4b565b610850611b32565b61085d8989898989610f7d565b90507f4d207a2df21cff761d39dd1942c4370b71074291874855081465c54e12987ab261088982610bc5565b61089289610bc5565b6040516108a0929190612319565b60405180910390a16108b388848961120c565b98975050505050505050565b303b1590565b600054610100900460ff16806108de57506108de6108bf565b806108ec575060005460ff16155b6109085760405162461bcd60e51b815260040161021c9061212e565b600054610100900460ff16158015610933576000805460ff1961ff0019909116610100171660011790555b61093b61133b565b6109436113bc565b8015610955576000805461ff00191690555b50565b61096183611496565b610973838361096e6114e3565b6114fe565b6104308383836114fe565b610986611b32565b61098e611b32565b825184516109a19163ffffffff6115fd16565b81529392505050565b6109b2611b32565b6109ba611b32565b825184516109a19163ffffffff61160b16565b6109d5611b32565b60006109df6106a2565b90506109ed87823088610e4b565b6109fa8787878787611619565b9150610a0786828461120c565b5095945050505050565b610a19611b32565b6040518060200160405280610a2e60126118a2565b9052905090565b60cc5460405163d06ca61f60e01b81526000916060916001600160a01b039091169063d06ca61f90610a6e906001908790600401611e72565b60006040518083038186803b158015610a8657600080fd5b505afa158015610a9a573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f19168201604052610ac29190810190611bd5565b905080600181518110610ad157fe5b6020026020010151915050919050565b6001600160a01b038116600090815260996020526040812054806103355760408051600481526024810182526020810180516001600160e01b031663313ce56760e01b17905290516000916060916001600160a01b03871691610b4391611e05565b600060405180830381855afa9150503d8060008114610b7e576040519150601f19603f3d011682016040523d82523d6000602084013e610b83565b606091505b5091509150818015610b955750805115155b610bb15760405162461bcd60e51b815260040161021c90611fba565b8080602001905181019061061f9190611daa565b5190565b610bd1611b32565b6000610bdc84610ae1565b905060128110610c2157604080516020810190915280610c16610c0684601263ffffffff6118ab16565b8690600a0a63ffffffff6118ed16565b815250915050610335565b604080516020810190915280610c51610c4160128563ffffffff6118ab16565b8690600a0a63ffffffff61192f16565b9052949350505050565b600080610c6784610ae1565b905060128110610ca557610c9d610c8582601263ffffffff6118ab16565b600a0a610c9185610bc5565b9063ffffffff61192f16565b915050610335565b610cd1610cb960128363ffffffff6118ab16565b600a0a610cc585610bc5565b9063ffffffff6118ed16565b949350505050565b610ce1611b32565b60408051600280825260608083018452926020830190803683370190505090508481600081518110610d0f57fe5b60200260200101906001600160a01b031690816001600160a01b0316815250508381600181518110610d3d57fe5b60200260200101906001600160a01b031690816001600160a01b0316815250506000610d698585610c5b565b60cc546040516307c0329d60e21b81529192506060916001600160a01b0390911690631f00ca7490610da19085908790600401611e72565b60006040518083038186803b158015610db957600080fd5b505afa158015610dcd573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f19168201604052610df59190810190611bd5565b9050600081600181518110610e0657fe5b602002602001015190506108b38882610bc9565b805182516000911015610e2f57506001610335565b815183511015610e425750600019610335565b50600092915050565b610e5484611496565b610e5c611b32565b610e668584611969565b90506000610e748684610c5b565b905060006060876001600160a01b03166323b872dd60e01b888886604051602401610ea193929190611e35565b60408051601f198184030181529181526020820180516001600160e01b03166001600160e01b0319909416939093179092529051610edf9190611e05565b6000604051808303816000865af19150503d8060008114610f1c576040519150601f19603f3d011682016040523d82523d6000602084013e610f21565b606091505b5091509150818015610f4b575080511580610f4b575080806020019051810190610f4b9190611c6d565b610f675760405162461bcd60e51b815260040161021c90611ffb565b610f73888785876119f1565b5050505050505050565b610f85611b32565b60408051600280825260608083018452926020830190803683370190505090508681600081518110610fb357fe5b60200260200101906001600160a01b031690816001600160a01b0316815250508581600181518110610fe157fe5b60200260200101906001600160a01b031690816001600160a01b03168152505061100a83610bc5565b61105057600061101982610a35565b60408051602080820183526710a741a4627800008252825190810190925282825291925061104c9163ffffffff61097e16565b9350505b60cc546110689088906001600160a01b031686610958565b60006110748787610c5b565b905060006110828987610c5b565b9050600061108f84610a35565b905061109a86610bc5565b8111156110b95760405162461bcd60e51b815260040161021c906120c0565b60cc54604051634401edf760e11b81526060916001600160a01b031690638803dbee906110f290879087908a9030904290600401612327565b600060405180830381600087803b15801561110c57600080fd5b505af1158015611120573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f191682016040526111489190810190611bd5565b905060008160018151811061115957fe5b60200260200101519050600061116e87610a35565b905061117989610bc5565b8111156111985760405162461bcd60e51b815260040161021c906120c0565b600082116111b85760405162461bcd60e51b815260040161021c9061203c565b7f1ac213d5b0a496f217ff7aa4815243ba303ec9f805bae18c73d1497b29df417b82876040516111e9929190612319565b60405180910390a16111fb8d83610bc9565b9d9c50505050505050505050505050565b61121583611496565b61121d611b32565b6112278484611969565b905060006112358584610c5b565b905060006060866001600160a01b031663a9059cbb60e01b8785604051602401611260929190611e59565b60408051601f198184030181529181526020820180516001600160e01b03166001600160e01b031990941693909317909252905161129e9190611e05565b6000604051808303816000865af19150503d80600081146112db576040519150601f19603f3d011682016040523d82523d6000602084013e6112e0565b606091505b509150915081801561130a57508051158061130a57508080602001905181019061130a9190611c6d565b6113265760405162461bcd60e51b815260040161021c90611ebe565b611332878785876119f1565b50505050505050565b600054610100900460ff168061135457506113546108bf565b80611362575060005460ff16155b61137e5760405162461bcd60e51b815260040161021c9061212e565b600054610100900460ff16158015610943576000805460ff1961ff0019909116610100171660011790558015610955576000805461ff001916905550565b600054610100900460ff16806113d557506113d56108bf565b806113e3575060005460ff16155b6113ff5760405162461bcd60e51b815260040161021c9061212e565b600054610100900460ff1615801561142a576000805460ff1961ff0019909116610100171660011790555b60006114346106a2565b606580546001600160a01b0319166001600160a01b038316908117909155604051919250906000907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908290a3508015610955576000805461ff001916905550565b60006114a182610ae1565b6001600160a01b03831660009081526099602052604090205490915081146114df576001600160a01b03821660009081526099602052604090208190555b5050565b6114eb611b32565b5060408051602081019091526000815290565b600060606001600160a01b03851663095ea7b360e01b8561151f8887610c5b565b604051602401611530929190611e59565b60408051601f198184030181529181526020820180516001600160e01b03166001600160e01b031990941693909317909252905161156e9190611e05565b6000604051808303816000865af19150503d80600081146115ab576040519150601f19603f3d011682016040523d82523d6000602084013e6115b0565b606091505b50915091508180156115da5750805115806115da5750808060200190518101906115da9190611c6d565b6115f65760405162461bcd60e51b815260040161021c90612254565b5050505050565b600061033283836012611a4a565b600061033283836012611a68565b611621611b32565b6040805160028082526060808301845292602083019080368337019050509050868160008151811061164f57fe5b60200260200101906001600160a01b031690816001600160a01b031681525050858160018151811061167d57fe5b60200260200101906001600160a01b031690816001600160a01b0316815250506116a683610bc5565b6116ec5760006116b582610a35565b60408051602080820183526710a741a462780000825282519081019092528282529192506116e89163ffffffff61097e16565b9350505b60cc546117049088906001600160a01b031687610958565b60006117108887610c5b565b9050600061171d83610a35565b905061172885610bc5565b8111156117475760405162461bcd60e51b815260040161021c906120c0565b60cc546060906001600160a01b03166338ed1739846117668c8b610c5b565b8730426040518663ffffffff1660e01b8152600401611789959493929190612327565b600060405180830381600087803b1580156117a357600080fd5b505af11580156117b7573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f191682016040526117df9190810190611bd5565b90506000816001815181106117f057fe5b60200260200101519050600061180586610a35565b905061181088610bc5565b81111561182f5760405162461bcd60e51b815260040161021c906120c0565b6000821161184f5760405162461bcd60e51b815260040161021c9061203c565b7f1ac213d5b0a496f217ff7aa4815243ba303ec9f805bae18c73d1497b29df417b8583604051611880929190612319565b60405180910390a16118928b83610bc9565b9c9b505050505050505050505050565b60ff16600a0a90565b600061033283836040518060400160405280601e81526020017f536166654d6174683a207375627472616374696f6e206f766572666c6f770000815250611a87565b600061033283836040518060400160405280601a81526020017f536166654d6174683a206469766973696f6e206279207a65726f000000000000815250611ab3565b60008261193e57506000610335565b8282028284828161194b57fe5b04146103325760405162461bcd60e51b815260040161021c906120ed565b611971611b32565b61033283846001600160a01b03166370a08231856040518263ffffffff1660e01b81526004016119a19190611e21565b60206040518083038186803b1580156119b957600080fd5b505afa1580156119cd573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906107a69190611daa565b611a24611a0e611a018685610bc9565b839063ffffffff611aea16565b611a188686611969565b9063ffffffff610e1a16565b60000b15611a445760405162461bcd60e51b815260040161021c9061228b565b50505050565b6000610cd1611a58836118a2565b610cc5868663ffffffff61192f16565b6000610cd183610cc5611a7a856118a2565b879063ffffffff61192f16565b60008184841115611aab5760405162461bcd60e51b815260040161021c9190611e8b565b505050900390565b60008183611ad45760405162461bcd60e51b815260040161021c9190611e8b565b506000838581611ae057fe5b0495945050505050565b611af2611b32565b611afa611b32565b825184516109a19163ffffffff611b0d16565b6000828201838110156103325760405162461bcd60e51b815260040161021c90611ef5565b6040518060200160405280600081525090565b600060208284031215611b56578081fd5b50919050565b600060208284031215611b6d578081fd5b611b776020612363565b9135825250919050565b600060208284031215611b92578081fd5b8135610332816123d6565b60008060408385031215611baf578081fd5b8235611bba816123d6565b91506020830135611bca816123d6565b809150509250929050565b60006020808385031215611be7578182fd5b825167ffffffffffffffff811115611bfd578283fd5b80840185601f820112611c0e578384fd5b80519150611c23611c1e8361238a565b612363565b8281528381019082850185850284018601891015611c3f578687fd5b8693505b84841015611c61578051835260019390930192918501918501611c43565b50979650505050505050565b600060208284031215611c7e578081fd5b81518015158114610332578182fd5b600080600060608486031215611ca1578081fd5b8335611cac816123d6565b92506020840135611cbc816123d6565b9150611ccb8560408601611b5c565b90509250925092565b60008060408385031215611baf578182fd5b600080600060608486031215611cfa578283fd5b8335611d05816123d6565b92506020840135611d15816123d6565b9150611ccb8560408601611b45565b600080600080600060a08688031215611d3b578081fd5b8535611d46816123d6565b94506020860135611d56816123d6565b9350611d658760408801611b45565b9250611d748760608801611b45565b9150611d838760808801611b45565b90509295509295909350565b600060208284031215611da0578081fd5b6103328383611b5c565b600060208284031215611dbb578081fd5b5051919050565b6000815180845260208085019450808401835b83811015611dfa5781516001600160a01b031687529582019590820190600101611dd5565b509495945050505050565b60008251611e178184602087016123aa565b9190910192915050565b6001600160a01b0391909116815260200190565b6001600160a01b039384168152919092166020820152604081019190915260600190565b6001600160a01b03929092168252602082015260400190565b600083825260406020830152610cd16040830184611dc2565b6000602082528251806020840152611eaa8160408501602087016123aa565b601f01601f19169190910160400192915050565b6020808252601d908201527f446563696d616c45524332303a207472616e73666572206661696c6564000000604082015260600190565b6020808252601b908201527f536166654d6174683a206164646974696f6e206f766572666c6f770000000000604082015260600190565b60208082526027908201527f49666e7846694f776e61626c65557067726164653a206e6f7420746865206e656040820152663b9037bbb732b960c91b606082015260800190565b60208082526027908201527f49666e7846694f776e61626c65557067726164653a2073616d652061732063616040820152666e64696461746560c81b606082015260800190565b60208082526021908201527f446563696d616c45524332303a2067657420646563696d616c73206661696c656040820152601960fa1b606082015260800190565b60208082526021908201527f446563696d616c45524332303a207472616e7366657246726f6d206661696c656040820152601960fa1b606082015260800190565b60208082526017908201527f42616c616e6365722065786368616e6765206572726f72000000000000000000604082015260600190565b6020808252602d908201527f49666e7846694f776e61626c65557067726164653a2063616c6c65722069732060408201526c3737ba103a34329037bbb732b960991b606082015260800190565b6020808252601390820152724552525f4241445f4c494d49545f505249434560681b604082015260600190565b60208082526021908201527f536166654d6174683a206d756c7469706c69636174696f6e206f766572666c6f6040820152607760f81b606082015260800190565b6020808252602e908201527f436f6e747261637420696e7374616e63652068617320616c726561647920626560408201526d195b881a5b9a5d1a585b1a5e995960921b606082015260800190565b60208082526023908201527f6d617820696e70757420616d6f756e74206c657373207468616e2065787065636040820152621d195960ea1b606082015260800190565b6020808252602f908201527f49666e7846694f776e61626c65557067726164653a2063616e6469646174652060408201526e6973207a65726f206164647265737360881b606082015260800190565b60208082526026908201527f49666e7846694f776e61626c65557067726164653a2073616d65206173206f726040820152651a59da5b985b60d21b606082015260800190565b6020808252601c908201527f446563696d616c45524332303a20617070726f7665206661696c656400000000604082015260600190565b60208082526022908201527f446563696d616c45524332303a2062616c616e636520696e636f6e73697374656040820152611b9d60f21b606082015260800190565b60208082526022908201527f49666e7846694f776e61626c65557067726164653a207a65726f206164647265604082015261737360f01b606082015260800190565b9051815260200190565b918252602082015260400190565b600086825285602083015260a0604083015261234660a0830186611dc2565b6001600160a01b0394909416606083015250608001529392505050565b60405181810167ffffffffffffffff8111828210171561238257600080fd5b604052919050565b600067ffffffffffffffff8211156123a0578081fd5b5060209081020190565b60005b838110156123c55781810151838201526020016123ad565b83811115611a445750506000910152565b6001600160a01b038116811461095557600080fdfea2646970667358221220ca58a03a0c62c92c39aef70a11cec4bef40d13f4c2c71581b1fa57cc0feaf09f64736f6c63430006090033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100ea5760003560e01c8063715018a61161008c578063bc5920ba11610066578063bc5920ba146101a6578063c1094e5b146101ae578063c643ea63146101c1578063e5e75d1e146101d4576100ea565b8063715018a6146101835780638da5cb5b1461018b5780639577ee8214610193576100ea565b806333967151116100c85780633396715114610140578063485cc9551461015357806359f571e8146101665780636c8381f81461017b576100ea565b8063026b49a7146100ef57806313af40351461010457806315e84af914610117575b600080fd5b6101026100fd366004611b81565b6101e7565b005b610102610112366004611b81565b610247565b61012a610125366004611cd4565b610320565b604051610137919061230f565b60405180910390f35b61012a61014e366004611d24565b61033b565b610102610161366004611b9d565b610384565b61016e610435565b6040516101379190611e21565b61016e610444565b610102610453565b61016e6104d2565b6101026101a1366004611c8d565b6104e1565b610102610521565b61012a6101bc366004611ce6565b6105e4565b61012a6101cf366004611ce6565b610628565b61012a6101e2366004611d24565b610663565b6101ef6106a2565b6065546001600160a01b039081169116146102255760405162461bcd60e51b815260040161021c90612073565b60405180910390fd5b60cc80546001600160a01b0319166001600160a01b0392909216919091179055565b61024f6106a2565b6065546001600160a01b0390811691161461027c5760405162461bcd60e51b815260040161021c90612073565b6001600160a01b0381166102a25760405162461bcd60e51b815260040161021c906122cd565b6065546001600160a01b03828116911614156102d05760405162461bcd60e51b815260040161021c9061220e565b6066546001600160a01b03828116911614156102fe5760405162461bcd60e51b815260040161021c90611f73565b606680546001600160a01b0319166001600160a01b0392909216919091179055565b610328611b32565b61033283836106a6565b90505b92915050565b610343611b32565b61037a868661035736889003880188611d8f565b61036636889003880188611d8f565b61037536889003880188611d8f565b6107e0565b9695505050505050565b600054610100900460ff168061039d575061039d6108bf565b806103ab575060005460ff16155b6103c75760405162461bcd60e51b815260040161021c9061212e565b600054610100900460ff161580156103f2576000805460ff1961ff0019909116610100171660011790555b6103fa6108c5565b60cd80546001600160a01b0319166001600160a01b03841617905561041e836101e7565b8015610430576000805461ff00191690555b505050565b60cc546001600160a01b031681565b6066546001600160a01b031690565b61045b6106a2565b6065546001600160a01b039081169116146104885760405162461bcd60e51b815260040161021c90612073565b6065546040516000916001600160a01b0316907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908390a3606580546001600160a01b0319169055565b6065546001600160a01b031690565b6104e96106a2565b6065546001600160a01b039081169116146105165760405162461bcd60e51b815260040161021c90612073565b610430838383610958565b6066546001600160a01b03166105495760405162461bcd60e51b815260040161021c906121bf565b6105516106a2565b6066546001600160a01b0390811691161461057e5760405162461bcd60e51b815260040161021c90611f2c565b6066546065546040516001600160a01b0392831692909116907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a360668054606580546001600160a01b03199081166001600160a01b03841617909155169055565b6105ec611b32565b6105f4611b32565b6105fe85856106a6565b905061061f8161061336869003860186611d8f565b9063ffffffff61097e16565b95945050505050565b610630611b32565b610638611b32565b61064285856106a6565b905061061f8161065736869003860186611d8f565b9063ffffffff6109aa16565b61066b611b32565b61037a868661067f36889003880188611d8f565b61068e36889003880188611d8f565b61069d36889003880188611d8f565b6109cd565b3390565b6106ae611b32565b816001600160a01b0316836001600160a01b031614156106d7576106d0610a11565b9050610335565b6040805160028082526060808301845292602083019080368337019050509050838160008151811061070557fe5b60200260200101906001600160a01b031690816001600160a01b031681525050828160018151811061073357fe5b60200260200101906001600160a01b031690816001600160a01b031681525050600061075e82610a35565b9050610768611b32565b506040805160208101909152818152600061078287610ae1565b9050600061078f87610ae1565b9050808210156107b2576107ab886107a685610bc5565b610bc9565b92506107d4565b808211156107d45760405180602001604052806107cf8986610c5b565b905292505b50909695505050505050565b6107e8611b32565b60006107f26106a2565b90506107fc611b32565b610807888888610cd9565b9050600061081b868363ffffffff610e1a16565b60000b121561083c5760405162461bcd60e51b815260040161021c9061217c565b61084888833084610e4b565b610850611b32565b61085d8989898989610f7d565b90507f4d207a2df21cff761d39dd1942c4370b71074291874855081465c54e12987ab261088982610bc5565b61089289610bc5565b6040516108a0929190612319565b60405180910390a16108b388848961120c565b98975050505050505050565b303b1590565b600054610100900460ff16806108de57506108de6108bf565b806108ec575060005460ff16155b6109085760405162461bcd60e51b815260040161021c9061212e565b600054610100900460ff16158015610933576000805460ff1961ff0019909116610100171660011790555b61093b61133b565b6109436113bc565b8015610955576000805461ff00191690555b50565b61096183611496565b610973838361096e6114e3565b6114fe565b6104308383836114fe565b610986611b32565b61098e611b32565b825184516109a19163ffffffff6115fd16565b81529392505050565b6109b2611b32565b6109ba611b32565b825184516109a19163ffffffff61160b16565b6109d5611b32565b60006109df6106a2565b90506109ed87823088610e4b565b6109fa8787878787611619565b9150610a0786828461120c565b5095945050505050565b610a19611b32565b6040518060200160405280610a2e60126118a2565b9052905090565b60cc5460405163d06ca61f60e01b81526000916060916001600160a01b039091169063d06ca61f90610a6e906001908790600401611e72565b60006040518083038186803b158015610a8657600080fd5b505afa158015610a9a573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f19168201604052610ac29190810190611bd5565b905080600181518110610ad157fe5b6020026020010151915050919050565b6001600160a01b038116600090815260996020526040812054806103355760408051600481526024810182526020810180516001600160e01b031663313ce56760e01b17905290516000916060916001600160a01b03871691610b4391611e05565b600060405180830381855afa9150503d8060008114610b7e576040519150601f19603f3d011682016040523d82523d6000602084013e610b83565b606091505b5091509150818015610b955750805115155b610bb15760405162461bcd60e51b815260040161021c90611fba565b8080602001905181019061061f9190611daa565b5190565b610bd1611b32565b6000610bdc84610ae1565b905060128110610c2157604080516020810190915280610c16610c0684601263ffffffff6118ab16565b8690600a0a63ffffffff6118ed16565b815250915050610335565b604080516020810190915280610c51610c4160128563ffffffff6118ab16565b8690600a0a63ffffffff61192f16565b9052949350505050565b600080610c6784610ae1565b905060128110610ca557610c9d610c8582601263ffffffff6118ab16565b600a0a610c9185610bc5565b9063ffffffff61192f16565b915050610335565b610cd1610cb960128363ffffffff6118ab16565b600a0a610cc585610bc5565b9063ffffffff6118ed16565b949350505050565b610ce1611b32565b60408051600280825260608083018452926020830190803683370190505090508481600081518110610d0f57fe5b60200260200101906001600160a01b031690816001600160a01b0316815250508381600181518110610d3d57fe5b60200260200101906001600160a01b031690816001600160a01b0316815250506000610d698585610c5b565b60cc546040516307c0329d60e21b81529192506060916001600160a01b0390911690631f00ca7490610da19085908790600401611e72565b60006040518083038186803b158015610db957600080fd5b505afa158015610dcd573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f19168201604052610df59190810190611bd5565b9050600081600181518110610e0657fe5b602002602001015190506108b38882610bc9565b805182516000911015610e2f57506001610335565b815183511015610e425750600019610335565b50600092915050565b610e5484611496565b610e5c611b32565b610e668584611969565b90506000610e748684610c5b565b905060006060876001600160a01b03166323b872dd60e01b888886604051602401610ea193929190611e35565b60408051601f198184030181529181526020820180516001600160e01b03166001600160e01b0319909416939093179092529051610edf9190611e05565b6000604051808303816000865af19150503d8060008114610f1c576040519150601f19603f3d011682016040523d82523d6000602084013e610f21565b606091505b5091509150818015610f4b575080511580610f4b575080806020019051810190610f4b9190611c6d565b610f675760405162461bcd60e51b815260040161021c90611ffb565b610f73888785876119f1565b5050505050505050565b610f85611b32565b60408051600280825260608083018452926020830190803683370190505090508681600081518110610fb357fe5b60200260200101906001600160a01b031690816001600160a01b0316815250508581600181518110610fe157fe5b60200260200101906001600160a01b031690816001600160a01b03168152505061100a83610bc5565b61105057600061101982610a35565b60408051602080820183526710a741a4627800008252825190810190925282825291925061104c9163ffffffff61097e16565b9350505b60cc546110689088906001600160a01b031686610958565b60006110748787610c5b565b905060006110828987610c5b565b9050600061108f84610a35565b905061109a86610bc5565b8111156110b95760405162461bcd60e51b815260040161021c906120c0565b60cc54604051634401edf760e11b81526060916001600160a01b031690638803dbee906110f290879087908a9030904290600401612327565b600060405180830381600087803b15801561110c57600080fd5b505af1158015611120573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f191682016040526111489190810190611bd5565b905060008160018151811061115957fe5b60200260200101519050600061116e87610a35565b905061117989610bc5565b8111156111985760405162461bcd60e51b815260040161021c906120c0565b600082116111b85760405162461bcd60e51b815260040161021c9061203c565b7f1ac213d5b0a496f217ff7aa4815243ba303ec9f805bae18c73d1497b29df417b82876040516111e9929190612319565b60405180910390a16111fb8d83610bc9565b9d9c50505050505050505050505050565b61121583611496565b61121d611b32565b6112278484611969565b905060006112358584610c5b565b905060006060866001600160a01b031663a9059cbb60e01b8785604051602401611260929190611e59565b60408051601f198184030181529181526020820180516001600160e01b03166001600160e01b031990941693909317909252905161129e9190611e05565b6000604051808303816000865af19150503d80600081146112db576040519150601f19603f3d011682016040523d82523d6000602084013e6112e0565b606091505b509150915081801561130a57508051158061130a57508080602001905181019061130a9190611c6d565b6113265760405162461bcd60e51b815260040161021c90611ebe565b611332878785876119f1565b50505050505050565b600054610100900460ff168061135457506113546108bf565b80611362575060005460ff16155b61137e5760405162461bcd60e51b815260040161021c9061212e565b600054610100900460ff16158015610943576000805460ff1961ff0019909116610100171660011790558015610955576000805461ff001916905550565b600054610100900460ff16806113d557506113d56108bf565b806113e3575060005460ff16155b6113ff5760405162461bcd60e51b815260040161021c9061212e565b600054610100900460ff1615801561142a576000805460ff1961ff0019909116610100171660011790555b60006114346106a2565b606580546001600160a01b0319166001600160a01b038316908117909155604051919250906000907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908290a3508015610955576000805461ff001916905550565b60006114a182610ae1565b6001600160a01b03831660009081526099602052604090205490915081146114df576001600160a01b03821660009081526099602052604090208190555b5050565b6114eb611b32565b5060408051602081019091526000815290565b600060606001600160a01b03851663095ea7b360e01b8561151f8887610c5b565b604051602401611530929190611e59565b60408051601f198184030181529181526020820180516001600160e01b03166001600160e01b031990941693909317909252905161156e9190611e05565b6000604051808303816000865af19150503d80600081146115ab576040519150601f19603f3d011682016040523d82523d6000602084013e6115b0565b606091505b50915091508180156115da5750805115806115da5750808060200190518101906115da9190611c6d565b6115f65760405162461bcd60e51b815260040161021c90612254565b5050505050565b600061033283836012611a4a565b600061033283836012611a68565b611621611b32565b6040805160028082526060808301845292602083019080368337019050509050868160008151811061164f57fe5b60200260200101906001600160a01b031690816001600160a01b031681525050858160018151811061167d57fe5b60200260200101906001600160a01b031690816001600160a01b0316815250506116a683610bc5565b6116ec5760006116b582610a35565b60408051602080820183526710a741a462780000825282519081019092528282529192506116e89163ffffffff61097e16565b9350505b60cc546117049088906001600160a01b031687610958565b60006117108887610c5b565b9050600061171d83610a35565b905061172885610bc5565b8111156117475760405162461bcd60e51b815260040161021c906120c0565b60cc546060906001600160a01b03166338ed1739846117668c8b610c5b565b8730426040518663ffffffff1660e01b8152600401611789959493929190612327565b600060405180830381600087803b1580156117a357600080fd5b505af11580156117b7573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f191682016040526117df9190810190611bd5565b90506000816001815181106117f057fe5b60200260200101519050600061180586610a35565b905061181088610bc5565b81111561182f5760405162461bcd60e51b815260040161021c906120c0565b6000821161184f5760405162461bcd60e51b815260040161021c9061203c565b7f1ac213d5b0a496f217ff7aa4815243ba303ec9f805bae18c73d1497b29df417b8583604051611880929190612319565b60405180910390a16118928b83610bc9565b9c9b505050505050505050505050565b60ff16600a0a90565b600061033283836040518060400160405280601e81526020017f536166654d6174683a207375627472616374696f6e206f766572666c6f770000815250611a87565b600061033283836040518060400160405280601a81526020017f536166654d6174683a206469766973696f6e206279207a65726f000000000000815250611ab3565b60008261193e57506000610335565b8282028284828161194b57fe5b04146103325760405162461bcd60e51b815260040161021c906120ed565b611971611b32565b61033283846001600160a01b03166370a08231856040518263ffffffff1660e01b81526004016119a19190611e21565b60206040518083038186803b1580156119b957600080fd5b505afa1580156119cd573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906107a69190611daa565b611a24611a0e611a018685610bc9565b839063ffffffff611aea16565b611a188686611969565b9063ffffffff610e1a16565b60000b15611a445760405162461bcd60e51b815260040161021c9061228b565b50505050565b6000610cd1611a58836118a2565b610cc5868663ffffffff61192f16565b6000610cd183610cc5611a7a856118a2565b879063ffffffff61192f16565b60008184841115611aab5760405162461bcd60e51b815260040161021c9190611e8b565b505050900390565b60008183611ad45760405162461bcd60e51b815260040161021c9190611e8b565b506000838581611ae057fe5b0495945050505050565b611af2611b32565b611afa611b32565b825184516109a19163ffffffff611b0d16565b6000828201838110156103325760405162461bcd60e51b815260040161021c90611ef5565b6040518060200160405280600081525090565b600060208284031215611b56578081fd5b50919050565b600060208284031215611b6d578081fd5b611b776020612363565b9135825250919050565b600060208284031215611b92578081fd5b8135610332816123d6565b60008060408385031215611baf578081fd5b8235611bba816123d6565b91506020830135611bca816123d6565b809150509250929050565b60006020808385031215611be7578182fd5b825167ffffffffffffffff811115611bfd578283fd5b80840185601f820112611c0e578384fd5b80519150611c23611c1e8361238a565b612363565b8281528381019082850185850284018601891015611c3f578687fd5b8693505b84841015611c61578051835260019390930192918501918501611c43565b50979650505050505050565b600060208284031215611c7e578081fd5b81518015158114610332578182fd5b600080600060608486031215611ca1578081fd5b8335611cac816123d6565b92506020840135611cbc816123d6565b9150611ccb8560408601611b5c565b90509250925092565b60008060408385031215611baf578182fd5b600080600060608486031215611cfa578283fd5b8335611d05816123d6565b92506020840135611d15816123d6565b9150611ccb8560408601611b45565b600080600080600060a08688031215611d3b578081fd5b8535611d46816123d6565b94506020860135611d56816123d6565b9350611d658760408801611b45565b9250611d748760608801611b45565b9150611d838760808801611b45565b90509295509295909350565b600060208284031215611da0578081fd5b6103328383611b5c565b600060208284031215611dbb578081fd5b5051919050565b6000815180845260208085019450808401835b83811015611dfa5781516001600160a01b031687529582019590820190600101611dd5565b509495945050505050565b60008251611e178184602087016123aa565b9190910192915050565b6001600160a01b0391909116815260200190565b6001600160a01b039384168152919092166020820152604081019190915260600190565b6001600160a01b03929092168252602082015260400190565b600083825260406020830152610cd16040830184611dc2565b6000602082528251806020840152611eaa8160408501602087016123aa565b601f01601f19169190910160400192915050565b6020808252601d908201527f446563696d616c45524332303a207472616e73666572206661696c6564000000604082015260600190565b6020808252601b908201527f536166654d6174683a206164646974696f6e206f766572666c6f770000000000604082015260600190565b60208082526027908201527f49666e7846694f776e61626c65557067726164653a206e6f7420746865206e656040820152663b9037bbb732b960c91b606082015260800190565b60208082526027908201527f49666e7846694f776e61626c65557067726164653a2073616d652061732063616040820152666e64696461746560c81b606082015260800190565b60208082526021908201527f446563696d616c45524332303a2067657420646563696d616c73206661696c656040820152601960fa1b606082015260800190565b60208082526021908201527f446563696d616c45524332303a207472616e7366657246726f6d206661696c656040820152601960fa1b606082015260800190565b60208082526017908201527f42616c616e6365722065786368616e6765206572726f72000000000000000000604082015260600190565b6020808252602d908201527f49666e7846694f776e61626c65557067726164653a2063616c6c65722069732060408201526c3737ba103a34329037bbb732b960991b606082015260800190565b6020808252601390820152724552525f4241445f4c494d49545f505249434560681b604082015260600190565b60208082526021908201527f536166654d6174683a206d756c7469706c69636174696f6e206f766572666c6f6040820152607760f81b606082015260800190565b6020808252602e908201527f436f6e747261637420696e7374616e63652068617320616c726561647920626560408201526d195b881a5b9a5d1a585b1a5e995960921b606082015260800190565b60208082526023908201527f6d617820696e70757420616d6f756e74206c657373207468616e2065787065636040820152621d195960ea1b606082015260800190565b6020808252602f908201527f49666e7846694f776e61626c65557067726164653a2063616e6469646174652060408201526e6973207a65726f206164647265737360881b606082015260800190565b60208082526026908201527f49666e7846694f776e61626c65557067726164653a2073616d65206173206f726040820152651a59da5b985b60d21b606082015260800190565b6020808252601c908201527f446563696d616c45524332303a20617070726f7665206661696c656400000000604082015260600190565b60208082526022908201527f446563696d616c45524332303a2062616c616e636520696e636f6e73697374656040820152611b9d60f21b606082015260800190565b60208082526022908201527f49666e7846694f776e61626c65557067726164653a207a65726f206164647265604082015261737360f01b606082015260800190565b9051815260200190565b918252602082015260400190565b600086825285602083015260a0604083015261234660a0830186611dc2565b6001600160a01b0394909416606083015250608001529392505050565b60405181810167ffffffffffffffff8111828210171561238257600080fd5b604052919050565b600067ffffffffffffffff8211156123a0578081fd5b5060209081020190565b60005b838110156123c55781810151838201526020016123ad565b83811115611a445750506000910152565b6001600160a01b038116811461095557600080fdfea2646970667358221220ca58a03a0c62c92c39aef70a11cec4bef40d13f4c2c71581b1fa57cc0feaf09f64736f6c63430006090033",
+  "devdoc": {
+    "methods": {
+      "owner()": {
+        "details": "Returns the address of the current owner."
+      },
+      "renounceOwnership()": {
+        "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
+      },
+      "setOwner(address)": {
+        "details": "Set ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+      },
+      "updateOwner()": {
+        "details": "Transfers ownership of the contract to a new account (`_candidate`). Can only be called by the new owner."
+      }
+    }
+  },
+  "userdoc": {
+    "methods": {}
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 151,
+        "contract": "contracts/exchangeWrapper/ExchangeWrapper.sol:ExchangeWrapper",
+        "label": "initialized",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_bool"
+      },
+      {
+        "astId": 154,
+        "contract": "contracts/exchangeWrapper/ExchangeWrapper.sol:ExchangeWrapper",
+        "label": "initializing",
+        "offset": 1,
+        "slot": "0",
+        "type": "t_bool"
+      },
+      {
+        "astId": 219,
+        "contract": "contracts/exchangeWrapper/ExchangeWrapper.sol:ExchangeWrapper",
+        "label": "______gap",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_array(t_uint256)50_storage"
+      },
+      {
+        "astId": 144,
+        "contract": "contracts/exchangeWrapper/ExchangeWrapper.sol:ExchangeWrapper",
+        "label": "__gap",
+        "offset": 0,
+        "slot": "51",
+        "type": "t_array(t_uint256)50_storage"
+      },
+      {
+        "astId": 18739,
+        "contract": "contracts/exchangeWrapper/ExchangeWrapper.sol:ExchangeWrapper",
+        "label": "_owner",
+        "offset": 0,
+        "slot": "101",
+        "type": "t_address"
+      },
+      {
+        "astId": 18741,
+        "contract": "contracts/exchangeWrapper/ExchangeWrapper.sol:ExchangeWrapper",
+        "label": "_candidate",
+        "offset": 0,
+        "slot": "102",
+        "type": "t_address"
+      },
+      {
+        "astId": 18915,
+        "contract": "contracts/exchangeWrapper/ExchangeWrapper.sol:ExchangeWrapper",
+        "label": "__gap",
+        "offset": 0,
+        "slot": "103",
+        "type": "t_array(t_uint256)50_storage"
+      },
+      {
+        "astId": 18076,
+        "contract": "contracts/exchangeWrapper/ExchangeWrapper.sol:ExchangeWrapper",
+        "label": "decimalMap",
+        "offset": 0,
+        "slot": "153",
+        "type": "t_mapping(t_address,t_uint256)"
+      },
+      {
+        "astId": 18080,
+        "contract": "contracts/exchangeWrapper/ExchangeWrapper.sol:ExchangeWrapper",
+        "label": "__gap",
+        "offset": 0,
+        "slot": "154",
+        "type": "t_array(t_uint256)50_storage"
+      },
+      {
+        "astId": 13506,
+        "contract": "contracts/exchangeWrapper/ExchangeWrapper.sol:ExchangeWrapper",
+        "label": "joeRouter",
+        "offset": 0,
+        "slot": "204",
+        "type": "t_contract(IJoeRouter02)14753"
+      },
+      {
+        "astId": 13508,
+        "contract": "contracts/exchangeWrapper/ExchangeWrapper.sol:ExchangeWrapper",
+        "label": "ifnxToken",
+        "offset": 0,
+        "slot": "205",
+        "type": "t_contract(IERC20)1832"
+      },
+      {
+        "astId": 13512,
+        "contract": "contracts/exchangeWrapper/ExchangeWrapper.sol:ExchangeWrapper",
+        "label": "__gap",
+        "offset": 0,
+        "slot": "206",
+        "type": "t_array(t_uint256)50_storage"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_array(t_uint256)50_storage": {
+        "base": "t_uint256",
+        "encoding": "inplace",
+        "label": "uint256[50]",
+        "numberOfBytes": "1600"
+      },
+      "t_bool": {
+        "encoding": "inplace",
+        "label": "bool",
+        "numberOfBytes": "1"
+      },
+      "t_contract(IERC20)1832": {
+        "encoding": "inplace",
+        "label": "contract IERC20",
+        "numberOfBytes": "20"
+      },
+      "t_contract(IJoeRouter02)14753": {
+        "encoding": "inplace",
+        "label": "contract IJoeRouter02",
+        "numberOfBytes": "20"
+      },
+      "t_mapping(t_address,t_uint256)": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => uint256)",
+        "numberOfBytes": "32",
+        "value": "t_uint256"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}
