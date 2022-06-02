@@ -16,7 +16,7 @@ contract API3PriceFeed is IPriceFeed, DapiReader {
     /// @dev returns log(price) of an asset
     /// @param _dapiName dapi Name i.e AVAX/USD
     function getPrice(bytes32 _dapiName) external view override returns (uint256) {
-        (int224 value, ) = IDapiServer(dapiServer).readDataFeedWithDapiName(_dapiName);
+        int224 value = IDapiServer(dapiServer).readDataFeedValueWithDapiName(_dapiName);
 
         uint256 scaledVal;
         unchecked {
