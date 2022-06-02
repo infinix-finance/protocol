@@ -227,38 +227,18 @@ contract ClearingHouse is
     // https://github.com/OpenZeppelin/openzeppelin-sdk/issues/1523
     function initialize(
         uint256 _initMarginRatio,
-        // uint256 _maintenanceMarginRatio,
-        // uint256 _liquidationFeeRatio,
         IInsuranceFund _insuranceFund
     ) public {
-        // require(address(_insuranceFund) != address(0), "Invalid IInsuranceFund");
 
-        // __OwnerPausable_init();
         __Ownable_init();
-        // __Pausable_init();
-
-        // comment these out for reducing bytecode size
-        // __ReentrancyGuard_init();
 
         initMarginRatio = Decimal.decimal(_initMarginRatio);
-        // maintenanceMarginRatio = Decimal.decimal(_maintenanceMarginRatio);
-        // liquidationFeeRatio = Decimal.decimal(_liquidationFeeRatio);
         insuranceFund = _insuranceFund;
     }
 
     //
     // External
     //
-
-    /**
-     * @notice set inital margin ratio
-     * @dev only owner can call
-     * @param _initialMarginRatio new initial margin ratio
-     */
-    // function setInitialMarginRatio(Decimal.decimal memory _initialMarginRatio) external onlyOwner {
-    //     initMarginRatio = _initialMarginRatio;
-    //     emit InitMarginRatioChanged(initMarginRatio.toUint());
-    // }
 
     /**
      * @notice set liquidation fee ratio
@@ -285,17 +265,6 @@ contract ClearingHouse is
         maintenanceMarginRatio = _maintenanceMarginRatio;
         emit MarginRatioChanged(maintenanceMarginRatio.toUint());
     }
-
-    /**
-     * @notice set insurance fund
-     * @dev only owner can call
-     * @param _insuranceFund new insurance fund
-     */
-    // function setInsuranceFund(IInsuranceFund _insuranceFund) external onlyOwner {
-    //     require(address(_insuranceFund) != address(0), "Invalid IInsuranceFund");
-    //     insuranceFund = _insuranceFund;
-    //     emit InsuranceFundChanged(address(_insuranceFund));
-    // }
 
     /**
      * @notice set the fee pool address
@@ -481,29 +450,6 @@ contract ClearingHouse is
     //   pay liquidation fee to liquidator
     //   move the remain margin to insuranceFund
 
-    // /**
-    //  * @notice open a position with referral code
-    //  * @param _amm amm address
-    //  * @param _side enum Side; BUY for long and SELL for short
-    //  * @param _quoteAssetAmount quote asset amount in 18 digits. Can Not be 0
-    //  * @param _leverage leverage  in 18 digits. Can Not be 0
-    //  * @param _baseAssetAmountLimit minimum base asset amount expected to get to prevent from slippage.
-    //  * @param _referralCode referral code
-    //  */
-    // function openPositionWithReferral(
-    //     IAmm _amm,
-    //     Side _side,
-    //     Decimal.decimal calldata _quoteAssetAmount,
-    //     Decimal.decimal calldata _leverage,
-    //     Decimal.decimal calldata _baseAssetAmountLimit,
-    //     bytes32 _referralCode
-    // ) external {
-    //     openPosition(_amm, _side, _quoteAssetAmount, _leverage, _baseAssetAmountLimit);
-    //     // if (_referralCode != 0) {
-    //     //     emit ReferredPositionChanged(_referralCode);
-    //     // }
-    // }
-
     /**
      * @notice open a position
      * @param _amm amm address
@@ -603,22 +549,6 @@ contract ClearingHouse is
             fundingPayment
         );
     }
-
-    // /**
-    //  * @notice close position with referral code
-    //  * @param _amm IAmm address
-    //  * @param _referralCode referral code
-    //  */
-    // function closePositionWithReferral(
-    //     IAmm _amm,
-    //     Decimal.decimal calldata _quoteAssetAmountLimit,
-    //     bytes32 _referralCode
-    // ) external {
-    //     closePosition(_amm, _quoteAssetAmountLimit);
-    //     // if (_referralCode != 0) {
-    //     //     emit ReferredPositionChanged(_referralCode);
-    //     // }
-    // }
 
     /**
      * @notice close all the positions
