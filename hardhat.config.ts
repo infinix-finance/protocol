@@ -67,6 +67,11 @@ export default {
         mnemonic: process.env.MNEMONIC || "",
       },
     },
+    fuji: {
+      url: "https://api.avax-test.network/ext/bc/C/rpc",
+      chainId: 43113,
+      accounts: [process.env.PRIVATE_KEY],
+    },
   },
   settings: {
     optimizer: {
