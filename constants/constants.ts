@@ -1,7 +1,7 @@
 import { toFullDigit } from "../test/helper/number";
 
 export const SELF_SERVE_RRP_BEACON_WHITELISTER = "0x525d10B8Ed4FA6fb757Bb722400aE6Da4cdfb80A"; // BEACON WHITELISTER on Rinkeby https://docs.api3.org/beacon/v0.1/reference/contract-addresses.html
-export const DAPI_SERVER = "0xdC91ea613247C0C9438A6F64Cc0E08291198981a"; // DAPI SERVER on Avalanche Testnet
+export const DAPI_SERVER = "0xdC91ea613247C0C9438A6F64Cc0E08291198981a"; // DAPI SERVER on Avalanche Testnet https://github.com/api3dao/operations/blob/main/chain/deployments/references.json
 export const QUOTE_ASSET_RESERVE = 10;
 export const BASE_ASSET_RESERVE = 10;
 export const TRADE_LIMIT_RATIO = 1;
