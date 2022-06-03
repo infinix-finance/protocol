@@ -1,11 +1,12 @@
 import { toFullDigit } from "../test/helper/number";
 
 export const SELF_SERVE_RRP_BEACON_WHITELISTER = "0x525d10B8Ed4FA6fb757Bb722400aE6Da4cdfb80A"; // BEACON WHITELISTER on Rinkeby https://docs.api3.org/beacon/v0.1/reference/contract-addresses.html
+export const DAPI_SERVER = "0xdC91ea613247C0C9438A6F64Cc0E08291198981a"; // DAPI SERVER on Avalanche Testnet
 export const QUOTE_ASSET_RESERVE = 10;
 export const BASE_ASSET_RESERVE = 10;
 export const TRADE_LIMIT_RATIO = 1;
 export const FUNDING_PERIOD = 1;
-export const PRICE_FEED_KEY = "0x4554482f55534400000000000000000000000000000000000000000000000000"; //ETH/USD
+export const PRICE_FEED_KEY = "0x415641582f555344000000000000000000000000000000000000000000000000"; // AVAX/USD
 export const QUOTE_ASSET = "0xeb8f08a975Ab53E34D8a0330E0D34de942C95926"; // USDC on Rinkeby
 // export const QUOTE_ASSET = "0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e"; // USDC on Avalanche
 export const FLUNCTUATION_LIMIT_RATIO = 1;
