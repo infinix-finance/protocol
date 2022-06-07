@@ -70,7 +70,9 @@ export default {
     fuji: {
       url: "https://api.avax-test.network/ext/bc/C/rpc",
       chainId: 43113,
-      accounts: [process.env.PRIVATE_KEY || ""],
+      accounts: {
+        mnemonic: process.env.MNEMONIC || "",
+      },
     },
   },
   settings: {
