@@ -2,7 +2,7 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { run } from "hardhat";
 
-import { SELF_SERVE_RRP_BEACON_WHITELISTER } from "../constants/constants";
+import { DAPI_SERVER } from "../constants/constants";
 
 const deployAPI3PriceFeed: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const {
@@ -15,7 +15,7 @@ const deployAPI3PriceFeed: DeployFunction = async function (hre: HardhatRuntimeE
 
   const deployResult = await deploy("API3PriceFeed", {
     from: deployer,
-    args: [SELF_SERVE_RRP_BEACON_WHITELISTER],
+    args: [DAPI_SERVER],
     log: true,
   });
 
