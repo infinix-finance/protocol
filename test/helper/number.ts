@@ -22,8 +22,8 @@ export function toFullDigitStr(val: number | string): string {
   return toFullDigit(val).toString();
 }
 
-export function toDecimal(val: number | string): Decimal {
-  return { d: toFullDigit(val).toString() };
+export function toDecimal(val: number | string, decimals = DEFAULT_TOKEN_DECIMALS): Decimal {
+  return { d: toFullDigit(val, decimals).toString() };
 }
 
 export function fromDecimal(val: Decimal, decimals = DEFAULT_TOKEN_DECIMALS): BN {
