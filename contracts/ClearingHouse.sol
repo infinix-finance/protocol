@@ -231,6 +231,7 @@ contract ClearingHouse is
     ) public {
 
         __Ownable_init();
+        __ReentrancyGuard_init_unchained();
 
         initMarginRatio = Decimal.decimal(_initMarginRatio);
         insuranceFund = _insuranceFund;
