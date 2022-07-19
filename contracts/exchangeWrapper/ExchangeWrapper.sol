@@ -178,7 +178,7 @@ contract ExchangeWrapper is IfnxFiOwnableUpgrade, IExchangeWrapper, DecimalERC20
             _inputToken,
             _outputToken,
             _outputTokenBought,
-            _maxInputTokenSold,
+            expectedTokenInAmount,
             _maxPrice
         );
 

@@ -2607,4 +2607,93 @@ describe("ClearingHouse Test", () => {
       ).to.revertedWith("IfnxFiOwnableUpgrade: caller is not the owner");
     });
   });
+
+  describe("stale prices from external (API3) oracle", async () => {
+    beforeEach(async () => {
+      const evmTs = await mockPriceFeed.getEvmTimestamp();
+      const newTs = evmTs.sub(25 * 60 * 60);
+      await mockPriceFeed.setTimestamp(newTs);
+    });
+
+    it("revert addMargin()", async () => {
+      await expect(
+        clearingHouse.connect(alice).addMargin(amm.address, toDecimal(1))
+      ).to.revertedWith("stale price feed");
+    });
+
+    it("revert removeMargin()", async () => {
+      await expect(
+        clearingHouse.connect(alice).removeMargin(amm.address, toDecimal(1))
+      ).to.revertedWith("stale price feed");
+    });
+
+    it("revert settlePosition()", async () => {
+      await amm.shutdown();
+      await expect(clearingHouse.connect(alice).settlePosition(amm.address)).to.revertedWith(
+        "stale price feed"
+      );
+    });
+
+    it("revert openPosition()", async () => {
+      await expect(
+        clearingHouse
+          .connect(alice)
+          .openPosition(amm.address, Side.SELL, toDecimal(1), toDecimal(1), toDecimal(1))
+      ).to.revertedWith("stale price feed");
+    });
+
+    it("revert closePosition()", async () => {
+      await expect(
+        clearingHouse.connect(alice).closePosition(amm.address, toDecimal(1))
+      ).to.revertedWith("stale price feed");
+    });
+
+    it("revert liquidate()", async () => {
+      await mockPriceFeed.setTimestamp(0);
+      await approve(alice, clearingHouse.address, 250);
+      await clearingHouse
+        .connect(alice)
+        .openPosition(amm.address, Side.SELL, toDecimal(250), toDecimal(1), toDecimal(0));
+
+      const evmTs = await mockPriceFeed.getEvmTimestamp();
+      const newTs = evmTs.sub(25 * 60 * 60);
+      await mockPriceFeed.setTimestamp(newTs);
+      await expect(
+        clearingHouse.connect(bob).liquidate(amm.address, alice.address)
+      ).to.revertedWith("stale price feed");
+    });
+
+    it("revert liquidateWithSlippage()", async () => {
+      await mockPriceFeed.setTimestamp(0);
+      await approve(alice, clearingHouse.address, 250);
+      await clearingHouse
+        .connect(alice)
+        .openPosition(amm.address, Side.SELL, toDecimal(250), toDecimal(1), toDecimal(0));
+
+      const evmTs = await mockPriceFeed.getEvmTimestamp();
+      const newTs = evmTs.sub(25 * 60 * 60);
+      await mockPriceFeed.setTimestamp(newTs);
+      await expect(
+        clearingHouse.connect(bob).liquidateWithSlippage(amm.address, alice.address, toDecimal(0))
+      ).to.revertedWith("stale price feed");
+    });
+
+    it("revert payFunding()", async () => {
+      await gotoNextFundingTime();
+      await expect(clearingHouse.connect(alice).payFunding(amm.address)).to.revertedWith(
+        "stale price feed"
+      );
+    });
+  });
+
+  describe("ClearingHouse deployment", async () => {
+    it("should not allow reinitialising", async () => {
+      await expect(
+        clearingHouse.connect(admin).initialize(0, ethers.constants.AddressZero)
+      ).to.revertedWith("Contract instance has already been initialized");
+      await expect(
+        clearingHouse.connect(alice).initialize(0, ethers.constants.AddressZero)
+      ).to.revertedWith("Contract instance has already been initialized");
+    });
+  });
 });

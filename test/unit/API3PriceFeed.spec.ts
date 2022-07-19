@@ -50,4 +50,29 @@ describe("API3PriceFeed Unit Test", () => {
       await expect(priceFeed.getPrice(dapiName)).to.be.revertedWith("Sender cannot read");
     });
   });
+
+  context("Stale prices", function () {
+    it("reverts on stale price", async () => {
+      await dapiServer.mockIfAllowedToRead(true);
+      const dataFeedId = "0x1234567890123456789012345678901234567890123456789012345678901234";
+      const dataFeedValue = toFullDigit(100);
+      const dataFeedTimestamp =
+        (await ethers.provider.getBlock(ethers.provider.getBlockNumber())).timestamp - 25 * 60 * 60;
+      await dapiServer.mockDataFeed(dataFeedId, dataFeedValue, dataFeedTimestamp);
+      const dapiName = ethers.utils.formatBytes32String("AVAX/USD");
+      await dapiServer.mockDapiName(dapiName, dataFeedId);
+      await expect(priceFeed.getPrice(dapiName)).to.be.revertedWith("stale price feed");
+    });
+
+    it("does not revert on fresh price", async () => {
+      const dataFeedId = "0x1234567890123456789012345678901234567890123456789012345678901234";
+      const dataFeedValue = toFullDigit(100);
+      const dataFeedTimestamp =
+        (await ethers.provider.getBlock(ethers.provider.getBlockNumber())).timestamp - 23 * 60 * 60;
+      await dapiServer.mockDataFeed(dataFeedId, dataFeedValue, dataFeedTimestamp);
+      const dapiName = ethers.utils.formatBytes32String("AVAX/USD");
+      await dapiServer.mockDapiName(dapiName, dataFeedId);
+      expect(await priceFeed.getPrice(dapiName)).to.equal("46506993328423072858");
+    });
+  });
 });
