@@ -5,7 +5,7 @@ async function main() {
   const IfnxToken = await ethers.getContractFactory("IfnxToken");
 
   // Initial Supply 1,000,000,000
-  const ifnxToken = await IfnxToken.deploy(1e9);
+  const ifnxToken = await IfnxToken.deploy(ethers.utils.parseEther("1000000000"));
 
   await ifnxToken.deployed();
 

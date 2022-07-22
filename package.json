@@ -8,6 +8,7 @@
     "accounts": "npx hardhat accounts",
     "balances": "npx hardhat balances",
     "deploy:testnet": "npx hardhat deploy --network rinkeby",
+    "deploy:fuji": "npx hardhat deploy --network fuji",
     "prettier:solidity": "npx prettier --write contracts/**/*.sol"
   },
   "repository": {

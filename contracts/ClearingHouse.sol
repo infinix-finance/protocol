@@ -225,12 +225,12 @@ contract ClearingHouse is
     //
     // openzeppelin doesn't support struct input
     // https://github.com/OpenZeppelin/openzeppelin-sdk/issues/1523
-    function initialize(
-        uint256 _initMarginRatio,
-        IInsuranceFund _insuranceFund
-    ) public {
-
+    function initialize(uint256 _initMarginRatio, IInsuranceFund _insuranceFund)
+        public
+        initializer
+    {
         __Ownable_init();
+        __ReentrancyGuard_init_unchained();
 
         initMarginRatio = Decimal.decimal(_initMarginRatio);
         insuranceFund = _insuranceFund;
@@ -317,6 +317,8 @@ contract ClearingHouse is
         requireAmm(_amm, true);
         IERC20 quoteToken = _amm.quoteAsset();
         requireValidTokenAmount(quoteToken, _addedMargin);
+        // price validity check
+        _amm.getUnderlyingPrice();
 
         address trader = _msgSender();
         Position memory position = getPosition(_amm, trader);
@@ -343,6 +345,8 @@ contract ClearingHouse is
         requireAmm(_amm, true);
         IERC20 quoteToken = _amm.quoteAsset();
         requireValidTokenAmount(quoteToken, _removedMargin);
+        // price validity check
+        _amm.getUnderlyingPrice();
 
         address trader = _msgSender();
         // realize funding payment if there's no bad debt
@@ -384,6 +388,9 @@ contract ClearingHouse is
     function settlePosition(IAmm _amm) external nonReentrant {
         // check condition
         requireAmm(_amm, false);
+        // price validity check
+        _amm.getUnderlyingPrice();
+
         address trader = _msgSender();
         Position memory pos = getPosition(_amm, trader);
         requirePositionSize(pos.size);
@@ -475,6 +482,8 @@ contract ClearingHouse is
             true
         );
         requireNotRestrictionMode(_amm);
+        // price validity check
+        _amm.getUnderlyingPrice();
 
         address trader = _msgSender();
         PositionResp memory positionResp;
@@ -562,6 +571,8 @@ contract ClearingHouse is
         // check conditions
         requireAmm(_amm, true);
         requireNotRestrictionMode(_amm);
+        // price validity check
+        _amm.getUnderlyingPrice();
 
         // update position
         address trader = _msgSender();
