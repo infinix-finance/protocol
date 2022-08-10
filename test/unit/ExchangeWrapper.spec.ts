@@ -9,11 +9,7 @@ import {
   JoeRouterMock,
   TetherToken,
 } from "../../types";
-import {
-  deployErc20Fake,
-  deployExchangeWrapper,
-  deployMockJoeRouter,
-} from "../helper/contract";
+import { deployErc20Fake, deployExchangeWrapper, deployMockJoeRouter } from "../helper/contract";
 import { toDecimal, toFullDigit } from "../helper/number";
 
 // skip, won't be in v1
@@ -96,9 +92,99 @@ describe("ExchangeWrapper Unit Test", () => {
       "IfnxFiOwnableUpgrade: caller is not the owner"
     );
   });
+
   it("force error, only owner can approve", async () => {
     await expect(
       exchangeWrapper.connect(alice).approve(alice.address, alice.address, toDecimal(10))
+    ).to.be.revertedWith("IfnxFiOwnableUpgrade: caller is not the owner");
+  });
+
+  it("admin should be able to set twap oracle for tokens", async () => {
+    const fakeTwapAddr = "0x0000000000000000000000000000000000000001";
+    await expect(
+      exchangeWrapper.connect(admin).setTwapOracle(erc20Fake.address, usdc.address, fakeTwapAddr)
+    )
+      .to.emit(exchangeWrapper, "TwapOracleUpdated")
+      .withArgs(erc20Fake.address, usdc.address, fakeTwapAddr);
+    expect(
+      await exchangeWrapper.twapOracles(
+        ethers.utils.keccak256(ethers.utils.hexConcat([erc20Fake.address, usdc.address]))
+      )
+    ).to.eq(fakeTwapAddr);
+  });
+
+  it("admin should be not able to set twap oracle for invalid tokens", async () => {
+    const fakeTwapAddr = "0x0000000000000000000000000000000000000001";
+    await expect(
+      exchangeWrapper.connect(admin).setTwapOracle(usdc.address, usdc.address, fakeTwapAddr)
+    ).to.be.revertedWith("invalid tokens");
+    await expect(
+      exchangeWrapper
+        .connect(admin)
+        .setTwapOracle(usdc.address, usdc.address, ethers.constants.AddressZero)
+    ).to.be.revertedWith("invalid tokens");
+  });
+
+  it("admin should be able to update twap oracle for tokens", async () => {
+    const fakeTwapAddr = "0x0000000000000000000000000000000000000002";
+    await expect(
+      exchangeWrapper.connect(admin).setTwapOracle(erc20Fake.address, usdc.address, fakeTwapAddr)
+    )
+      .to.emit(exchangeWrapper, "TwapOracleUpdated")
+      .withArgs(erc20Fake.address, usdc.address, fakeTwapAddr);
+    expect(
+      await exchangeWrapper.twapOracles(
+        ethers.utils.keccak256(ethers.utils.hexConcat([erc20Fake.address, usdc.address]))
+      )
+    ).to.eq(fakeTwapAddr);
+  });
+
+  it("admin should be able to reset twap oracle for tokens", async () => {
+    await expect(
+      exchangeWrapper
+        .connect(admin)
+        .setTwapOracle(erc20Fake.address, usdc.address, ethers.constants.AddressZero)
+    )
+      .to.emit(exchangeWrapper, "TwapOracleUpdated")
+      .withArgs(erc20Fake.address, usdc.address, ethers.constants.AddressZero);
+    expect(
+      await exchangeWrapper.twapOracles(
+        ethers.utils.keccak256(ethers.utils.hexConcat([erc20Fake.address, usdc.address]))
+      )
+    ).to.eq(ethers.constants.AddressZero);
+  });
+
+  it("admin should be not able to set twap oracle for invalid tokens - sanity checks", async () => {
+    const fakeTwapAddr = "0x0000000000000000000000000000000000000001";
+    await expect(
+      exchangeWrapper
+        .connect(admin)
+        .setTwapOracle(exchangeWrapper.address, usdc.address, fakeTwapAddr)
+    ).to.be.reverted;
+    await expect(
+      exchangeWrapper
+        .connect(admin)
+        .setTwapOracle(usdc.address, exchangeWrapper.address, fakeTwapAddr)
+    ).to.be.reverted;
+    await expect(
+      exchangeWrapper
+        .connect(admin)
+        .setTwapOracle(usdc.address, exchangeWrapper.address, ethers.constants.AddressZero)
+    ).to.be.reverted;
+  });
+
+  it("non admin should be not able to set twap oracle for tokens", async () => {
+    const fakeTwapAddr = "0x0000000000000000000000000000000000000001";
+    await expect(
+      exchangeWrapper.connect(alice).setTwapOracle(erc20Fake.address, usdc.address, fakeTwapAddr)
+    ).to.be.revertedWith("IfnxFiOwnableUpgrade: caller is not the owner");
+    await expect(
+      exchangeWrapper
+        .connect(alice)
+        .setTwapOracle(erc20Fake.address, usdc.address, ethers.constants.AddressZero)
+    ).to.be.revertedWith("IfnxFiOwnableUpgrade: caller is not the owner");
+    await expect(
+      exchangeWrapper.connect(alice).setTwapOracle(usdc.address, usdc.address, fakeTwapAddr)
     ).to.be.revertedWith("IfnxFiOwnableUpgrade: caller is not the owner");
   });
 });

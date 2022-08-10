@@ -2,9 +2,10 @@
 pragma solidity ^0.6.9;
 
 import "@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol";
+import "../interface/ITwapOracle.sol";
 import "./UniswapLib.sol";
 
-contract InfxUsdcTwap {
+contract InfxUsdcTwap is ITwapOracle {
     using FixedPoint for *;
     using SafeMath for uint256;
 
@@ -45,7 +46,7 @@ contract InfxUsdcTwap {
         newObservation.acc = cumulativePrice;
     }
 
-    function update() external {
+    function update() external override {
         if (block.timestamp.sub(newObservation.timestamp) >= period) {
             oldObservation.timestamp = newObservation.timestamp;
             oldObservation.acc = newObservation.acc;
@@ -60,7 +61,7 @@ contract InfxUsdcTwap {
         }
     }
 
-    function getTwapPrice() external view returns (uint256) {
+    function getTwapPrice() external view override returns (uint256) {
         uint256 timeElapsed = block.timestamp.sub(oldObservation.timestamp);
         FixedPoint.uq112x112 memory priceAverage = FixedPoint.uq112x112(
             uint224((currentCumulativePrice() - oldObservation.acc) / timeElapsed)
