@@ -22,6 +22,8 @@ interface IExchangeWrapper {
         Decimal.decimal calldata maxPrice
     ) external returns (Decimal.decimal memory);
 
+    function syncTwapOracle(IERC20 _baseToken, IERC20 _quoteToken) external;
+
     function getInputPrice(
         IERC20 inputToken,
         IERC20 outputToken,

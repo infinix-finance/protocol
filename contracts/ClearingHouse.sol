@@ -712,6 +712,7 @@ contract ClearingHouse is
         } else {
             transferToInsuranceFund(quoteAsset, ammFundingPaymentProfit.abs());
         }
+        insuranceFund.syncTwapOracle(quoteAsset);
     }
 
     //

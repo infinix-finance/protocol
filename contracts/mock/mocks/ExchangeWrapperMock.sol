@@ -24,6 +24,12 @@ contract ExchangeWrapperMock is IExchangeWrapper, DecimalERC20 {
         bException = true;
     }
 
+    function syncTwapOracle(IERC20 _baseToken, IERC20 _quoteToken) external override {
+        _baseToken;
+        _quoteToken;
+        bException = bException;
+    }
+
     function swapInput(
         IERC20 inputToken,
         IERC20 outputToken,

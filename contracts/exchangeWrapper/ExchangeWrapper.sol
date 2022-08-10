@@ -68,6 +68,13 @@ contract ExchangeWrapper is IfnxFiOwnableUpgrade, IExchangeWrapper, DecimalERC20
         emit TwapOracleUpdated(baseToken, quoteToken, address(twapOracle));
     }
 
+    function syncTwapOracle(IERC20 _baseToken, IERC20 _quoteToken) external override {
+        ITwapOracle twapOracle = twapOracles[
+            keccak256(abi.encodePacked(address(_baseToken), address(_quoteToken)))
+        ];
+        if (address(twapOracle) != address(0)) twapOracle.update();
+    }
+
     function swapInput(
         IERC20 _inputToken,
         IERC20 _outputToken,

@@ -163,6 +163,10 @@ contract InsuranceFund is IInsuranceFund, IfnxFiOwnableUpgrade, BlockContext, Re
         emit Withdrawn(_msgSender(), _amount.toUint());
     }
 
+    function syncTwapOracle(IERC20 _quoteToken) external override {
+        exchange.syncTwapOracle(ifnxToken, _quoteToken);
+    }
+
     //
     // SETTER
     //

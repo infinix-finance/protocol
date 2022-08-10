@@ -9,6 +9,8 @@ import {IAmm} from "./IAmm.sol";
 interface IInsuranceFund {
     function withdraw(IERC20 _quoteToken, Decimal.decimal calldata _amount) external;
 
+    function syncTwapOracle(IERC20 _quoteToken) external;
+
     function isExistedAmm(IAmm _amm) external view returns (bool);
 
     function getAllAmms() external view returns (IAmm[] memory);
