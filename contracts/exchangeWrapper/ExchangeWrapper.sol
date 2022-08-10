@@ -6,6 +6,7 @@ import {IfnxFiOwnableUpgrade} from "../utils/IfnxFiOwnableUpgrade.sol";
 import {IERC20} from "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/IERC20.sol";
 import {IJoeRouter02} from "./traderjoe/IJoeRouter02.sol";
 import {IExchangeWrapper, Decimal} from "../interface/IExchangeWrapper.sol";
+import {ITwapOracle} from "../interface/ITwapOracle.sol";
 import {DecimalERC20} from "../utils/DecimalERC20.sol";
 import {Decimal, SafeMath} from "../utils/Decimal.sol";
 
@@ -17,9 +18,13 @@ contract ExchangeWrapper is IfnxFiOwnableUpgrade, IExchangeWrapper, DecimalERC20
     // default max price slippage is 20% of spot price. 12e17 = (1 + 20%) e18
     uint256 private constant DEFAULT_MAX_PRICE_SLIPPAGE = 12e17;
 
+    // default trade range for input/output tokens is 10%. 0.1e18 = 10% * e18
+    uint256 private constant DEFAULT_TRADE_RANGE = 0.1e18;
+
     //
     // EVENTS
     //
+    event TwapOracleUpdated(address baseToken, address quoteToken, address twapOracle);
     event ExchangeSwap(uint256 ifnxTokenAmount, uint256 usdtAmount);
     // for debug purpose in the future
     event TraderJoeSwap(uint256 inAmount, uint256 out);
@@ -29,6 +34,7 @@ contract ExchangeWrapper is IfnxFiOwnableUpgrade, IExchangeWrapper, DecimalERC20
     //**********************************************************//
     IJoeRouter02 public joeRouter;
     IERC20 private ifnxToken;
+    mapping(bytes32 => ITwapOracle) public twapOracles;
     //**********************************************************//
     //    The above state variables can not change the order    //
     //**********************************************************//
@@ -46,6 +52,27 @@ contract ExchangeWrapper is IfnxFiOwnableUpgrade, IExchangeWrapper, DecimalERC20
 
         ifnxToken = IERC20(_ifnxToken);
         setJoeRouter(_joeRouter);
+    }
+
+    function setTwapOracle(
+        address baseToken,
+        address quoteToken,
+        ITwapOracle twapOracle
+    ) external onlyOwner {
+        require(baseToken != quoteToken, "invalid tokens");
+        // sanity checks
+        IERC20(baseToken).totalSupply();
+        IERC20(quoteToken).totalSupply();
+
+        twapOracles[keccak256(abi.encodePacked(baseToken, quoteToken))] = twapOracle;
+        emit TwapOracleUpdated(baseToken, quoteToken, address(twapOracle));
+    }
+
+    function syncTwapOracle(IERC20 _baseToken, IERC20 _quoteToken) external override {
+        ITwapOracle twapOracle = twapOracles[
+            keccak256(abi.encodePacked(address(_baseToken), address(_quoteToken)))
+        ];
+        if (address(twapOracle) != address(0)) twapOracle.update();
     }
 
     function swapInput(
@@ -209,6 +236,24 @@ contract ExchangeWrapper is IfnxFiOwnableUpgrade, IExchangeWrapper, DecimalERC20
             );
         }
 
+        // if min output tokens are 0, set to (DEFAULT_MIN_OUTPUT x (input tokens x twap price))
+        if (_minOutputTokenBought.toUint() == 0) {
+            ITwapOracle twapOracle = twapOracles[
+                keccak256(abi.encodePacked(address(_inputToken), address(_outputToken)))
+            ];
+            twapOracle.update();
+            // price is in _outputToken decimal precision
+            uint256 rawPrice = twapOracle.getTwapPrice();
+            require(rawPrice != 0, "invalid twap price");
+
+            Decimal.decimal memory priceMantissa = _toDecimal(_outputToken, rawPrice);
+            Decimal.decimal memory tradeRange = Decimal.one().subD(
+                Decimal.decimal(DEFAULT_TRADE_RANGE)
+            );
+
+            _minOutputTokenBought = tradeRange.mulD(_inputTokenSold).mulD(priceMantissa);
+        }
+
         _approve(IERC20(_inputToken), address(joeRouter), _inputTokenSold);
 
         uint256 tokenSold = _toUint(_inputToken, _inputTokenSold);
@@ -255,6 +300,24 @@ contract ExchangeWrapper is IfnxFiOwnableUpgrade, IExchangeWrapper, DecimalERC20
             _maxPrice = Decimal.decimal(spotPrice).mulD(
                 Decimal.decimal(DEFAULT_MAX_PRICE_SLIPPAGE)
             );
+        }
+
+        // if max input tokens are 0, set to (trade range x (input tokens x twap price))
+        if (_maxInputTokenSold.toUint() == 0) {
+            ITwapOracle twapOracle = twapOracles[
+                keccak256(abi.encodePacked(address(_inputToken), address(_outputToken)))
+            ];
+            twapOracle.update();
+            // price is in _outputToken decimal precision
+            uint256 rawPrice = twapOracle.getTwapPrice();
+            require(rawPrice != 0, "invalid twap price");
+
+            Decimal.decimal memory priceMantissa = _toDecimal(_outputToken, rawPrice);
+            Decimal.decimal memory tradeRange = Decimal.one().addD(
+                Decimal.decimal(DEFAULT_TRADE_RANGE)
+            );
+
+            _maxInputTokenSold = tradeRange.mulD(_outputTokenBought).divD(priceMantissa);
         }
 
         _approve(IERC20(_inputToken), address(joeRouter), _maxInputTokenSold);
