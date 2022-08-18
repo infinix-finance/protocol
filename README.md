@@ -16,13 +16,13 @@ In-depth documentation on Infinix is available at [***DOC LINK***]().
 
 ### Requirements
 
-You should have Node 12 installed. Use [nvm](https://github.com/nvm-sh/nvm) to install it.
+You should have Node 16 installed. Use [nvm](https://github.com/nvm-sh/nvm) to install it.
 
 ### Get started
 
 Clone this repository, install NodeJS dependencies, and compile the contracts:
 ```
-git clone git@github.com:advancedblockchain/infinix.git
+git clone git@github.com:infinix-finance/protocol.git
 yarn
 yarn compile
 ```
