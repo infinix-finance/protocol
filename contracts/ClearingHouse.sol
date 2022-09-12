@@ -3,7 +3,7 @@ pragma solidity 0.6.9;
 pragma experimental ABIEncoderV2;
 
 import {BlockContext} from "./utils/BlockContext.sol";
-import {BaseRelayRecipient} from "@opengsn/gsn/contracts/BaseRelayRecipient.sol";
+import {ERC2771Recipient} from "./gsn/ERC2771Recipient.sol";
 import {IERC20} from "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/IERC20.sol";
 import {Decimal} from "./utils/Decimal.sol";
 import {SignedDecimal} from "./utils/SignedDecimal.sol";
@@ -18,14 +18,14 @@ import {IAmm} from "./interface/IAmm.sol";
 import {IInsuranceFund} from "./interface/IInsuranceFund.sol";
 import {IMultiTokenRewardRecipient} from "./interface/IMultiTokenRewardRecipient.sol";
 
-// note BaseRelayRecipient must come after OwnerPausableUpgradeSafe so its _msgSender() takes precedence
+// note ERC2771Recipient must come after OwnerPausableUpgradeSafe so its _msgSender() takes precedence
 // (yes, the ordering is reversed comparing to Python)
 contract ClearingHouse is
     DecimalERC20,
     OwnerPausableUpgradeSafe,
     ReentrancyGuardUpgradeSafe,
     BlockContext,
-    BaseRelayRecipient
+    ERC2771Recipient
 {
     using Decimal for Decimal.decimal;
     using SignedDecimal for SignedDecimal.signedDecimal;
@@ -180,7 +180,7 @@ contract ClearingHouse is
     //**********************************************************//
     //    Can not change the order of below state variables     //
     //**********************************************************//
-    string public override versionRecipient;
+    string public versionRecipient;
 
     // only admin
     Decimal.decimal public initMarginRatio;
@@ -1507,7 +1507,7 @@ contract ClearingHouse is
     function _msgSender()
         internal
         view
-        override(BaseRelayRecipient, ContextUpgradeSafe)
+        override(ERC2771Recipient, ContextUpgradeSafe)
         returns (address payable)
     {
         return super._msgSender();
@@ -1516,7 +1516,7 @@ contract ClearingHouse is
     function _msgData()
         internal
         view
-        override(BaseRelayRecipient, ContextUpgradeSafe)
+        override(ERC2771Recipient, ContextUpgradeSafe)
         returns (bytes memory ret)
     {
         return super._msgData();

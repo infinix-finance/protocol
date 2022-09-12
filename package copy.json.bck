@@ -53,6 +53,7 @@
     "@eth-optimism/smock": "^1.1.10",
     "@nomiclabs/ethereumjs-vm": "^4.2.2",
     "@nomiclabs/hardhat-etherscan": "^3.0.3",
+    "@opengsn/gsn": "^2.1.0",
     "@openzeppelin/contracts": "^4.7.3",
     "@openzeppelin/contracts-ethereum-package": "^3.0.0",
     "@openzeppelin/test-helpers": "^0.5.15",
