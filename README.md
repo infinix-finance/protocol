@@ -1,5 +1,5 @@
 # Infinix
-Infinix the Logarithmic Perpetual Futures DEX with signals from API3-S&P500.
+Infinix the Logarithmic Perpetual Futures DEX with signals from API3 oracle.
 Infinix is built on Perpetual Protocol and uses vAMM.
 
 #### How is it different from Perpetual Protocol?
